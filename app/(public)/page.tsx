@@ -1,6 +1,8 @@
-import { LandingHero } from "@/components/ui/landing-hero";
+import { RobotScrollClient } from "@/components/ui/RobotScrollClient";
 import { Trophy, Users, Cpu, Star, ArrowRight, Zap, Globe, Shield } from "lucide-react";
 import Link from "next/link";
+
+
 
 const stats = [
   { label: "National Ranks", value: "Top 5" },
@@ -55,13 +57,12 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-[#030712] text-white">
 
-      {/* Hero */}
-      <section className="relative w-full pt-16 grid-bg">
-        {/* Purple glow orb */}
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-violet-700/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-40 right-1/4 w-72 h-72 bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
-        <LandingHero />
+      {/* Scrollytelling Hero */}
+      <section className="relative w-full bg-[#050a14]">
+        <RobotScrollClient />
       </section>
+
+
 
       {/* Stats strip */}
       <section className="py-12 border-y border-white/5 bg-black/30 backdrop-blur-sm">

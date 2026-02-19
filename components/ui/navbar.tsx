@@ -30,19 +30,23 @@ export function Navbar() {
         <header className={cn(
             'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
             scrolled
-                ? 'py-2 bg-[#030712]/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/30'
-                : 'py-4 bg-transparent'
+                ? 'py-2 bg-[#030712]/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/30'
+                : 'py-4 bg-[#030712]/60 backdrop-blur-md'
         )}>
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2.5 group">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow">
+                    <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow shrink-0"
+                        style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}
+                    >
                         <Cpu className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-bold text-xl tracking-tight">
+                    <span className="font-bold text-xl tracking-tight text-white">
                         Vul<span className="text-violet-400">cans</span>
                     </span>
                 </Link>
+
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-1">

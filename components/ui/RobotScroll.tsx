@@ -169,7 +169,6 @@ export default function RobotScroll() {
                     background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, #050a14 100%)',
                 }} />
 
-                {/* Text Overlay */}
                 {loaded && activeOverlay && (
                     <motion.div
                         key={activeOverlay.heading}
@@ -178,17 +177,19 @@ export default function RobotScroll() {
                         exit={{ opacity: 0, y: -16 }}
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                         className={`absolute inset-0 flex flex-col justify-center pointer-events-none px-8 sm:px-16 lg:px-24 ${activeOverlay.align === 'center'
-                                ? 'items-center text-center'
-                                : activeOverlay.align === 'left'
-                                    ? 'items-start text-left'
-                                    : 'items-end text-right'
+                            ? 'items-center text-center'
+                            : activeOverlay.align === 'left'
+                                ? 'items-start text-left'
+                                : 'items-end text-right'
                             }`}
                     >
                         <p className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-blue-400/70 mb-3 font-medium">
                             {activeOverlay.eyebrow}
                         </p>
                         <h2 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl">
-                            {activeOverlay.heading}
+                            {activeOverlay.heading === 'Built by\nVulcans.' ? (
+                                <>Built by{'\n'}<span style={{ color: '#7c3aed' }}>Vulcans.</span></>
+                            ) : activeOverlay.heading}
                         </h2>
                         <p className="mt-4 text-sm sm:text-base text-white/50 max-w-sm font-light tracking-wide">
                             {activeOverlay.sub}

@@ -17,22 +17,36 @@ const navLinks = [
 
 export function Navbar() {
     const [scrolled, setScrolled] = useState(false)
+    const [hideNav, setHideNav] = useState(true)
     const [open, setOpen] = useState(false)
     const pathname = usePathname()
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 20)
+        const onScroll = () => {
+            const y = window.scrollY
+            const robotZone = window.innerHeight * 4 // 400vh
+            setScrolled(y > 20)
+            // Hide navbar while inside the scrollytelling section, show after
+            setHideNav(y < robotZone - window.innerHeight * 0.5)
+        }
+        // Run once on mount
+        onScroll()
         window.addEventListener('scroll', onScroll)
         return () => window.removeEventListener('scroll', onScroll)
     }, [])
 
+    // Only collapse nav links on homepage during robot scroll
+    const isHome = pathname === '/'
+    const minimalMode = isHome && hideNav
+
     return (
         <header className={cn(
-            'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+            'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
             scrolled
-                ? 'py-2 bg-[#030712]/90 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/30'
-                : 'py-4 bg-[#030712]/60 backdrop-blur-md'
+                ? 'py-2 backdrop-blur-xl border-b border-white/5'
+                : 'py-4 bg-transparent'
         )}>
+
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2.5 group">
@@ -48,8 +62,8 @@ export function Navbar() {
                 </Link>
 
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-1">
+                {/* Desktop Nav — hidden during robot scroll */}
+                <nav className={cn("hidden md:flex items-center gap-1 transition-all duration-300", minimalMode && "invisible opacity-0 w-0 overflow-hidden")}>
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}

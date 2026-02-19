@@ -42,9 +42,11 @@ export function Navbar() {
     return (
         <header className={cn(
             'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+            // Mobile: always dark bg for readability
+            'bg-[#030712]/95 md:bg-transparent',
             scrolled
-                ? 'py-2 backdrop-blur-xl border-b border-white/5'
-                : 'py-4 bg-transparent'
+                ? 'py-2 md:backdrop-blur-xl md:border-b md:border-white/5'
+                : 'py-4'
         )}>
 
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">

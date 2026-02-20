@@ -61,7 +61,7 @@ export default function RobotScroll() {
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
 
-    const { scrollYProgress } = useScroll({ target: containerRef });
+    const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
 
     // Preload all frames
     useEffect(() => {

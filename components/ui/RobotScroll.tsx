@@ -97,9 +97,9 @@ export default function RobotScroll() {
             const img = framesRef.current[idx];
             if (!img || !img.complete) return;
 
-            // Resize canvas to window
+            // Resize canvas to window minus navbar height
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.height = window.innerHeight - 64;
 
             const cw = canvas.width;
             const ch = canvas.height;
@@ -132,7 +132,7 @@ export default function RobotScroll() {
         const img = framesRef.current[0];
         if (!img) return;
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.height = window.innerHeight - 64;
         const cw = canvas.width;
         const ch = canvas.height;
         const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
@@ -157,7 +157,7 @@ export default function RobotScroll() {
             )}
 
             {/* Sticky canvas */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full"

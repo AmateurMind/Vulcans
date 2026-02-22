@@ -19,7 +19,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0d0d0d;
+    --background: #0d0f11;
     --foreground: #ffffff;
     --card: #121212;
     --card-foreground: #ffffff;
@@ -30,7 +30,7 @@
 
 .dark {
   /* Dark Mode (Aggressive / Esports) */
-  --background: #0d0d0d;
+  --background: #0d0f11;
   --foreground: #ffffff;
   --card: #121212;
   --card-foreground: #ffffff;

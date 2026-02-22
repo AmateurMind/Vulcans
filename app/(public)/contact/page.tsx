@@ -33,7 +33,7 @@ export default function ContactPage() {
                         Contact <span className="text-shimmer">Vulcans</span>
                     </h1>
                     <p className="text-[var(--muted-foreground)] text-lg max-w-xl mx-auto">
-                        Interested in joining, sponsoring, or just want to say hi? We'd love to hear from you.
+                        Interested in joining, sponsoring, or just want to say hi? We&apos;d love to hear from you.
                     </p>
                 </div>
             </section>
@@ -82,7 +82,7 @@ export default function ContactPage() {
                                     <Send className="w-8 h-8 text-[var(--primary)]" />
                                 </div>
                                 <h2 className="text-2xl font-bold">Message Sent!</h2>
-                                <p className="text-[var(--muted-foreground)]">We'll get back to you within 48 hours.</p>
+                                <p className="text-[var(--muted-foreground)]">We&apos;ll get back to you within 48 hours.</p>
                                 <button
                                     onClick={() => { setSent(false); setForm({ name: '', email: '', subject: '', message: '' }) }}
                                     className="mt-4 px-6 py-2 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary)] text-white font-semibold transition-all"

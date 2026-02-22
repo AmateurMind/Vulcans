@@ -197,7 +197,7 @@ export default function RobotScroll() {
                 />
 
                 <div className="absolute inset-0 pointer-events-none" style={{
-                    background: 'radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, var(--background) 90%)',
+                    background: 'radial-gradient(ellipse 75% 100% at 50% 50%, transparent 20%, var(--background) 80%)',
                 }} />
 
                 {loaded && activeOverlay && (

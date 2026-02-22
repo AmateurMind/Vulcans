@@ -28,3 +28,9 @@
 - [x] Fix navbar theme visuals for both desktop and mobile states.
 - [x] Update homepage/footer hardcoded dark styles to theme-aware tokens.
   Summary: Light mode now switches consistently and navbar/footer follow theme colors instead of remaining dark-only.
+
+## Full-Site Theme Pass
+- [x] Convert all public route pages to theme tokens (`about`, `achievements`, `gallery`, `team`, `contact`).
+- [x] Convert admin routes to theme tokens (`dashboard`, `events`, `certificates`, `login`, `setup`).
+- [x] Verify updated route files with lint.
+  Summary: Light mode now applies across public and admin pages instead of only the home route.

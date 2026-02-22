@@ -4,7 +4,9 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -32,6 +34,24 @@ export default function RootLayout({
         <body
           className={`${nunito.variable} ${alegreya.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300 font-sans`}
         >
+          {/* Google Analytics */}
+          <Script
+            strategy="afterInteractive"
+            src="https://www.googletagmanager.com/gtag/js?id=G-3LE66569GK"
+          />
+          <Script
+            id="google-analytics"
+            strategy="afterInteractive"
+          >
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-3LE66569GK');
+            `}
+          </Script>
+
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -41,6 +61,7 @@ export default function RootLayout({
             <ConvexClientProvider>{children}</ConvexClientProvider>
           </ThemeProvider>
           <SpeedInsights />
+          <Analytics />
         </body>
       </html>
     </ConvexAuthNextjsServerProvider>

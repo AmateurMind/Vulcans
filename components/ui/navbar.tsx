@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Cpu } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from './theme-toggle'
 
@@ -17,38 +18,27 @@ const navLinks = [
 ]
 
 export function Navbar() {
-    const [scrolled, setScrolled] = useState(false)
     const [open, setOpen] = useState(false)
     const pathname = usePathname()
-
-    useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 20)
-        onScroll()
-        window.addEventListener('scroll', onScroll, { passive: true })
-        return () => window.removeEventListener('scroll', onScroll)
-    }, [])
 
     return (
         <header className={cn(
             'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
             'bg-[var(--background)]/70 md:bg-transparent',
-            scrolled
-                ? 'py-2 md:backdrop-blur-xl md:border-b md:border-[var(--border)] md:bg-[var(--background)]/70'
-                : 'py-4'
+            'py-2 md:backdrop-blur-xl md:border-b md:border-[var(--border)] md:bg-[var(--background)]/70'
         )}>
 
             <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2.5 group">
-                    <div
-                        className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg shadow-[var(--primary-glow)] group-hover:shadow-[var(--primary-glow)] transition-shadow shrink-0"
-                        style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-dark))' }}
-                    >
-                        <Cpu className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="font-bold text-xl tracking-tight text-[var(--foreground)]">
-                        Vul<span className="text-[var(--primary)]">cans</span>
-                    </span>
+                <Link href="/" className="flex items-center group">
+                    <Image
+                        src="/reference/text-transparent.png"
+                        alt="Vulcans"
+                        width={220}
+                        height={66}
+                        priority
+                        className="h-10 sm:h-11 w-auto"
+                    />
                 </Link>
 
 

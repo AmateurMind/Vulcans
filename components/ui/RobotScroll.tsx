@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useScroll, motion } from 'framer-motion';
+import Image from 'next/image';
 
 const FRAME_COUNT = 128;
 const MOBILE_BREAKPOINT = 768;
@@ -9,7 +10,6 @@ const DESKTOP_FRAME_BASE = '/frames/ezgif-frame-';
 const MOBILE_FRAME_BASE = '/frames-mobile/ezgif-frame-';
 const MOBILE_FOCUS_SCALE = 1.14;
 const MOBILE_FOCUS_Y_OFFSET = 20;
-const BRAND_RED = '#FF3B1F';
 const BRAND_EMBER = '#FF6A3D';
 
 function pad(n: number) {
@@ -62,9 +62,9 @@ const overlays: TextOverlay[] = [
         from: 0,
         to: 0.22,
         align: 'center',
-        eyebrow: 'ROBOTICS CLUB - PESMCOE',
+        eyebrow: 'ROBOTICS CLUB',
         heading: 'Vulcans.',
-        sub: 'Engineered Intelligence. Since 2011.',
+        sub: 'PESMCOE',
     },
     {
         from: 0.22,
@@ -86,7 +86,7 @@ const overlays: TextOverlay[] = [
         from: 0.75,
         to: 1.0,
         align: 'center',
-        eyebrow: 'ASSEMBLY',
+        eyebrow: 'WE ARE',
         heading: 'Built by\nVulcans.',
         sub: '8+ years. 24+ competition wins. 60+ active members.',
     },
@@ -221,16 +221,30 @@ export default function RobotScroll() {
                             } ${finalSlidePositionClass}`}
                     >
                         <p
-                            className={`font-tech tracking-[0.3em] uppercase mb-3 font-bold ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em]' : 'text-[10px] sm:text-xs font-semibold'}`}
+                            className={`font-tech tracking-[0.3em] uppercase mb-3 ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em] font-extrabold' : 'text-[10px] sm:text-xs font-semibold'}`}
                             style={{ color: BRAND_EMBER }}
                         >
                             {activeOverlay.eyebrow}
                         </p>
                         <h2 className={`${headingFontClass} ${isFirstSlide ? 'text-6xl sm:text-8xl lg:text-[10rem] mb-6' : 'text-4xl sm:text-6xl lg:text-7xl'} font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl`}>
                             {activeOverlay.heading === 'Built by\nVulcans.' ? (
-                                <>Built by{'\n'}<span style={{ color: BRAND_RED }}>Vulcans.</span></>
+                                <Image
+                                    src="/reference/text-transparent.png"
+                                    alt="Vulcans"
+                                    width={320}
+                                    height={96}
+                                    priority
+                                    className="h-24 sm:h-28 lg:h-36 w-auto"
+                                />
                             ) : activeOverlay.heading === 'Vulcans.' ? (
-                                <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#FFC371] via-[#FF6A3D] to-[#FF3B1F] drop-shadow-[0_0_30px_rgba(255,59,31,0.4)]">Vulcans.</span>
+                                <Image
+                                    src="/reference/text-transparent.png"
+                                    alt="Vulcans"
+                                    width={320}
+                                    height={96}
+                                    priority
+                                    className="h-24 sm:h-28 lg:h-36 w-auto"
+                                />
                             ) : activeOverlay.heading}
                         </h2>
                         <p className={`font-landing mt-2 text-white/70 font-medium tracking-wide ${isFirstSlide ? 'max-w-2xl text-base sm:text-lg lg:text-2xl' : 'max-w-sm text-sm sm:text-base'} ${isFinalSlide ? 'md:mt-40 lg:mt-40' : ''}`}>

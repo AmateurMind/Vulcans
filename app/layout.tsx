@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -39,6 +40,7 @@ export default function RootLayout({
           >
             <ConvexClientProvider>{children}</ConvexClientProvider>
           </ThemeProvider>
+          <SpeedInsights />
         </body>
       </html>
     </ConvexAuthNextjsServerProvider>

@@ -179,7 +179,7 @@ export default function RobotScroll() {
     const isFirstSlide = activeOverlay?.heading === 'Vulcans.';
     const isFinalSlide = activeOverlay?.heading === 'Built by\nVulcans.';
     const finalSlidePositionClass = isFinalSlide
-        ? (isMobile ? 'justify-start pt-36' : 'justify-start pt-32 md:pt-40 lg:pt-48')
+        ? (isMobile ? 'justify-start pt-20' : 'justify-start pt-16 md:pt-20 lg:pt-24')
         : '';
 
     return (
@@ -227,7 +227,7 @@ export default function RobotScroll() {
                                 <>Built by{'\n'}<span style={{ color: BRAND_RED }}>Vulcans.</span></>
                             ) : activeOverlay.heading}
                         </h2>
-                        <p className={`font-landing mt-4 text-white/70 max-w-sm font-medium tracking-wide ${isFirstSlide ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'}`}>
+                        <p className={`font-landing mt-4 text-white/70 max-w-sm font-medium tracking-wide ${isFirstSlide ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'} ${isFinalSlide ? 'md:mt-40 lg:mt-40' : ''}`}>
                             {activeOverlay.sub}
                         </p>
                     </motion.div>

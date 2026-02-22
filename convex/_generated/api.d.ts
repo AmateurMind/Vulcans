@@ -12,6 +12,7 @@ import type * as auth from "../auth.js";
 import type * as certificates from "../certificates.js";
 import type * as events from "../events.js";
 import type * as http from "../http.js";
+import type * as teamMembers from "../teamMembers.js";
 
 import type {
   ApiFromModules,
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   certificates: typeof certificates;
   events: typeof events;
   http: typeof http;
+  teamMembers: typeof teamMembers;
 }>;
 
 /**

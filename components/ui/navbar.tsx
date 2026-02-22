@@ -31,10 +31,9 @@ export function Navbar() {
     return (
         <header className={cn(
             'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-            // Mobile: always dark bg for readability
-            'bg-[#030712]/95 md:bg-transparent',
+            'bg-[var(--background)]/95 md:bg-transparent',
             scrolled
-                ? 'py-2 md:backdrop-blur-xl md:border-b md:border-white/5'
+                ? 'py-2 md:backdrop-blur-xl md:border-b md:border-[var(--border)] md:bg-[var(--background)]/70'
                 : 'py-4'
         )}>
 
@@ -54,7 +53,7 @@ export function Navbar() {
 
 
                 {/* Desktop Nav — glassmorphism pill, always visible */}
-                <nav className="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-md rounded-full px-3 py-1.5 border border-white/10 shadow-sm hover:bg-white/8 transition-all duration-300">
+                <nav className="hidden md:flex items-center gap-1 bg-[var(--card)]/70 backdrop-blur-md rounded-full px-3 py-1.5 border border-[var(--border)] shadow-sm transition-all duration-300">
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
@@ -63,7 +62,7 @@ export function Navbar() {
                                 'relative px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 group',
                                 pathname === link.href
                                     ? 'bg-[var(--primary)]/15 text-[var(--primary)]'
-                                    : 'text-neutral-400 hover:text-white hover:bg-white/10'
+                                    : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--border)]'
                             )}
                         >
                             {link.label}
@@ -87,7 +86,7 @@ export function Navbar() {
 
                 {/* Mobile Menu Toggle */}
                 <button
-                    className="md:hidden p-2 rounded-lg text-neutral-300 hover:text-white hover:bg-white/5 transition-colors"
+                    className="md:hidden p-2 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--border)] transition-colors"
                     onClick={() => setOpen(!open)}
                     aria-label="Toggle menu"
                 >

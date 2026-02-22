@@ -22,3 +22,9 @@
 - [x] Refresh hero overlay lines for a college robotics-club tone and PESMCOE context.
 - [x] Update homepage supporting copy to reflect club achievements and focus areas.
   Summary: Fonts are now loaded globally and robot overlay/homepage copy now aligns with Vulcans branding and existing stats.
+
+## Theme Fixes (Home + Navbar)
+- [x] Fix theme variable precedence so explicit light mode overrides system dark preference.
+- [x] Fix navbar theme visuals for both desktop and mobile states.
+- [x] Update homepage/footer hardcoded dark styles to theme-aware tokens.
+  Summary: Light mode now switches consistently and navbar/footer follow theme colors instead of remaining dark-only.

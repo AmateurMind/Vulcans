@@ -55,10 +55,10 @@ const highlights = [
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-[#030712] text-white">
+    <main className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)]">
 
       {/* Scrollytelling Hero */}
-      <section className="relative w-full bg-[#050a14]">
+      <section className="relative w-full bg-[var(--background)]">
         <RobotScrollClient />
       </section>
 
@@ -138,13 +138,13 @@ export default function Home() {
           <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-[var(--primary-dark)]/20 rounded-full blur-3xl animate-pulse" />
           <div className="relative z-10">
             <Star className="w-10 h-10 text-[var(--primary)] mx-auto mb-5 drop-shadow-[0_0_10px_var(--primary)]" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Ready to Build Something Epic?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[var(--foreground)]">Ready to Build Something Epic?</h2>
             <p className="text-[var(--muted-foreground)] mb-8 text-lg max-w-xl mx-auto">
               Join Vulcans and be part of a team that competes, innovates, and makes history.
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#0d0d0d] border border-[var(--primary)] hover:bg-[var(--primary)] rounded-full font-bold text-lg text-white transition-all duration-300 shadow-xl shadow-[var(--primary-glow)] group"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--card)] border border-[var(--primary)] hover:bg-[var(--primary)] rounded-full font-bold text-lg text-[var(--foreground)] hover:text-white transition-all duration-300 shadow-xl shadow-[var(--primary-glow)] group"
             >
               Join Us <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>

@@ -1,29 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Nunito, Rajdhani } from "next/font/google";
+import { Nunito, Alegreya } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ThemeProvider } from "@/components/theme-provider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
 });
 
-const rajdhani = Rajdhani({
-  variable: "--font-rajdhani",
+const alegreya = Alegreya({
+  variable: "--font-alegreya",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -40,7 +29,7 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} ${rajdhani.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300`}
+          className={`${nunito.variable} ${alegreya.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300 font-sans`}
         >
           <ThemeProvider
             attribute="class"

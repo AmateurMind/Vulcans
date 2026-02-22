@@ -1,7 +1,7 @@
 "use client";
 
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { api } from "../../convex/_generated/api";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef } from "react";
@@ -120,7 +120,7 @@ function EventsManager() {
         ) : events.length === 0 ? (
           <div className="text-center py-10 border border-dashed border-[var(--border)] rounded-xl text-[var(--muted-foreground)]">No events found.</div>
         ) : (
-          events.map(event => (
+          events.map((event: any) => (
             <div key={event._id} className="flex items-center justify-between p-4 border border-[var(--border)] rounded-xl hover:border-[var(--primary)]/50 transition-colors bg-[var(--background)] shadow-sm">
               <div className="flex flex-col">
                 <span className="font-semibold text-[var(--foreground)]">{event.title}</span>
@@ -210,7 +210,7 @@ function TeamManager() {
         ) : members.length === 0 ? (
           <div className="text-center py-10 border border-dashed border-[var(--border)] rounded-xl text-[var(--muted-foreground)]">No team members found.</div>
         ) : (
-          members.map(member => (
+          members.map((member: any) => (
             <div key={member._id} className="flex items-center justify-between p-4 border border-[var(--border)] rounded-xl hover:border-[var(--primary)]/50 transition-colors bg-[var(--background)] shadow-sm">
               <div className="flex flex-col">
                 <span className="font-semibold text-[var(--foreground)]">{member.name}</span>

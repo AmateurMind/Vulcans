@@ -65,7 +65,7 @@ const achievements = [
 
 export default function AchievementsPage() {
     return (
-        <main className="min-h-screen bg-[#030712] text-white">
+        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
             {/* Hero */}
             <section className="pt-32 pb-20 px-6 grid-bg relative">
                 <div className="absolute top-20 left-1/3 w-96 h-96 bg-yellow-700/10 rounded-full blur-[120px] pointer-events-none" />
@@ -74,7 +74,7 @@ export default function AchievementsPage() {
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         Built on <span className="text-shimmer">Victories</span>
                     </h1>
-                    <p className="text-neutral-400 text-xl leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-[var(--muted-foreground)] text-xl leading-relaxed max-w-2xl mx-auto">
                         From local competitions to national championships — Vulcans consistently delivers excellence.
                     </p>
                 </div>
@@ -86,17 +86,17 @@ export default function AchievementsPage() {
                     {achievements.map((a, i) => (
                         <div
                             key={i}
-                            className={`glass p-7 rounded-2xl bg-gradient-to-br ${a.color} border border-white/5 hover:border-white/15 transition-all duration-300 hover:-translate-y-1 flex gap-5`}
+                            className={`glass p-7 rounded-2xl bg-gradient-to-br ${a.color} border border-[var(--border)] hover:border-[var(--primary)]/30 transition-all duration-300 hover:-translate-y-1 flex gap-5`}
                         >
-                            <div className="p-3 rounded-xl bg-white/5 h-fit shrink-0">{a.icon}</div>
+                            <div className="p-3 rounded-xl bg-[var(--background)]/50 h-fit shrink-0">{a.icon}</div>
                             <div className="flex flex-col gap-2">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-white/5 text-neutral-400 border border-white/8">{a.year}</span>
+                                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--background)]/60 text-[var(--muted-foreground)] border border-[var(--border)]">{a.year}</span>
                                     <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${a.badgeColor}`}>{a.badge}</span>
                                 </div>
-                                <h3 className="text-lg font-bold text-white">{a.title}</h3>
-                                <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">{a.org}</p>
-                                <p className="text-neutral-400 text-sm leading-relaxed">{a.desc}</p>
+                                <h3 className="text-lg font-bold text-[var(--foreground)]">{a.title}</h3>
+                                <p className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider">{a.org}</p>
+                                <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{a.desc}</p>
                             </div>
                         </div>
                     ))}

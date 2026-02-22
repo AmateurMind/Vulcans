@@ -24,11 +24,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     };
 
     return (
-        <div className="min-h-screen bg-[#030712] text-white flex">
+        <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex">
             {/* Sidebar */}
-            <aside className="w-60 shrink-0 border-r border-white/5 flex flex-col bg-[#0a0a12] fixed h-full z-40">
+            <aside className="w-60 shrink-0 border-r border-[var(--border)] flex flex-col bg-[var(--card)] fixed h-full z-40">
                 {/* Brand */}
-                <div className="px-5 py-5 border-b border-white/5 flex items-center gap-2.5">
+                <div className="px-5 py-5 border-b border-[var(--border)] flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--primary)] to-[var(--primary)] flex items-center justify-center">
                         <Cpu className="w-4 h-4 text-white" />
                     </div>
@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                 "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
                                 pathname === href
                                     ? "bg-[var(--primary)]/15 text-[var(--primary)]"
-                                    : "text-neutral-500 hover:text-white hover:bg-white/5"
+                                    : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--border)]"
                             )}
                         >
                             <Icon className="w-4 h-4" />
@@ -55,10 +55,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </nav>
 
                 {/* Sign Out */}
-                <div className="px-3 py-4 border-t border-white/5">
+                <div className="px-3 py-4 border-t border-[var(--border)]">
                     <button
                         onClick={handleSignOut}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-500 hover:text-red-400 hover:bg-red-500/5 transition-all w-full"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[var(--muted-foreground)] hover:text-red-400 hover:bg-red-500/5 transition-all w-full"
                     >
                         <LogOut className="w-4 h-4" />
                         Sign Out

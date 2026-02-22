@@ -44,7 +44,7 @@ const avatarColors = [
 
 export default function TeamPage() {
     return (
-        <main className="min-h-screen bg-[#030712] text-white">
+        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
             {/* Hero */}
             <section className="pt-32 pb-20 px-6 grid-bg relative">
                 <div className="absolute top-20 right-1/3 w-96 h-96 bg-blue-700/10 rounded-full blur-[120px] pointer-events-none" />
@@ -53,7 +53,7 @@ export default function TeamPage() {
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         Meet the <span className="text-shimmer">Team</span>
                     </h1>
-                    <p className="text-neutral-400 text-xl leading-relaxed max-w-2xl mx-auto">
+                    <p className="text-[var(--muted-foreground)] text-xl leading-relaxed max-w-2xl mx-auto">
                         Vulcans is powered by passionate engineers, designers, and innovators working as one.
                     </p>
                 </div>
@@ -78,14 +78,14 @@ export default function TeamPage() {
                                         <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarColors[(ti + mi) % avatarColors.length]} flex items-center justify-center text-xl font-bold text-white shadow-lg mb-4 group-hover:scale-105 transition-transform`}>
                                             {m.initials}
                                         </div>
-                                        <h3 className="font-bold text-lg text-white">{m.name}</h3>
+                                        <h3 className="font-bold text-lg text-[var(--foreground)]">{m.name}</h3>
                                         <p className="text-[var(--primary)] text-sm font-semibold mt-1">{m.role}</p>
-                                        <p className="text-neutral-500 text-xs mt-1">{m.domain}</p>
+                                        <p className="text-[var(--muted-foreground)] text-xs mt-1">{m.domain}</p>
 
                                         {/* Social Links */}
                                         <div className="flex gap-3 mt-4">
                                             {[Github, Linkedin, Mail].map((Icon, idx) => (
-                                                <button key={idx} className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-all">
+                                                <button key={idx} className="p-2 rounded-lg bg-[var(--background)]/60 hover:bg-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">
                                                     <Icon className="w-4 h-4" />
                                                 </button>
                                             ))}

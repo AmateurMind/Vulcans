@@ -32,7 +32,7 @@ export default function AdminSetupPage() {
     };
 
     return (
-        <main className="min-h-screen bg-[#030712] flex items-center justify-center px-4 grid-bg">
+        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex items-center justify-center px-4 grid-bg">
             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-[var(--primary)]/15 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative w-full max-w-md">
@@ -41,8 +41,8 @@ export default function AdminSetupPage() {
                         <Cpu className="w-7 h-7 text-white" />
                     </div>
                     <div className="text-center">
-                        <h1 className="text-2xl font-bold text-white">Admin Setup</h1>
-                        <p className="text-neutral-500 text-sm mt-1">Create the admin account (one-time only)</p>
+                        <h1 className="text-2xl font-bold text-[var(--foreground)]">Admin Setup</h1>
+                        <p className="text-[var(--muted-foreground)] text-sm mt-1">Create the admin account (one-time only)</p>
                     </div>
                 </div>
 
@@ -55,34 +55,34 @@ export default function AdminSetupPage() {
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                         <div>
-                            <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Email</label>
+                            <label className="block text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-2">Email</label>
                             <div className="relative">
-                                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
-                                    placeholder="suhail17mohammad@gmail.com"
-                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
+                                    placeholder="admin@example.com"
+                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Password (min 8 chars)</label>
+                            <label className="block text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-2">Password (min 8 chars)</label>
                             <div className="relative">
-                                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                                 <input
                                     type={showPwd ? "text" : "password"}
                                     required
                                     minLength={8}
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
+                                    placeholder="********"
+                                    className="w-full pl-10 pr-10 py-3 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
                                 />
-                                <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors">
+                                <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
                                     {showPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                 </button>
                             </div>
@@ -101,7 +101,7 @@ export default function AdminSetupPage() {
                         </button>
                     </form>
 
-                    <p className="mt-5 text-center text-xs text-neutral-600">
+                    <p className="mt-5 text-center text-xs text-[var(--muted-foreground)]">
                         Already have an account?{" "}
                         <Link href="/admin/login" className="text-[var(--primary)] hover:text-[var(--primary)] font-medium">Sign in</Link>
                     </p>

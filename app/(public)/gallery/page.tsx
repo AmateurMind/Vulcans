@@ -61,7 +61,7 @@ export default function GalleryPage() {
     const filtered = active === 'All' ? gallery : gallery.filter(g => g.category === active)
 
     return (
-        <main className="min-h-screen bg-[#030712] text-white">
+        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
             {/* Hero */}
             <section className="pt-32 pb-16 px-6 grid-bg relative">
                 <div className="absolute top-20 left-1/3 w-80 h-80 bg-rose-700/10 rounded-full blur-[100px] pointer-events-none" />
@@ -70,14 +70,14 @@ export default function GalleryPage() {
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         The <span className="text-shimmer">Gallery</span>
                     </h1>
-                    <p className="text-neutral-400 text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--muted-foreground)] text-lg max-w-xl mx-auto">
                         A glimpse into our workshops, competitions, builds, and the moments we celebrate together.
                     </p>
                 </div>
             </section>
 
             {/* Filter Tabs */}
-            <div className="sticky top-16 z-30 py-4 px-6 bg-[#030712]/80 backdrop-blur-xl border-b border-white/5">
+            <div className="sticky top-16 z-30 py-4 px-6 bg-[var(--background)]/80 backdrop-blur-xl border-b border-[var(--border)]">
                 <div className="max-w-6xl mx-auto flex gap-2 overflow-x-auto no-scrollbar">
                     {categories.map(cat => (
                         <button
@@ -87,7 +87,7 @@ export default function GalleryPage() {
                                 'px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200',
                                 active === cat
                                     ? 'bg-[var(--primary)] text-white shadow-lg shadow-[0_0_15px_var(--primary-glow)]'
-                                    : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
+                                    : 'bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--border)]'
                             )}
                         >
                             {cat}
@@ -103,7 +103,7 @@ export default function GalleryPage() {
                         <div
                             key={item.id}
                             className={cn(
-                                'group relative overflow-hidden rounded-2xl border border-white/5 hover:border-[var(--primary)]/30 transition-all duration-300 hover:-translate-y-1',
+                                'group relative overflow-hidden rounded-2xl border border-[var(--border)] hover:border-[var(--primary)]/30 transition-all duration-300 hover:-translate-y-1',
                                 item.cols
                             )}
                         >
@@ -116,7 +116,7 @@ export default function GalleryPage() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
                                 <span className="text-xs text-[var(--primary)] font-semibold uppercase tracking-widest mb-1">{item.category}</span>
                                 <h3 className="font-bold text-lg text-white">{item.title}</h3>
-                                <p className="text-neutral-300 text-sm">{item.desc}</p>
+                                <p className="text-white/80 text-sm">{item.desc}</p>
                             </div>
                         </div>
                     ))}

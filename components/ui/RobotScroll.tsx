@@ -41,8 +41,6 @@ function drawFrameToCanvas(
     const dy = (ch - dh) / 2 + yOffset;
 
     ctx.clearRect(0, 0, cw, ch);
-    ctx.fillStyle = '#050a14';
-    ctx.fillRect(0, 0, cw, ch);
     ctx.drawImage(img, dx, dy, dw, dh);
 }
 
@@ -185,7 +183,7 @@ export default function RobotScroll() {
     return (
         <div ref={containerRef} className="relative h-[400vh]">
             {!loaded && (
-                <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050a14]">
+                <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--background)]">
                     <div className="w-12 h-12 border-2 border-white/10 border-t-[var(--primary)] rounded-full animate-spin mb-5" />
                     <p className="font-tech text-white/40 text-sm tracking-widest uppercase">Initialising</p>
                 </div>
@@ -199,7 +197,7 @@ export default function RobotScroll() {
                 />
 
                 <div className="absolute inset-0 pointer-events-none" style={{
-                    background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, #050a14 100%)',
+                    background: 'radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, var(--background) 90%)',
                 }} />
 
                 {loaded && activeOverlay && (

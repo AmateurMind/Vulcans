@@ -34,3 +34,9 @@
 - [x] Convert admin routes to theme tokens (`dashboard`, `events`, `certificates`, `login`, `setup`).
 - [x] Verify updated route files with lint.
   Summary: Light mode now applies across public and admin pages instead of only the home route.
+
+## About Page Mouse-Follower Bot
+- [x] Locate the About hero insertion point and reuse the existing Spline wrapper.
+- [x] Add a dedicated About section right after the hero text with the provided Spline scene URL.
+- [x] Run targeted lint verification for the modified page and capture results.
+  Summary: Inserted an interactive Spline section after the About hero and verified with `eslint app/(public)/about/page.tsx`.

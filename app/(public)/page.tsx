@@ -1,4 +1,5 @@
 import { RobotScrollClient } from "@/components/ui/RobotScrollClient";
+import { EventsList } from "@/components/ui/EventsList";
 import { Trophy, Users, Cpu, Star, ArrowRight, Zap, Globe, Shield } from "lucide-react";
 import Link from "next/link";
 
@@ -111,17 +112,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <p className="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-3 relative inline-block after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-[var(--primary)] after:left-0 after:-bottom-1 after:shadow-[0_0_8px_var(--primary-glow)]">Recent Highlights</p>
-            <h2 className="text-3xl md:text-4xl font-bold">Our Latest Achievements</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">Our Latest Achievements & Events</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {highlights.map((h, i) => (
-              <div key={i} className={`p-7 rounded-2xl glass bg-[var(--card)] border border-[var(--border)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_20px_var(--primary-glow)] group`}>
-                <div className="mb-4 p-3 rounded-xl bg-[var(--primary-maroon)]/30 w-fit group-hover:scale-110 transition-transform">{h.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-[var(--foreground)]">{h.title}</h3>
-                <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{h.desc}</p>
-              </div>
-            ))}
-          </div>
+          <EventsList />
           <div className="text-center mt-10">
             <Link href="/achievements" className="inline-flex items-center gap-2 text-[var(--primary)] hover:text-[var(--primary-hover)] font-semibold transition-colors group">
               View All Achievements <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -152,6 +145,6 @@ export default function Home() {
         </div>
       </section>
 
-    </main>
+    </main >
   );
 }

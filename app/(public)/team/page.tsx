@@ -1,39 +1,9 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+"use client";
 
-const teams = [
-    {
-        title: "Leadership",
-        members: [
-            { name: "Arjun Mehta", role: "Club President", domain: "Mechanical & Strategy", initials: "AM" },
-            { name: "Priya Sharma", role: "Vice President", domain: "Electrical Systems", initials: "PS" },
-            { name: "Rohit Kumar", role: "Technical Lead", domain: "Software & AI", initials: "RK" },
-        ],
-    },
-    {
-        title: "Mechanical Team",
-        members: [
-            { name: "Siddharth Jain", role: "Mech Lead", domain: "CAD & Fabrication", initials: "SJ" },
-            { name: "Ananya Patel", role: "Design Engineer", domain: "Structural Analysis", initials: "AP" },
-            { name: "Vikram Rao", role: "Fabrication Head", domain: "3D Printing & CNC", initials: "VR" },
-        ],
-    },
-    {
-        title: "Electrical Team",
-        members: [
-            { name: "Kiran Bose", role: "Electronics Lead", domain: "PCB Design", initials: "KB" },
-            { name: "Meghna Iyer", role: "Embedded Systems", domain: "Microcontrollers", initials: "MI" },
-            { name: "Tarun Singh", role: "Power Systems", domain: "Battery & Motors", initials: "TS" },
-        ],
-    },
-    {
-        title: "Software & AI Team",
-        members: [
-            { name: "Neha Gupta", role: "Software Lead", domain: "ROS2 & Navigation", initials: "NG" },
-            { name: "Aditya Das", role: "CV Engineer", domain: "Computer Vision", initials: "AD" },
-            { name: "Riya Kapoor", role: "Firmware Dev", domain: "STM32 & Arduino", initials: "RK" },
-        ],
-    },
-];
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Github, Linkedin, Mail, User } from "lucide-react";
+import { useMemo } from "react";
 
 const avatarColors = [
     "from-[var(--primary)] to-[var(--primary)]",
@@ -43,6 +13,22 @@ const avatarColors = [
 ];
 
 export default function TeamPage() {
+    const members = useQuery(api.teamMembers.list);
+
+    const groupedTeams = useMemo(() => {
+        if (!members) return {};
+        return members.reduce((acc, m) => {
+            const dept = m.department || "Other";
+            if (!acc[dept]) acc[dept] = [];
+            acc[dept].push(m);
+            return acc;
+        }, {} as Record<string, typeof members>);
+    }, [members]);
+
+    const getInitials = (name: string) => {
+        return name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+    };
+
     return (
         <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
             {/* Hero */}
@@ -62,25 +48,32 @@ export default function TeamPage() {
             {/* Teams */}
             <section className="py-10 px-6 pb-24">
                 <div className="max-w-6xl mx-auto flex flex-col gap-16">
-                    {teams.map((team, ti) => (
+                    {members === undefined && (
+                        <div className="text-center text-[var(--muted-foreground)]">Loading team members...</div>
+                    )}
+
+                    {members && members.length === 0 && (
+                        <div className="text-center text-[var(--muted-foreground)]">No team members found.</div>
+                    )}
+
+                    {Object.entries(groupedTeams).map(([department, teamMembers], ti) => (
                         <div key={ti}>
                             <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                                 <span className="w-8 h-px bg-[var(--primary)]" />
-                                {team.title}
+                                {department}
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                                {team.members.map((m, mi) => (
+                                {teamMembers.map((m, mi) => (
                                     <div
                                         key={mi}
                                         className="glass p-6 rounded-2xl hover:border-[var(--primary)]/20 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center text-center"
                                     >
                                         {/* Avatar */}
                                         <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarColors[(ti + mi) % avatarColors.length]} flex items-center justify-center text-xl font-bold text-white shadow-lg mb-4 group-hover:scale-105 transition-transform`}>
-                                            {m.initials}
+                                            {m.name ? getInitials(m.name) : <User className="w-8 h-8" />}
                                         </div>
                                         <h3 className="font-bold text-lg text-[var(--foreground)]">{m.name}</h3>
                                         <p className="text-[var(--primary)] text-sm font-semibold mt-1">{m.role}</p>
-                                        <p className="text-[var(--muted-foreground)] text-xs mt-1">{m.domain}</p>
 
                                         {/* Social Links */}
                                         <div className="flex gap-3 mt-4">

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Cpu } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from './theme-toggle'
 
 const navLinks = [
     { label: 'Home', href: '/' },
@@ -41,13 +42,13 @@ export function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2.5 group">
                     <div
-                        className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow shrink-0"
-                        style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}
+                        className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg shadow-[var(--primary-glow)] group-hover:shadow-[var(--primary-glow)] transition-shadow shrink-0"
+                        style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-dark))' }}
                     >
                         <Cpu className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-bold text-xl tracking-tight text-white">
-                        Vul<span className="text-violet-400">cans</span>
+                    <span className="font-bold text-xl tracking-tight text-[var(--foreground)]">
+                        Vul<span className="text-[var(--primary)]">cans</span>
                     </span>
                 </Link>
 
@@ -75,9 +76,10 @@ export function Navbar() {
 
                 {/* CTA */}
                 <div className="hidden md:flex items-center gap-3">
+                    <ThemeToggle />
                     <Link
                         href="/contact"
-                        className="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-all duration-200 shadow-md shadow-violet-500/20 hover:shadow-violet-500/40"
+                        className="px-5 py-2 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white text-sm font-semibold transition-all duration-200 shadow-[0_0_20px_var(--primary-glow)]"
                     >
                         Join Us
                     </Link>
@@ -95,7 +97,7 @@ export function Navbar() {
 
             {/* Mobile Menu */}
             {open && (
-                <div className="md:hidden mt-2 mx-4 rounded-2xl bg-[#0d1117]/95 backdrop-blur-xl border border-white/8 shadow-2xl overflow-hidden">
+                <div className="md:hidden mt-2 mx-4 rounded-2xl bg-[var(--background)]/95 backdrop-blur-xl border border-[var(--border)] shadow-2xl overflow-hidden">
                     <nav className="flex flex-col p-3 gap-1">
                         {navLinks.map((link) => (
                             <Link
@@ -105,8 +107,8 @@ export function Navbar() {
                                 className={cn(
                                     'px-4 py-3 rounded-xl text-sm font-medium transition-all',
                                     pathname === link.href
-                                        ? 'bg-violet-500/15 text-violet-300'
-                                        : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                                        ? 'bg-[var(--primary)]/15 text-[var(--primary)]'
+                                        : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--border)]'
                                 )}
                             >
                                 {link.label}
@@ -115,7 +117,7 @@ export function Navbar() {
                         <Link
                             href="/contact"
                             onClick={() => setOpen(false)}
-                            className="mt-2 px-4 py-3 rounded-xl bg-violet-600 text-center text-sm font-semibold text-white"
+                            className="mt-2 px-4 py-3 rounded-xl bg-[var(--primary)] text-center text-sm font-semibold text-white"
                         >
                             Join Us
                         </Link>

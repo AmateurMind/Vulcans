@@ -46,11 +46,11 @@ export function Footer() {
                     {/* Brand block */}
                     <div className="md:col-span-2 flex flex-col gap-5">
                         <Link href="/" className="flex items-center gap-2.5 group w-fit">
-                            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-lg shadow-violet-500/20">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg shadow-[var(--primary-glow)]" style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-dark))' }}>
                                 <Cpu className="w-5 h-5 text-white" />
                             </div>
                             <span className="font-bold text-xl tracking-tight text-white">
-                                Vul<span className="text-violet-400">cans</span>
+                                Vul<span className="text-[var(--primary)]">cans</span>
                             </span>
                         </Link>
 
@@ -60,9 +60,9 @@ export function Footer() {
                         </p>
 
                         <div className="flex flex-col gap-2.5 text-sm text-neutral-500">
-                            <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-violet-500" /> vulcans@college.edu</span>
-                            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-violet-500" /> Robotics Lab, Block C, Campus</span>
-                            <span className="flex items-center gap-2"><Phone className="w-4 h-4 text-violet-500" /> +91 98765 43210</span>
+                            <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-[var(--primary)]" /> vulcans@college.edu</span>
+                            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[var(--primary)]" /> Robotics Lab, Block C, Campus</span>
+                            <span className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--primary)]" /> +91 98765 43210</span>
                         </div>
                     </div>
 
@@ -75,7 +75,7 @@ export function Footer() {
                                     <li key={j}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-neutral-500 hover:text-violet-400 transition-colors duration-200"
+                                            className="text-sm text-neutral-500 hover:text-[var(--primary)] transition-colors duration-200"
                                         >
                                             {link.label}
                                         </Link>
@@ -89,7 +89,7 @@ export function Footer() {
                 {/* Bottom Row */}
                 <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-neutral-600 text-sm">
-                        © {new Date().getFullYear()} <span className="text-violet-500 font-semibold">Vulcans</span> Robotics Club. All rights reserved.
+                        © {new Date().getFullYear()} <span className="text-[var(--primary)] font-semibold">Vulcans</span> Robotics Club. All rights reserved.
                     </p>
 
                     {/* Socials */}
@@ -99,7 +99,7 @@ export function Footer() {
                                 key={i}
                                 href={s.href}
                                 aria-label={s.label}
-                                className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-neutral-500 hover:text-violet-400 hover:bg-violet-500/10 transition-all duration-200"
+                                className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-neutral-500 hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 transition-all duration-200"
                             >
                                 {s.icon}
                             </a>

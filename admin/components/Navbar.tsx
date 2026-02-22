@@ -3,19 +3,20 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { useRouter } from "next/navigation";
 
 const NAV_LINKS = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "#about" },
-    { label: "Achievements", href: "#achievements" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Team", href: "#team" },
-    { label: "Contact", href: "#contact" },
+    { label: "Dashboard", href: "/admin/dashboard" }, // Optional, maybe we keep it at "/"? Let's use ?tab=... for easy state management, or separate pages. Let's stick with query params for now on the homepage.
+    { label: "Events", href: "/?tab=events" },
+    { label: "Team Members", href: "/?tab=team" },
 ];
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const { signOut } = useAuthActions();
+    const router = useRouter();
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 20);
@@ -64,12 +65,12 @@ export default function Navbar() {
                 {/* CTA + Mobile hamburger */}
                 <div className="flex items-center gap-3">
                     <ThemeToggle />
-                    <Link
-                        href="#contact"
-                        className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white backdrop-blur-sm shadow-lg hover:shadow-[0_0_20px_var(--primary-glow)] hover:scale-105 active:scale-95 transition-all duration-200"
+                    <button
+                        onClick={() => void signOut().then(() => router.push("/signin"))}
+                        className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 backdrop-blur-sm transition-all duration-200"
                     >
-                        Join Us
-                    </Link>
+                        Sign Out
+                    </button>
 
                     {/* Mobile hamburger */}
                     <button
@@ -101,13 +102,15 @@ export default function Navbar() {
                         </Link>
                     ))}
                     <div className="h-px bg-[var(--border)] my-1" />
-                    <Link
-                        href="#contact"
-                        onClick={() => setMenuOpen(false)}
-                        className="px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-center transition-all duration-200"
+                    <button
+                        onClick={() => {
+                            setMenuOpen(false);
+                            void signOut().then(() => router.push("/signin"));
+                        }}
+                        className="px-4 py-2.5 text-sm font-semibold text-red-500 border border-red-500/20 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-center transition-all duration-200"
                     >
-                        Join Us
-                    </Link>
+                        Sign Out
+                    </button>
                 </div>
             </div>
         </header>

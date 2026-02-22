@@ -13,9 +13,9 @@ export default function DashboardPage() {
         {
             label: "Total Events",
             value: events?.length ?? "—",
-            icon: <Calendar className="w-6 h-6 text-violet-400" />,
+            icon: <Calendar className="w-6 h-6 text-[var(--primary)]" />,
             href: "/admin/dashboard/events",
-            color: "from-violet-500/10 to-purple-500/5",
+            color: "from-[var(--primary)]/10 to-[var(--primary)]/5",
         },
         {
             label: "Certificates Issued",
@@ -47,7 +47,7 @@ export default function DashboardPage() {
             <div className="glass rounded-2xl p-6">
                 <h2 className="font-semibold text-sm text-neutral-400 uppercase tracking-wider mb-4">Quick Actions</h2>
                 <div className="flex gap-3 flex-wrap">
-                    <Link href="/admin/dashboard/events" className="px-4 py-2 rounded-lg bg-violet-600/20 text-violet-300 hover:bg-violet-600/30 text-sm font-medium transition-colors flex items-center gap-2"><Calendar className="w-4 h-4" /> Add Event</Link>
+                    <Link href="/admin/dashboard/events" className="px-4 py-2 rounded-lg bg-[var(--primary)]/20 text-[var(--primary)] hover:bg-[var(--primary)]/30 text-sm font-medium transition-colors flex items-center gap-2"><Calendar className="w-4 h-4" /> Add Event</Link>
                     <Link href="/admin/dashboard/certificates" className="px-4 py-2 rounded-lg bg-yellow-600/20 text-yellow-300 hover:bg-yellow-600/30 text-sm font-medium transition-colors flex items-center gap-2"><Award className="w-4 h-4" />   Issue Certificate</Link>
                 </div>
             </div>

@@ -62,13 +62,13 @@ export function Navbar() {
                             className={cn(
                                 'relative px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 group',
                                 pathname === link.href
-                                    ? 'bg-violet-500/20 text-violet-300'
+                                    ? 'bg-[var(--primary)]/15 text-[var(--primary)]'
                                     : 'text-neutral-400 hover:text-white hover:bg-white/10'
                             )}
                         >
                             {link.label}
                             {pathname === link.href && (
-                                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-violet-400" />
+                                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--primary)]" />
                             )}
                         </Link>
                     ))}

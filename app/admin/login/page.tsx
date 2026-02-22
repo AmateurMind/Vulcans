@@ -33,16 +33,16 @@ export default function AdminLoginPage() {
     return (
         <main className="min-h-screen bg-[#030712] flex items-center justify-center px-4 grid-bg">
             {/* Glow */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-violet-700/15 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-[var(--primary)]/15 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative w-full max-w-md">
                 {/* Logo */}
                 <div className="flex flex-col items-center mb-8 gap-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-xl shadow-violet-500/30">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--primary)] flex items-center justify-center shadow-xl shadow-[0_0_15px_var(--primary-glow)]">
                         <Cpu className="w-7 h-7 text-white" />
                     </div>
                     <div className="text-center">
-                        <h1 className="text-2xl font-bold text-white">Vul<span className="text-violet-400">cans</span> Admin</h1>
+                        <h1 className="text-2xl font-bold text-white">Vul<span className="text-[var(--primary)]">cans</span> Admin</h1>
                         <p className="text-neutral-500 text-sm mt-1">Sign in to manage events &amp; certificates</p>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="admin@example.com"
-                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-violet-500/50 transition-all text-sm"
+                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
                                 />
                             </div>
                         </div>
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-violet-500/50 transition-all text-sm"
+                                    className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
                                 />
                                 <button
                                     type="button"
@@ -99,7 +99,7 @@ export default function AdminLoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-60 disabled:cursor-not-allowed font-bold text-white transition-all shadow-lg shadow-violet-500/20 group"
+                            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary)] disabled:opacity-60 disabled:cursor-not-allowed font-bold text-white transition-all shadow-lg shadow-[0_0_15px_var(--primary-glow)] group"
                         >
                             {loading ? (
                                 <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
 
                     <p className="mt-5 text-center text-xs text-neutral-600">
                         First time?{" "}
-                        <Link href="/admin/setup" className="text-violet-400 hover:text-violet-300 font-medium transition-colors">
+                        <Link href="/admin/setup" className="text-[var(--primary)] hover:text-[var(--primary)] font-medium transition-colors">
                             Create admin account
                         </Link>
                     </p>

@@ -15,17 +15,17 @@ const features = [
   {
     icon: <Zap className="w-6 h-6 text-yellow-400" />,
     title: "High-Performance Builds",
-    desc: "We engineer robots that push the limits of speed, precision, and autonomy."
+    desc: "From CAD to final assembly, we build competition-ready robots with precision and reliability."
   },
   {
     icon: <Shield className="w-6 h-6 text-blue-400" />,
     title: "Competitive Excellence",
-    desc: "Consistently qualifying for national & international robotics competitions."
+    desc: "24+ competition wins and consistent national-level performances across major robotics events."
   },
   {
-    icon: <Globe className="w-6 h-6 text-violet-400" />,
-    title: "Global Community",
-    desc: "A network of engineers, mentors, and alumni across the globe."
+    icon: <Globe className="w-6 h-6 text-[var(--primary)]" />,
+    title: "Club Ecosystem",
+    desc: "A growing PESMCOE network of student builders, mentors, and alumni driving each season forward."
   },
 ];
 
@@ -38,11 +38,11 @@ const highlights = [
     border: "hover:border-yellow-500/30",
   },
   {
-    icon: <Cpu className="w-7 h-7 text-violet-400" />,
+    icon: <Cpu className="w-7 h-7 text-[var(--primary)]" />,
     title: "AI Bot Project",
     desc: "Built an autonomous navigation bot using ROS2 and computer vision.",
-    color: "from-violet-500/10 to-purple-500/5",
-    border: "hover:border-violet-500/30",
+    color: "from-[var(--primary)]/10 to-[var(--primary)]/5",
+    border: "hover:border-[var(--primary)]/30",
   },
   {
     icon: <Users className="w-7 h-7 text-blue-400" />,
@@ -83,9 +83,9 @@ export default function Home() {
               Engineering the <span className="text-shimmer">future</span>, one bot at a time.
             </h2>
             <p className="text-[var(--muted-foreground)] text-lg leading-relaxed mb-8">
-              Vulcans is a student-led robotics and engineering club dedicated to innovation,
-              collaboration, and competitive excellence. We design, build, and program robots
-              that compete at national and international levels.
+              Vulcans Robotics Club at PESMCOE is a student-led engineering team focused on design, manufacturing,
+              embedded systems, and autonomous control. For 8+ years, our members have built robots that perform on
+              national competition stages while mentoring the next generation of builders on campus.
             </p>
             <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary-hover)] font-semibold transition-all duration-200 group shadow-lg shadow-[var(--primary-glow)]">
               Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[var(--foreground)]" />

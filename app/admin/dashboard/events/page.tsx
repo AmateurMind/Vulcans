@@ -60,7 +60,7 @@ export default function EventsPage() {
                 </div>
                 <button
                     onClick={() => setShowForm(true)}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 font-semibold text-sm transition-all shadow-lg shadow-violet-500/20"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary)] font-semibold text-sm transition-all shadow-lg shadow-[0_0_15px_var(--primary-glow)]"
                 >
                     <Plus className="w-4 h-4" /> Add Event
                 </button>
@@ -88,7 +88,7 @@ export default function EventsPage() {
                                         value={f.value}
                                         onChange={e => f.setter(e.target.value)}
                                         placeholder={f.placeholder}
-                                        className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-violet-500/50 text-sm transition-all"
+                                        className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 text-sm transition-all"
                                     />
                                 </div>
                             ))}
@@ -101,14 +101,14 @@ export default function EventsPage() {
                                         <img src={preview} className="w-full h-full object-cover" alt="preview" />
                                         <button type="button" onClick={() => { setImage(null); setPreview(null); }} className="absolute top-2 right-2 p-1 rounded-full bg-black/50 text-white"><X className="w-3 h-3" /></button>
                                     </div>
-                                    : <button type="button" onClick={() => fileRef.current?.click()} className="w-full h-28 border border-dashed border-white/15 rounded-xl flex flex-col items-center justify-center gap-2 text-neutral-500 hover:text-violet-400 hover:border-violet-500/30 transition-all text-sm">
+                                    : <button type="button" onClick={() => fileRef.current?.click()} className="w-full h-28 border border-dashed border-white/15 rounded-xl flex flex-col items-center justify-center gap-2 text-neutral-500 hover:text-[var(--primary)] hover:border-[var(--primary)]/30 transition-all text-sm">
                                         <ImageIcon className="w-6 h-6" /> Click to upload image
                                     </button>
                                 }
                                 <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                             </div>
 
-                            <button type="submit" disabled={uploading} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-60 font-bold text-white transition-all mt-1">
+                            <button type="submit" disabled={uploading} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary)] disabled:opacity-60 font-bold text-white transition-all mt-1">
                                 {uploading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><Plus className="w-4 h-4" />Create Event</>}
                             </button>
                         </form>
@@ -138,8 +138,8 @@ function EventCard({ event, onRemove }: { event: { _id: Id<"events">; title: str
 
     return (
         <div className="glass rounded-2xl overflow-hidden group hover:border-white/15 transition-all">
-            <div className="h-40 bg-gradient-to-br from-violet-900/30 to-purple-900/20 flex items-center justify-center">
-                {imageUrl ? <img src={imageUrl} className="w-full h-full object-cover" alt={event.title} /> : <Calendar className="w-10 h-10 text-violet-500/30" />}
+            <div className="h-40 bg-gradient-to-br from-[var(--primary)]/30 to-[var(--primary)]/20 flex items-center justify-center">
+                {imageUrl ? <img src={imageUrl} className="w-full h-full object-cover" alt={event.title} /> : <Calendar className="w-10 h-10 text-[var(--primary)]/30" />}
             </div>
             <div className="p-4">
                 <h3 className="font-bold text-white mb-1 truncate">{event.title}</h3>

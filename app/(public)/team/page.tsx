@@ -36,7 +36,7 @@ const teams = [
 ];
 
 const avatarColors = [
-    "from-violet-600 to-purple-700",
+    "from-[var(--primary)] to-[var(--primary)]",
     "from-blue-600 to-cyan-700",
     "from-rose-600 to-pink-700",
     "from-orange-600 to-amber-700",
@@ -49,7 +49,7 @@ export default function TeamPage() {
             <section className="pt-32 pb-20 px-6 grid-bg relative">
                 <div className="absolute top-20 right-1/3 w-96 h-96 bg-blue-700/10 rounded-full blur-[120px] pointer-events-none" />
                 <div className="max-w-4xl mx-auto text-center relative">
-                    <p className="text-violet-400 font-semibold text-sm tracking-widest uppercase mb-4">The People</p>
+                    <p className="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-4">The People</p>
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         Meet the <span className="text-shimmer">Team</span>
                     </h1>
@@ -65,21 +65,21 @@ export default function TeamPage() {
                     {teams.map((team, ti) => (
                         <div key={ti}>
                             <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-                                <span className="w-8 h-px bg-violet-500" />
+                                <span className="w-8 h-px bg-[var(--primary)]" />
                                 {team.title}
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                                 {team.members.map((m, mi) => (
                                     <div
                                         key={mi}
-                                        className="glass p-6 rounded-2xl hover:border-violet-500/20 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center text-center"
+                                        className="glass p-6 rounded-2xl hover:border-[var(--primary)]/20 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center text-center"
                                     >
                                         {/* Avatar */}
                                         <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarColors[(ti + mi) % avatarColors.length]} flex items-center justify-center text-xl font-bold text-white shadow-lg mb-4 group-hover:scale-105 transition-transform`}>
                                             {m.initials}
                                         </div>
                                         <h3 className="font-bold text-lg text-white">{m.name}</h3>
-                                        <p className="text-violet-400 text-sm font-semibold mt-1">{m.role}</p>
+                                        <p className="text-[var(--primary)] text-sm font-semibold mt-1">{m.role}</p>
                                         <p className="text-neutral-500 text-xs mt-1">{m.domain}</p>
 
                                         {/* Social Links */}

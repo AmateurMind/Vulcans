@@ -20,4 +20,12 @@ export default defineSchema({
         fileId: v.optional(v.id("_storage")),
         createdAt: v.number(),
     }),
+
+    teamMembers: defineTable({
+        name: v.string(),
+        role: v.string(),
+        department: v.string(), // or Year
+        imageId: v.optional(v.id("_storage")),
+        createdAt: v.number(),
+    }),
 });

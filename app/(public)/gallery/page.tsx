@@ -66,7 +66,7 @@ export default function GalleryPage() {
             <section className="pt-32 pb-16 px-6 grid-bg relative">
                 <div className="absolute top-20 left-1/3 w-80 h-80 bg-rose-700/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="max-w-4xl mx-auto text-center relative">
-                    <p className="text-violet-400 font-semibold text-sm tracking-widest uppercase mb-4">Our Story In Images</p>
+                    <p className="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-4">Our Story In Images</p>
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         The <span className="text-shimmer">Gallery</span>
                     </h1>
@@ -86,7 +86,7 @@ export default function GalleryPage() {
                             className={cn(
                                 'px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200',
                                 active === cat
-                                    ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/20'
+                                    ? 'bg-[var(--primary)] text-white shadow-lg shadow-[0_0_15px_var(--primary-glow)]'
                                     : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
                             )}
                         >
@@ -103,7 +103,7 @@ export default function GalleryPage() {
                         <div
                             key={item.id}
                             className={cn(
-                                'group relative overflow-hidden rounded-2xl border border-white/5 hover:border-violet-500/30 transition-all duration-300 hover:-translate-y-1',
+                                'group relative overflow-hidden rounded-2xl border border-white/5 hover:border-[var(--primary)]/30 transition-all duration-300 hover:-translate-y-1',
                                 item.cols
                             )}
                         >
@@ -114,7 +114,7 @@ export default function GalleryPage() {
                             />
                             {/* Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                                <span className="text-xs text-violet-400 font-semibold uppercase tracking-widest mb-1">{item.category}</span>
+                                <span className="text-xs text-[var(--primary)] font-semibold uppercase tracking-widest mb-1">{item.category}</span>
                                 <h3 className="font-bold text-lg text-white">{item.title}</h3>
                                 <p className="text-neutral-300 text-sm">{item.desc}</p>
                             </div>

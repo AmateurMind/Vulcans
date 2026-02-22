@@ -1,13 +1,49 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useScroll, useTransform, motion } from 'framer-motion';
+import { useScroll, motion } from 'framer-motion';
 
 const FRAME_COUNT = 128;
-const FRAME_BASE = '/frames/ezgif-frame-';
+const MOBILE_BREAKPOINT = 768;
+const DESKTOP_FRAME_BASE = '/frames/ezgif-frame-';
+const MOBILE_FRAME_BASE = '/frames-mobile/ezgif-frame-';
+const MOBILE_COVER_Y_OFFSET = 64;
+const BRAND_RED = '#FF3B1F';
+const BRAND_EMBER = '#FF6A3D';
 
 function pad(n: number) {
     return n.toString().padStart(3, '0');
+}
+
+function drawFrameToCanvas(
+    canvas: HTMLCanvasElement,
+    img: HTMLImageElement,
+    fillMode: 'contain' | 'cover',
+    yOffset = 0
+) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 64;
+
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+
+    const scale = fillMode === 'cover'
+        ? Math.max(cw / iw, ch / ih)
+        : Math.min(cw / iw, ch / ih);
+    const dw = iw * scale;
+    const dh = ih * scale;
+    const dx = (cw - dw) / 2;
+    const dy = (ch - dh) / 2 + yOffset;
+
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.fillStyle = '#050a14';
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.drawImage(img, dx, dy, dw, dh);
 }
 
 type TextOverlay = {
@@ -24,25 +60,25 @@ const overlays: TextOverlay[] = [
         from: 0,
         to: 0.22,
         align: 'center',
-        eyebrow: 'VULCANS ROBOTICS CLUB',
-        heading: 'Vulcan X.',
-        sub: 'Engineered Intelligence.',
+        eyebrow: 'VULCANS ROBOTICS CLUB - PESMCOE',
+        heading: 'Vulcans.',
+        sub: 'Engineered Intelligence. Since 2011.',
     },
     {
         from: 0.22,
         to: 0.48,
         align: 'left',
-        eyebrow: 'MECHANICS',
-        heading: 'Precision\nMechanics.',
-        sub: 'Every panel, every joint — crafted to nanometer tolerance.',
+        eyebrow: 'MECHANICAL SYSTEMS',
+        heading: 'Precision\nDrive Systems.',
+        sub: 'Designed, machined, and tuned by PESMCOE student engineers.',
     },
     {
         from: 0.48,
         to: 0.75,
         align: 'right',
-        eyebrow: 'NEURAL CORE',
-        heading: 'Neural Core\nProcessing.',
-        sub: 'Real-time cognition at 400 TOPS. The mind of a machine.',
+        eyebrow: 'CONTROL AND AUTONOMY',
+        heading: 'Code.\nControl.\nCompete.',
+        sub: 'From embedded logic to autonomous routines, built inside the club.',
     },
     {
         from: 0.75,
@@ -50,7 +86,7 @@ const overlays: TextOverlay[] = [
         align: 'center',
         eyebrow: 'ASSEMBLY',
         heading: 'Built by\nVulcans.',
-        sub: 'The next generation of robotics starts here.',
+        sub: '8+ years. 24+ competition wins. 60+ active members.',
     },
 ];
 
@@ -60,103 +96,101 @@ export default function RobotScroll() {
     const framesRef = useRef<HTMLImageElement[]>([]);
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [frameBase, setFrameBase] = useState(DESKTOP_FRAME_BASE);
+    const [isMobile, setIsMobile] = useState(false);
 
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
 
-    // Preload all frames
     useEffect(() => {
+        const updateFrameBase = () => {
+            const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+            setIsMobile(mobile);
+            setFrameBase(mobile ? MOBILE_FRAME_BASE : DESKTOP_FRAME_BASE);
+        };
+
+        updateFrameBase();
+        window.addEventListener('resize', updateFrameBase);
+        return () => window.removeEventListener('resize', updateFrameBase);
+    }, []);
+
+    useEffect(() => {
+        let cancelled = false;
         let loadedCount = 0;
         const images: HTMLImageElement[] = [];
+        setLoaded(false);
 
         for (let i = 1; i <= FRAME_COUNT; i++) {
             const img = new window.Image();
-            img.src = `${FRAME_BASE}${pad(i)}.jpg`;
+            img.src = `${frameBase}${pad(i)}.jpg`;
             img.onload = () => {
                 loadedCount++;
-                if (loadedCount === FRAME_COUNT) setLoaded(true);
+                if (!cancelled && loadedCount === FRAME_COUNT) setLoaded(true);
             };
             img.onerror = () => {
                 loadedCount++;
-                if (loadedCount === FRAME_COUNT) setLoaded(true);
+                if (!cancelled && loadedCount === FRAME_COUNT) setLoaded(true);
             };
             images.push(img);
         }
         framesRef.current = images;
-    }, []);
+        return () => {
+            cancelled = true;
+        };
+    }, [frameBase]);
 
-    // Draw frame on scroll
     useEffect(() => {
         const unsubscribe = scrollYProgress.on('change', (v) => {
             setProgress(v);
             const canvas = canvasRef.current;
             if (!canvas || !loaded) return;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) return;
 
             const idx = Math.min(Math.floor(v * FRAME_COUNT), FRAME_COUNT - 1);
             const img = framesRef.current[idx];
             if (!img || !img.complete) return;
 
-            // Resize canvas to window minus navbar height
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight - 64;
-
-            const cw = canvas.width;
-            const ch = canvas.height;
-            const iw = img.naturalWidth;
-            const ih = img.naturalHeight;
-
-            // contain-fit: show full image, letterbox with background
-            const scale = Math.min(cw / iw, ch / ih);
-            const dw = iw * scale;
-            const dh = ih * scale;
-            const dx = (cw - dw) / 2;
-            const dy = (ch - dh) / 2;
-
-            ctx.clearRect(0, 0, cw, ch);
-            // fill background matching the image edge colors (dark navy)
-            ctx.fillStyle = '#050a14';
-            ctx.fillRect(0, 0, cw, ch);
-            ctx.drawImage(img, dx, dy, dw, dh);
+            drawFrameToCanvas(
+                canvas,
+                img,
+                isMobile ? 'cover' : 'contain',
+                isMobile ? MOBILE_COVER_Y_OFFSET : 0
+            );
         });
         return unsubscribe;
-    }, [scrollYProgress, loaded]);
+    }, [scrollYProgress, loaded, isMobile]);
 
-    // Draw first frame when loaded
     useEffect(() => {
         if (!loaded) return;
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
         const img = framesRef.current[0];
         if (!img) return;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - 64;
-        const cw = canvas.width;
-        const ch = canvas.height;
-        const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
-        const dw = img.naturalWidth * scale;
-        const dh = img.naturalHeight * scale;
-        ctx.fillStyle = '#050a14';
-        ctx.fillRect(0, 0, cw, ch);
-        ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-    }, [loaded]);
+        drawFrameToCanvas(
+            canvas,
+            img,
+            isMobile ? 'cover' : 'contain',
+            isMobile ? MOBILE_COVER_Y_OFFSET : 0
+        );
+    }, [loaded, isMobile]);
 
     const activeOverlay = overlays.find(o => progress >= o.from && progress < o.to)
         ?? (progress >= 1 ? overlays[overlays.length - 1] : null);
+    const isLandingHeadline = activeOverlay?.heading === 'Vulcans.' || activeOverlay?.heading === 'Built by\nVulcans.';
+    const headingFontClass = isLandingHeadline ? 'font-landing' : 'font-tech';
+    const isFirstSlide = activeOverlay?.heading === 'Vulcans.';
+    const isFinalSlide = activeOverlay?.heading === 'Built by\nVulcans.';
+    const finalSlidePositionClass = isFinalSlide
+        ? (isMobile ? 'justify-start pt-36' : 'justify-start pt-32 md:pt-40 lg:pt-48')
+        : '';
 
     return (
         <div ref={containerRef} className="relative h-[400vh]">
-            {/* Loading Screen */}
             {!loaded && (
                 <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050a14]">
-                    <div className="w-12 h-12 border-2 border-white/10 border-t-blue-400 rounded-full animate-spin mb-5" />
-                    <p className="text-white/40 text-sm tracking-widest uppercase">Initialising</p>
+                    <div className="w-12 h-12 border-2 border-white/10 border-t-[var(--primary)] rounded-full animate-spin mb-5" />
+                    <p className="font-tech text-white/40 text-sm tracking-widest uppercase">Initialising</p>
                 </div>
             )}
 
-            {/* Sticky canvas */}
             <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
                 <canvas
                     ref={canvasRef}
@@ -164,7 +198,6 @@ export default function RobotScroll() {
                     style={{ display: loaded ? 'block' : 'none' }}
                 />
 
-                {/* Overlay gradient vignette */}
                 <div className="absolute inset-0 pointer-events-none" style={{
                     background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, #050a14 100%)',
                 }} />
@@ -181,23 +214,25 @@ export default function RobotScroll() {
                             : activeOverlay.align === 'left'
                                 ? 'items-start text-left'
                                 : 'items-end text-right'
-                            }`}
+                            } ${finalSlidePositionClass}`}
                     >
-                        <p className="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-blue-400/70 mb-3 font-medium">
+                        <p
+                            className={`font-tech tracking-[0.3em] uppercase mb-3 font-semibold ${isFirstSlide ? 'text-[9px] sm:text-[10px]' : 'text-[10px] sm:text-xs'}`}
+                            style={{ color: BRAND_EMBER }}
+                        >
                             {activeOverlay.eyebrow}
                         </p>
-                        <h2 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl">
+                        <h2 className={`${headingFontClass} text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl`}>
                             {activeOverlay.heading === 'Built by\nVulcans.' ? (
-                                <>Built by{'\n'}<span style={{ color: '#7c3aed' }}>Vulcans.</span></>
+                                <>Built by{'\n'}<span style={{ color: BRAND_RED }}>Vulcans.</span></>
                             ) : activeOverlay.heading}
                         </h2>
-                        <p className="mt-4 text-sm sm:text-base text-white/50 max-w-sm font-light tracking-wide">
+                        <p className={`font-landing mt-4 text-white/70 max-w-sm font-medium tracking-wide ${isFirstSlide ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'}`}>
                             {activeOverlay.sub}
                         </p>
                     </motion.div>
                 )}
 
-                {/* Scroll indicator */}
                 {loaded && progress < 0.04 && (
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -205,15 +240,14 @@ export default function RobotScroll() {
                         transition={{ delay: 1 }}
                         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                     >
-                        <p className="text-[10px] tracking-[0.3em] uppercase text-white/30">Scroll</p>
+                        <p className="font-tech text-[10px] tracking-[0.3em] uppercase text-white/30">Scroll</p>
                         <div className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent animate-pulse" />
                     </motion.div>
                 )}
 
-                {/* Progress bar */}
                 <div className="absolute bottom-0 left-0 h-px bg-white/5 w-full">
                     <motion.div
-                        className="h-full bg-blue-400/40"
+                        className="h-full bg-[var(--primary)]/50"
                         style={{ scaleX: progress, transformOrigin: 'left' }}
                     />
                 </div>

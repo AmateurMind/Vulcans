@@ -33,11 +33,11 @@ export default function AdminSetupPage() {
 
     return (
         <main className="min-h-screen bg-[#030712] flex items-center justify-center px-4 grid-bg">
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-violet-700/15 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-[var(--primary)]/15 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative w-full max-w-md">
                 <div className="flex flex-col items-center mb-8 gap-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-xl shadow-violet-500/30">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--primary)] flex items-center justify-center shadow-xl shadow-[0_0_15px_var(--primary-glow)]">
                         <Cpu className="w-7 h-7 text-white" />
                     </div>
                     <div className="text-center">
@@ -64,7 +64,7 @@ export default function AdminSetupPage() {
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="suhail17mohammad@gmail.com"
-                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-violet-500/50 transition-all text-sm"
+                                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
                                 />
                             </div>
                         </div>
@@ -80,7 +80,7 @@ export default function AdminSetupPage() {
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-violet-500/50 transition-all text-sm"
+                                    className="w-full pl-10 pr-10 py-3 rounded-xl bg-white/5 border border-white/8 text-white placeholder-neutral-600 focus:outline-none focus:border-[var(--primary)]/50 transition-all text-sm"
                                 />
                                 <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors">
                                     {showPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -91,7 +91,7 @@ export default function AdminSetupPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-60 font-bold text-white transition-all shadow-lg shadow-violet-500/20 group"
+                            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary)] disabled:opacity-60 font-bold text-white transition-all shadow-lg shadow-[0_0_15px_var(--primary-glow)] group"
                         >
                             {loading ? (
                                 <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -103,7 +103,7 @@ export default function AdminSetupPage() {
 
                     <p className="mt-5 text-center text-xs text-neutral-600">
                         Already have an account?{" "}
-                        <Link href="/admin/login" className="text-violet-400 hover:text-violet-300 font-medium">Sign in</Link>
+                        <Link href="/admin/login" className="text-[var(--primary)] hover:text-[var(--primary)] font-medium">Sign in</Link>
                     </p>
                 </div>
             </div>

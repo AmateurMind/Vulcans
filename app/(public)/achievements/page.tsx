@@ -13,13 +13,13 @@ const achievements = [
     },
     {
         year: "2024",
-        icon: <Star className="w-8 h-8 text-violet-400" />,
+        icon: <Star className="w-8 h-8 text-[var(--primary)]" />,
         title: "IIT Bombay Techfest Robotics – Finalist",
         org: "Asia's Largest Science & Technology Festival",
         desc: "Selected as one of the top 10 teams nationwide for the Techfest autonomous robotics challenge.",
         badge: "National Finalist",
-        color: "from-violet-500/10 to-purple-500/5",
-        badgeColor: "bg-violet-500/15 text-violet-400 border-violet-500/20",
+        color: "from-[var(--primary)]/10 to-[var(--primary)]/5",
+        badgeColor: "bg-[var(--primary)]/15 text-[var(--primary)] border-[var(--primary)]/20",
     },
     {
         year: "2023",
@@ -70,7 +70,7 @@ export default function AchievementsPage() {
             <section className="pt-32 pb-20 px-6 grid-bg relative">
                 <div className="absolute top-20 left-1/3 w-96 h-96 bg-yellow-700/10 rounded-full blur-[120px] pointer-events-none" />
                 <div className="max-w-4xl mx-auto text-center relative">
-                    <p className="text-violet-400 font-semibold text-sm tracking-widest uppercase mb-4">Our Track Record</p>
+                    <p className="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-4">Our Track Record</p>
                     <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         Built on <span className="text-shimmer">Victories</span>
                     </h1>

@@ -187,7 +187,7 @@ export default function RobotScroll() {
         ? (isMobile ? 'justify-start pt-28' : 'justify-start pt-16 md:pt-20 lg:pt-24')
         : '';
     const middleSlidePositionClass = isMiddleSlide
-        ? (isMobile ? 'justify-between pt-16 pb-20' : '')
+        ? (isMobile ? 'justify-between pt-14 pb-8' : '')
         : '';
 
     return (
@@ -225,13 +225,13 @@ export default function RobotScroll() {
                             } ${finalSlidePositionClass} ${middleSlidePositionClass}`}
                     >
                         <p
-                            className={`font-tech tracking-[0.3em] uppercase mb-3 ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em] font-extrabold' : isFinalSlide ? (isMobile ? 'text-xl tracking-[0.45em] font-bold mb-5' : 'text-[10px] sm:text-xs font-semibold') : isMobile ? 'text-xs font-bold' : 'text-[10px] sm:text-xs font-semibold'}`}
+                            className={`font-tech tracking-[0.3em] uppercase mb-3 ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em] font-extrabold' : isFinalSlide ? (isMobile ? 'text-xl tracking-[0.45em] font-bold mb-5' : 'text-[10px] sm:text-xs font-semibold') : isMobile ? 'text-sm font-bold' : 'text-[10px] sm:text-xs font-semibold'}`}
                             style={{ color: BRAND_EMBER }}
                         >
                             {activeOverlay.eyebrow}
                         </p>
                         <h2
-                            className={`${headingFontClass} ${isFirstSlide ? 'text-6xl sm:text-8xl lg:text-[10rem] mb-6' : isFinalSlide ? 'text-5xl sm:text-7xl lg:text-8xl mb-8' : isMobile ? 'text-5xl' : 'text-4xl sm:text-6xl lg:text-7xl'} font-bold tracking-tight leading-tight whitespace-pre-line ${isMobile && !isLandingHeadline ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#FFD2AC] via-[#FF9D63] to-[#FF5B2D] drop-shadow-[0_3px_12px_rgba(0,0,0,0.65)]' : 'text-white/90 drop-shadow-2xl'}`}
+                            className={`${headingFontClass} ${isFirstSlide ? 'text-6xl sm:text-8xl lg:text-[10rem] mb-6' : isFinalSlide ? 'text-5xl sm:text-7xl lg:text-8xl mb-8' : isMobile ? 'text-[3.35rem] leading-[0.95]' : 'text-4xl sm:text-6xl lg:text-7xl'} font-bold tracking-tight leading-tight whitespace-pre-line ${isMobile && !isLandingHeadline ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#FFD2AC] via-[#FF9D63] to-[#FF5B2D] drop-shadow-[0_3px_12px_rgba(0,0,0,0.65)]' : 'text-white/90 drop-shadow-2xl'}`}
                         >
                             {activeOverlay.heading === 'Built by\nVulcans.' ? (
                                 <Image
@@ -254,7 +254,7 @@ export default function RobotScroll() {
                             ) : activeOverlay.heading}
                         </h2>
                         <p
-                            className={`font-landing mt-2 font-medium tracking-wide ${isFirstSlide ? 'max-w-2xl text-base sm:text-lg lg:text-2xl text-white/75 not-italic' : isFinalSlide ? 'max-w-md text-base sm:text-lg mt-[33vh] sm:mt-12 md:mt-44 lg:mt-44 text-white/75 not-italic' : isMobile ? 'max-w-sm text-sm text-[#FFDCC4] text-center self-center italic mb-2' : 'max-w-sm text-sm sm:text-base text-white/70'}`}
+                            className={`font-landing font-medium tracking-wide ${isMobile ? 'mt-[35vh] text-center self-center' : 'mt-2'} ${isFirstSlide ? 'max-w-2xl text-base sm:text-lg lg:text-2xl text-white/75 not-italic' : isFinalSlide ? (isMobile ? 'max-w-sm text-sm text-[#FFDCC4] italic mb-2' : 'max-w-md text-base sm:text-lg mt-[33vh] sm:mt-12 md:mt-44 lg:mt-44 text-white/75 not-italic') : isMobile ? 'max-w-sm text-sm text-[#FFDCC4] italic mb-2' : 'max-w-sm text-sm sm:text-base text-white/70'}`}
                             style={isLandingHeadline ? undefined : { textShadow: '0 2px 8px rgba(0,0,0,0.75)' }}
                         >
                             {activeOverlay.sub}

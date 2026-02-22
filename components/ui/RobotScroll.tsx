@@ -71,7 +71,7 @@ const overlays: TextOverlay[] = [
         to: 0.48,
         align: 'left',
         eyebrow: 'MECHANICAL SYSTEMS',
-        heading: 'Precision\nDrive Systems.',
+        heading: 'Precision\nDrive \nSystems.',
         sub: 'Designed, machined, and tuned by PESMCOE student engineers.',
     },
     {
@@ -79,7 +79,7 @@ const overlays: TextOverlay[] = [
         to: 0.75,
         align: 'right',
         eyebrow: 'CONTROL AND AUTONOMY',
-        heading: 'Code.\nControl.\nCompete.',
+        heading: 'Code.\nCompete.\nControl.',
         sub: 'From embedded logic to autonomous routines, built inside the club.',
     },
     {
@@ -182,8 +182,12 @@ export default function RobotScroll() {
     const headingFontClass = isLandingHeadline ? 'font-landing' : 'font-tech';
     const isFirstSlide = activeOverlay?.heading === 'Vulcans.';
     const isFinalSlide = activeOverlay?.heading === 'Built by\nVulcans.';
+    const isMiddleSlide = !!activeOverlay && !isLandingHeadline;
     const finalSlidePositionClass = isFinalSlide
-        ? (isMobile ? 'justify-start pt-20' : 'justify-start pt-16 md:pt-20 lg:pt-24')
+        ? (isMobile ? 'justify-start pt-28' : 'justify-start pt-16 md:pt-20 lg:pt-24')
+        : '';
+    const middleSlidePositionClass = isMiddleSlide
+        ? (isMobile ? 'justify-between pt-16 pb-20' : '')
         : '';
 
     return (
@@ -218,15 +222,17 @@ export default function RobotScroll() {
                             : activeOverlay.align === 'left'
                                 ? 'items-start text-left'
                                 : 'items-end text-right'
-                            } ${finalSlidePositionClass}`}
+                            } ${finalSlidePositionClass} ${middleSlidePositionClass}`}
                     >
                         <p
-                            className={`font-tech tracking-[0.3em] uppercase mb-3 ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em] font-extrabold' : 'text-[10px] sm:text-xs font-semibold'}`}
+                            className={`font-tech tracking-[0.3em] uppercase mb-3 ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em] font-extrabold' : isFinalSlide ? (isMobile ? 'text-xl tracking-[0.45em] font-bold mb-5' : 'text-[10px] sm:text-xs font-semibold') : isMobile ? 'text-xs font-bold' : 'text-[10px] sm:text-xs font-semibold'}`}
                             style={{ color: BRAND_EMBER }}
                         >
                             {activeOverlay.eyebrow}
                         </p>
-                        <h2 className={`${headingFontClass} ${isFirstSlide ? 'text-6xl sm:text-8xl lg:text-[10rem] mb-6' : 'text-4xl sm:text-6xl lg:text-7xl'} font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl`}>
+                        <h2
+                            className={`${headingFontClass} ${isFirstSlide ? 'text-6xl sm:text-8xl lg:text-[10rem] mb-6' : isFinalSlide ? 'text-5xl sm:text-7xl lg:text-8xl mb-8' : isMobile ? 'text-5xl' : 'text-4xl sm:text-6xl lg:text-7xl'} font-bold tracking-tight leading-tight whitespace-pre-line ${isMobile && !isLandingHeadline ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#FFD2AC] via-[#FF9D63] to-[#FF5B2D] drop-shadow-[0_3px_12px_rgba(0,0,0,0.65)]' : 'text-white/90 drop-shadow-2xl'}`}
+                        >
                             {activeOverlay.heading === 'Built by\nVulcans.' ? (
                                 <Image
                                     src="/reference/text-transparent.png"
@@ -234,7 +240,7 @@ export default function RobotScroll() {
                                     width={320}
                                     height={96}
                                     priority
-                                    className="h-24 sm:h-28 lg:h-36 w-auto"
+                                    className={`${isMobile ? 'h-36' : 'h-24 sm:h-28 lg:h-36'} w-auto`}
                                 />
                             ) : activeOverlay.heading === 'Vulcans.' ? (
                                 <Image
@@ -247,7 +253,10 @@ export default function RobotScroll() {
                                 />
                             ) : activeOverlay.heading}
                         </h2>
-                        <p className={`font-landing mt-2 text-white/70 font-medium tracking-wide ${isFirstSlide ? 'max-w-2xl text-base sm:text-lg lg:text-2xl' : 'max-w-sm text-sm sm:text-base'} ${isFinalSlide ? 'md:mt-40 lg:mt-40' : ''}`}>
+                        <p
+                            className={`font-landing mt-2 font-medium tracking-wide ${isFirstSlide ? 'max-w-2xl text-base sm:text-lg lg:text-2xl text-white/75 not-italic' : isFinalSlide ? 'max-w-md text-base sm:text-lg mt-[33vh] sm:mt-12 md:mt-44 lg:mt-44 text-white/75 not-italic' : isMobile ? 'max-w-sm text-sm text-[#FFDCC4] text-center self-center italic mb-2' : 'max-w-sm text-sm sm:text-base text-white/70'}`}
+                            style={isLandingHeadline ? undefined : { textShadow: '0 2px 8px rgba(0,0,0,0.75)' }}
+                        >
                             {activeOverlay.sub}
                         </p>
                     </motion.div>

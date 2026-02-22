@@ -7,7 +7,8 @@ const FRAME_COUNT = 128;
 const MOBILE_BREAKPOINT = 768;
 const DESKTOP_FRAME_BASE = '/frames/ezgif-frame-';
 const MOBILE_FRAME_BASE = '/frames-mobile/ezgif-frame-';
-const MOBILE_COVER_Y_OFFSET = 64;
+const MOBILE_FOCUS_SCALE = 1.14;
+const MOBILE_FOCUS_Y_OFFSET = 20;
 const BRAND_RED = '#FF3B1F';
 const BRAND_EMBER = '#FF6A3D';
 
@@ -19,13 +20,14 @@ function drawFrameToCanvas(
     canvas: HTMLCanvasElement,
     img: HTMLImageElement,
     fillMode: 'contain' | 'cover',
-    yOffset = 0
+    yOffset = 0,
+    fullHeight = false
 ) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 64;
+    canvas.height = fullHeight ? window.innerHeight : window.innerHeight - 64;
 
     const cw = canvas.width;
     const ch = canvas.height;
@@ -35,10 +37,12 @@ function drawFrameToCanvas(
     const scale = fillMode === 'cover'
         ? Math.max(cw / iw, ch / ih)
         : Math.min(cw / iw, ch / ih);
-    const dw = iw * scale;
-    const dh = ih * scale;
+    const focusScale = fullHeight && fillMode === 'cover' ? MOBILE_FOCUS_SCALE : 1;
+    const dw = iw * scale * focusScale;
+    const dh = ih * scale * focusScale;
     const dx = (cw - dw) / 2;
-    const dy = (ch - dh) / 2 + yOffset;
+    const focusYOffset = fullHeight && fillMode === 'cover' ? MOBILE_FOCUS_Y_OFFSET : 0;
+    const dy = (ch - dh) / 2 + yOffset + focusYOffset;
 
     ctx.clearRect(0, 0, cw, ch);
     ctx.drawImage(img, dx, dy, dw, dh);
@@ -58,7 +62,7 @@ const overlays: TextOverlay[] = [
         from: 0,
         to: 0.22,
         align: 'center',
-        eyebrow: 'VULCANS ROBOTICS CLUB - PESMCOE',
+        eyebrow: 'ROBOTICS CLUB - PESMCOE',
         heading: 'Vulcans.',
         sub: 'Engineered Intelligence. Since 2011.',
     },
@@ -150,7 +154,8 @@ export default function RobotScroll() {
                 canvas,
                 img,
                 isMobile ? 'cover' : 'contain',
-                isMobile ? MOBILE_COVER_Y_OFFSET : 0
+                0,
+                isMobile
             );
         });
         return unsubscribe;
@@ -166,7 +171,8 @@ export default function RobotScroll() {
             canvas,
             img,
             isMobile ? 'cover' : 'contain',
-            isMobile ? MOBILE_COVER_Y_OFFSET : 0
+            0,
+            isMobile
         );
     }, [loaded, isMobile]);
 
@@ -189,7 +195,7 @@ export default function RobotScroll() {
                 </div>
             )}
 
-            <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+            <div className={`sticky w-full overflow-hidden ${isMobile ? 'top-0 h-[100dvh]' : 'top-16 h-[calc(100vh-4rem)]'}`}>
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full"
@@ -215,17 +221,19 @@ export default function RobotScroll() {
                             } ${finalSlidePositionClass}`}
                     >
                         <p
-                            className={`font-tech tracking-[0.3em] uppercase mb-3 font-semibold ${isFirstSlide ? 'text-[9px] sm:text-[10px]' : 'text-[10px] sm:text-xs'}`}
+                            className={`font-tech tracking-[0.3em] uppercase mb-3 font-bold ${isFirstSlide ? 'text-sm sm:text-base lg:text-xl tracking-[0.5em]' : 'text-[10px] sm:text-xs font-semibold'}`}
                             style={{ color: BRAND_EMBER }}
                         >
                             {activeOverlay.eyebrow}
                         </p>
-                        <h2 className={`${headingFontClass} text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl`}>
+                        <h2 className={`${headingFontClass} ${isFirstSlide ? 'text-6xl sm:text-8xl lg:text-[10rem] mb-6' : 'text-4xl sm:text-6xl lg:text-7xl'} font-bold tracking-tight text-white/90 leading-tight whitespace-pre-line drop-shadow-2xl`}>
                             {activeOverlay.heading === 'Built by\nVulcans.' ? (
                                 <>Built by{'\n'}<span style={{ color: BRAND_RED }}>Vulcans.</span></>
+                            ) : activeOverlay.heading === 'Vulcans.' ? (
+                                <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#FFC371] via-[#FF6A3D] to-[#FF3B1F] drop-shadow-[0_0_30px_rgba(255,59,31,0.4)]">Vulcans.</span>
                             ) : activeOverlay.heading}
                         </h2>
-                        <p className={`font-landing mt-4 text-white/70 max-w-sm font-medium tracking-wide ${isFirstSlide ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'} ${isFinalSlide ? 'md:mt-40 lg:mt-40' : ''}`}>
+                        <p className={`font-landing mt-2 text-white/70 font-medium tracking-wide ${isFirstSlide ? 'max-w-2xl text-base sm:text-lg lg:text-2xl' : 'max-w-sm text-sm sm:text-base'} ${isFinalSlide ? 'md:mt-40 lg:mt-40' : ''}`}>
                             {activeOverlay.sub}
                         </p>
                     </motion.div>

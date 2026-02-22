@@ -34,6 +34,7 @@ export const create = mutation({
         title: v.string(),
         description: v.string(),
         date: v.string(),
+        status: v.union(v.literal("past"), v.literal("upcoming")),
         imageId: v.optional(v.id("_storage")),
     },
     handler: async (ctx, args) => {

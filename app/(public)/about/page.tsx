@@ -33,7 +33,7 @@ export default function AboutPage() {
                             through competition, innovation, and relentless curiosity.
                         </p>
                     </div>
-                    <div className="glass bg-vulcan-bg-secondary border-vulcan-border rounded-xs overflow-hidden">
+                    <div>
                         <AboutBot />
                     </div>
                 </div>

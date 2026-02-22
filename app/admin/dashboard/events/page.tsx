@@ -16,13 +16,14 @@ export default function EventsPage() {
     const [title, setTitle] = useState("");
     const [description, setDesc] = useState("");
     const [date, setDate] = useState("");
+    const [status, setStatus] = useState<"past" | "upcoming">("upcoming");
     const [imageFile, setImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const fileRef = useRef<HTMLInputElement>(null);
 
     const resetForm = () => {
-        setTitle(""); setDesc(""); setDate(""); setImage(null); setPreview(null);
+        setTitle(""); setDesc(""); setDate(""); setStatus("upcoming"); setImage(null); setPreview(null);
         setShowForm(false);
     };
 
@@ -44,7 +45,7 @@ export default function EventsPage() {
                 const { storageId } = await result.json();
                 imageId = storageId;
             }
-            await createEvent({ title, description, date, imageId });
+            await createEvent({ title, description, date, status, imageId });
             resetForm();
         } finally {
             setUploading(false);
@@ -93,6 +94,19 @@ export default function EventsPage() {
                                 </div>
                             ))}
 
+                            {/* Status Selection */}
+                            <div>
+                                <label className="block text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-1.5">Status</label>
+                                <select
+                                    value={status}
+                                    onChange={(e) => setStatus(e.target.value as "past" | "upcoming")}
+                                    className="w-full px-4 py-2.5 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)]/50 text-sm transition-all"
+                                >
+                                    <option value="upcoming">Upcoming</option>
+                                    <option value="past">Past</option>
+                                </select>
+                            </div>
+
                             {/* Image Upload */}
                             <div>
                                 <label className="block text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-1.5">Image (optional)</label>
@@ -133,12 +147,15 @@ export default function EventsPage() {
     );
 }
 
-function EventCard({ event, onRemove }: { event: { _id: Id<"events">; title: string; description: string; date: string; imageId?: Id<"_storage"> }; onRemove: () => void }) {
+function EventCard({ event, onRemove }: { event: { _id: Id<"events">; title: string; description: string; date: string; status: "past" | "upcoming"; imageId?: Id<"_storage"> }; onRemove: () => void }) {
     const imageUrl = useQuery(api.events.getImageUrl, event.imageId ? { imageId: event.imageId } : "skip");
 
     return (
         <div className="glass rounded-2xl overflow-hidden group hover:border-[var(--primary)]/30 transition-all">
-            <div className="h-40 bg-gradient-to-br from-[var(--primary)]/30 to-[var(--primary)]/20 flex items-center justify-center">
+            <div className="h-40 bg-gradient-to-br from-[var(--primary)]/30 to-[var(--primary)]/20 flex items-center justify-center relative">
+                <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold border backdrop-blur-md ${event.status === "upcoming" ? "bg-[var(--primary)]/80 text-white border-[var(--primary)]/50" : "bg-[var(--card)]/80 text-[var(--foreground)] border-[var(--border)]"}`}>
+                    {event.status === "upcoming" ? "Upcoming" : "Past Event"}
+                </span>
                 {imageUrl ? <img src={imageUrl} className="w-full h-full object-cover" alt={event.title} /> : <Calendar className="w-10 h-10 text-[var(--primary)]/30" />}
             </div>
             <div className="p-4">

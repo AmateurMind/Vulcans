@@ -215,6 +215,7 @@ body {
 .text-shimmer {
   background: linear-gradient(90deg, var(--primary), var(--primary-hover), var(--primary-dark), var(--primary));
   background-size: 200%;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 4s linear infinite;

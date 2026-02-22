@@ -55,7 +55,7 @@ function EventsManager() {
   const generateUploadUrl = useMutation(api.events.generateUploadUrl);
 
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({ title: "", description: "", date: "" });
+  const [formData, setFormData] = useState<{ title: string; description: string; date: string; status: "upcoming" | "past" }>({ title: "", description: "", date: "", status: "upcoming" });
   const [file, setFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,7 +75,7 @@ function EventsManager() {
         imageId = storageId;
       }
       await createEvent({ ...formData, imageId });
-      setFormData({ title: "", description: "", date: "" });
+      setFormData({ title: "", description: "", date: "", status: "upcoming" });
       setFile(null);
     } catch (error) {
       console.error(error);
@@ -104,6 +104,13 @@ function EventsManager() {
             <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full mt-1 px-3 py-2 rounded-lg border border-[var(--border)] bg-transparent text-sm focus:border-[var(--primary)] outline-none min-h-[80px]" />
           </div>
           <div>
+            <label className="text-xs font-semibold text-[var(--muted-foreground)] uppercase">Status</label>
+            <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value as "upcoming" | "past" })} className="w-full mt-1 px-3 py-2 rounded-lg border border-[var(--border)] bg-transparent text-sm focus:border-[var(--primary)] outline-none">
+              <option value="upcoming">Upcoming</option>
+              <option value="past">Past</option>
+            </select>
+          </div>
+          <div>
             <label className="text-xs font-semibold text-[var(--muted-foreground)] uppercase">Image (Optional)</label>
             <input type="file" accept="image/*" onChange={e => setFile(e.target.files?.[0] || null)} className="w-full mt-1 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[var(--primary)]/10 file:text-[var(--primary)] hover:file:bg-[var(--primary)]/20" />
           </div>
@@ -122,9 +129,14 @@ function EventsManager() {
         ) : (
           events.map((event: any) => (
             <div key={event._id} className="flex items-center justify-between p-4 border border-[var(--border)] rounded-xl hover:border-[var(--primary)]/50 transition-colors bg-[var(--background)] shadow-sm">
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-1">
                 <span className="font-semibold text-[var(--foreground)]">{event.title}</span>
-                <span className="text-sm text-[var(--muted-foreground)]">{new Date(event.date).toLocaleDateString()}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${event.status === "upcoming" ? "bg-[var(--primary)]/10 text-[var(--primary)] border-[var(--primary)]/30" : "bg-[var(--muted)]/50 text-[var(--muted-foreground)] border-[var(--border)]"}`}>
+                    {event.status === "upcoming" ? "Upcoming" : "Past"}
+                  </span>
+                  <span className="text-sm text-[var(--muted-foreground)]">{new Date(event.date).toLocaleDateString()}</span>
+                </div>
               </div>
               <button onClick={() => { if (confirm("Delete this event?")) removeEvent({ id: event._id }) }} className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                 <Trash2 className="w-4 h-4" />

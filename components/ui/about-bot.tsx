@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic'
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false })
-const SCENE_URL = '/scene-clean%20%281%29.splinecode'
+const SCENE_URL = '/about-bot.splinecode'
 
 export function AboutBot() {
     return (

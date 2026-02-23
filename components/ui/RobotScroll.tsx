@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useScroll, motion } from 'framer-motion';
 import Image from 'next/image';
+import { Component as QuantumPulseLoade } from '@/components/ui/quantum-pulse-loade';
 
 const FRAME_COUNT = 128;
 const MOBILE_BREAKPOINT = 768;
@@ -194,8 +195,7 @@ export default function RobotScroll() {
         <div ref={containerRef} className="relative h-[400vh]">
             {!loaded && (
                 <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--background)]">
-                    <div className="w-12 h-12 border-2 border-white/10 border-t-[var(--primary)] rounded-full animate-spin mb-5" />
-                    <p className="font-tech text-white/40 text-sm tracking-widest uppercase">Initialising</p>
+                    <QuantumPulseLoade text="Initializing" />
                 </div>
             )}
 

@@ -147,7 +147,7 @@ export default function EventsPage() {
     );
 }
 
-function EventCard({ event, onRemove }: { event: { _id: Id<"events">; title: string; description: string; date: string; status: "past" | "upcoming"; imageId?: Id<"_storage"> }; onRemove: () => void }) {
+function EventCard({ event, onRemove }: { event: { _id: Id<"events">; title: string; description: string; date: string; status?: "past" | "upcoming"; imageId?: Id<"_storage"> }; onRemove: () => void }) {
     const imageUrl = useQuery(api.events.getImageUrl, event.imageId ? { imageId: event.imageId } : "skip");
 
     return (

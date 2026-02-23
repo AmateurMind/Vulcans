@@ -34,7 +34,7 @@ export const create = mutation({
         title: v.string(),
         description: v.string(),
         date: v.string(),
-        status: v.union(v.literal("past"), v.literal("upcoming")),
+        status: v.optional(v.union(v.literal("past"), v.literal("upcoming"))),
         imageId: v.optional(v.id("_storage")),
     },
     handler: async (ctx, args) => {
@@ -42,6 +42,7 @@ export const create = mutation({
         if (!userId) throw new Error("Not authenticated");
         return await ctx.db.insert("events", {
             ...args,
+            status: args.status ?? "upcoming",
             createdAt: Date.now(),
         });
     },

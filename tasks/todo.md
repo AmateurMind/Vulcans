@@ -40,3 +40,10 @@
 - [x] Add a dedicated About section right after the hero text with the provided Spline scene URL.
 - [x] Run targeted lint verification for the modified page and capture results.
   Summary: Inserted an interactive Spline section after the About hero and verified with `eslint app/(public)/about/page.tsx`.
+
+## Quantum Initializing Loader
+- [x] Inspect current loading UX and verify component/style conventions.
+- [x] Add `quantum-pulse-loade.tsx` (and demo usage file) under `components/ui`.
+- [x] Extend Tailwind global styles with loader keyframes/classes and wire loader into active initializing overlay.
+- [x] Install missing dependency for `@import "tw-animate-css"` and verify lint for changed files.
+  Summary: Replaced the old spinner in `RobotScroll` with a new animated `Initializing` loader component, added loader CSS/keyframes in `globals.css`, added `tw-animate-css`, and verified lint on all touched TSX files.

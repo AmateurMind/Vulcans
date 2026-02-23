@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../node_modules/tw-animate-css/dist/tw-animate.css";
 
 :root {
   /* Light Mode (Premium / Clean) */
@@ -164,6 +165,99 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes generating-loader-letter-anim {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) rotateX(-90deg);
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+
+  50% {
+    opacity: 0;
+    transform: translateY(-20px) rotateX(90deg);
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes generating-loader-bar-anim {
+  0% {
+    left: -100%;
+  }
+
+  50% {
+    left: 100%;
+  }
+
+  100% {
+    left: -100%;
+  }
+}
+
+.generating-loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(90vw, 320px);
+}
+
+.generating-loader-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.04em;
+  font-family: var(--font-rajdhani), "Arial Narrow", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.generating-loader-letter {
+  color: color-mix(in oklab, var(--foreground) 82%, var(--primary) 18%);
+  opacity: 0;
+  transform-origin: 50% 50%;
+  animation: generating-loader-letter-anim 2.2s ease-in-out infinite;
+}
+
+.generating-loader-bar {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+.generating-loader-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 45%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-hover) 100%);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--primary) 60%, transparent);
+  animation: generating-loader-bar-anim 1.5s ease-in-out infinite;
 }
 
 /* Scroll-bar styling */

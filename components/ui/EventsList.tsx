@@ -15,7 +15,7 @@ export function EventsList() {
 
     const pastEvents = useMemo(() => {
         if (!events) return [];
-        return events.filter(e => e.status === "past");
+        return events.filter(e => e.status === "past" || !e.status);
     }, [events]);
 
     if (events === undefined) {

@@ -1,15 +1,8 @@
 import {
     convexAuthNextjsMiddleware,
-    createRouteMatcher,
-    nextjsMiddlewareRedirect,
 } from "@convex-dev/auth/nextjs/server";
 
-const isAdminDashboard = createRouteMatcher(["/admin/dashboard(.*)"]);
-
-export default convexAuthNextjsMiddleware((request, { convexAuth }) => {
-    if (isAdminDashboard(request) && !convexAuth.isAuthenticated()) {
-        return nextjsMiddlewareRedirect(request, "/admin/login");
-    }
+export default convexAuthNextjsMiddleware(() => {
 });
 
 export const config = {

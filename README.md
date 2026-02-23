@@ -1,53 +1,66 @@
 # Vulcans Robotics Club Website
 
-Team Vulcans is the premier robotics team and club associated with P.E.S.'s Modern College of Engineering (MCOE) in Shivajinagar, Pune. Founded in 2011, the team focuses on robotics, automation, and competing in prestigious national competitions like ABU Robocon.
+This repo now has two separate Next.js apps:
 
-This repository holds the codebase for the official website, built using Next.js, Tailwind CSS, and Convex.
+- Public website: root project (`f:\Vulcans`)
+- Admin app: standalone project in `f:\Vulcans\admin`
 
----
+Both apps use Convex.
 
-## 🚀 Deployment Credentials & Architecture
+## Prerequisites
 
-The application is split into a frontend hosted on Vercel and a real-time backend/database hosted on Convex.
+- Node.js 18+
+- npm
+- Convex project access
 
-### Frontend (Next.js on Vercel)
-- **Deployment Platform**: Vercel
-- **Live URL**: https://robotics-pesmcoe.vercel.app
-- **Account / Email Associated**: `suhail17mohammad@gmail.com`
+## Environment Setup
 
-### Backend (Convex)
-- **Deployment Platform**: Convex Cloud
-- **Dashboard URL**: https://dashboard.convex.dev/
-- **Account / Email Associated**: `mohammad_suhail_entc@moderncoe.edu.in`
-- **Team**: `suhail-mohammad-f9a06`
-- **Project**: `vulcans`
+Set env vars before running:
 
-## 💻 Getting Started for Development
+- Root app: `f:\Vulcans\.env.local`
+- Admin app: `f:\Vulcans\admin\.env.local` (create from `admin/.env.example` if missing)
 
-To get the full application running on your local machine, you need to start three separate processes in three different terminal windows:
+## Run Everything (3 Terminals)
 
-### 1. Run the Convex Backend
-First, start the Convex development server from the root of the project to sync your database and API functions:
+Install dependencies once:
 
 ```bash
+cd f:\Vulcans
+npm install
+cd admin
+npm install
+```
+
+Then run these at the same time in 3 terminals:
+
+Terminal 1 (Convex backend):
+
+```bash
+cd f:\Vulcans
 npx convex dev
 ```
 
-### 2. Run the Public Website (Frontend)
-In a new terminal window, start the main Next.js development server for the public website:
+Terminal 2 (Public frontend):
 
 ```bash
+cd f:\Vulcans
 npm run dev
 ```
 
-The public site will be available at [http://localhost:3000](http://localhost:3000).
-
-### 3. Run the Admin Dashboard
-In a third terminal window, navigate into the `admin` folder and start its Next.js development server:
+Terminal 3 (Admin frontend):
 
 ```bash
-cd admin
+cd f:\Vulcans\admin
 npm run dev
 ```
 
-The admin dashboard will be available at [http://localhost:3001](http://localhost:3001) (or whichever port Next.js assigns it).
+Open:
+
+- Public: `http://localhost:3000`
+- Admin: `http://localhost:3001/signin`
+
+## Notes
+
+- `admin` uses the root Convex backend; do not run `convex dev` from `admin` unless you intentionally use a separate Convex project.
+- If port `3000` or `3001` is busy, stop the old process first.
+- Root and admin are separate apps and can run independently.

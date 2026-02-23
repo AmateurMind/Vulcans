@@ -24,16 +24,30 @@ The application is split into a frontend hosted on Vercel and a real-time backen
 
 ## 💻 Getting Started for Development
 
-First, run the Convex development server to sync your backend changes:
+To get the full application running on your local machine, you need to start three separate processes in three different terminal windows:
+
+### 1. Run the Convex Backend
+First, start the Convex development server from the root of the project to sync your database and API functions:
 
 ```bash
 npx convex dev
 ```
 
-Then, in a separate terminal, run the Next.js development server:
+### 2. Run the Public Website (Frontend)
+In a new terminal window, start the main Next.js development server for the public website:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The public site will be available at [http://localhost:3000](http://localhost:3000).
+
+### 3. Run the Admin Dashboard
+In a third terminal window, navigate into the `admin` folder and start its Next.js development server:
+
+```bash
+cd admin
+npm run dev
+```
+
+The admin dashboard will be available at [http://localhost:3001](http://localhost:3001) (or whichever port Next.js assigns it).

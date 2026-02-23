@@ -21,6 +21,9 @@ const alegreya = Alegreya({
 export const metadata: Metadata = {
   title: "Vulcans Robotics Club",
   description: "Vulcans - The premier robotics and engineering club. We build, compete, and innovate.",
+  verification: {
+    google: "dYdWQD4JK5uBoHjZvqXaVPe6NojvzbZdnLh2z5JGMZg",
+  },
 };
 
 export default function RootLayout({

@@ -4,9 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "dev:frontend": "next dev -p 3001",
-    "dev:backend": "convex dev",
-    "setup": "convex dev --until-success && convex dev --once --run-sh \"node setup.mjs --once\" && convex dashboard",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ignore-pattern \"convex/_generated/**\""
@@ -26,10 +23,8 @@
     "@types/node": "^24.10.11",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
-    "dotenv": "^17.2.4",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
-    "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"

@@ -1,11 +1,10 @@
 "use client";
 
-import { useConvexAuth, useMutation, useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { useAuthActions } from "@convex-dev/auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useRef } from "react";
-import { Loader2, Plus, Trash2, Image as ImageIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -226,7 +225,7 @@ function TeamManager() {
             <div key={member._id} className="flex items-center justify-between p-4 border border-[var(--border)] rounded-xl hover:border-[var(--primary)]/50 transition-colors bg-[var(--background)] shadow-sm">
               <div className="flex flex-col">
                 <span className="font-semibold text-[var(--foreground)]">{member.name}</span>
-                <span className="text-sm text-[var(--muted-foreground)]">{member.role} {member.department ? `· ${member.department}` : ''}</span>
+                <span className="text-sm text-[var(--muted-foreground)]">{member.role} {member.department ? ` - ${member.department}` : ""}</span>
               </div>
               <button onClick={() => { if (confirm("Remove this member?")) removeMember({ id: member._id }) }} className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                 <Trash2 className="w-4 h-4" />

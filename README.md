@@ -1,5 +1,5 @@
 # Vulcans Robotics Club Website
-
+![Visitors](https://komarev.com/ghpvc/?username=AmateurMind&repo=Vulcans&color=blue)
 This repo now has two separate Next.js apps:
 
 - Public website: root project (`f:\Vulcans`)

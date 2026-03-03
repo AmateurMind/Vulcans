@@ -301,28 +301,18 @@ function FlipCard({ achievement, index }: { achievement: typeof achievements[0];
 
                 {/* Back Side */}
                 <div
-                    className={`absolute inset-0 glass p-6 rounded-2xl bg-gradient-to-br ${achievement.color} border border-[var(--primary)]/30 flex flex-col
+                    className={`absolute inset-0 glass p-5 rounded-2xl bg-gradient-to-br ${achievement.color} border border-[var(--primary)]/30 flex flex-col
                         }`}
                     style={{
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)'
                     }}
                 >
-                    <div className={`flex items-center gap-3 w-full mb-4 ${index % 2 === 1 ? 'flex-row-reverse' : ''}`}>
-                        <div className="p-2 rounded-xl bg-[var(--background)]/50">
-                            {achievement.icon}
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-bold text-[var(--foreground)]">{achievement.title}</h3>
-                            <p className="text-sm text-[var(--primary)]">{achievement.rank}</p>
-                        </div>
-                    </div>
-
-                    <div className="flex-1 overflow-y-auto">
-                        <p className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-2">
+                    <div className="flex-1">
+                        <p className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-3">
                             Technical Specifications:
                         </p>
-                        <ul className="space-y-1.5">
+                        <ul className="space-y-2">
                             {achievement.fullDesc.map((item, i) => (
                                 <li key={i} className="text-sm text-[var(--foreground)] flex items-start gap-2">
                                     <span className="text-[var(--primary)] mt-1.5 shrink-0">•</span>
@@ -332,7 +322,7 @@ function FlipCard({ achievement, index }: { achievement: typeof achievements[0];
                         </ul>
                     </div>
 
-                    <p className="text-xs text-[var(--muted-foreground)] mt-3 opacity-60">← Click to go back</p>
+                    <p className="text-xs text-[var(--muted-foreground)] mt-2 opacity-60">← Click to go back</p>
                 </div>
             </div>
         </div>

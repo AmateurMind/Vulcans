@@ -231,3 +231,28 @@ export const seedTeamMembers = mutation({
         return results;
     },
 });
+
+// Public seed function - no auth required (for initial setup)
+export const seedAll = mutation({
+    args: {},
+    handler: async (ctx) => {
+        const results = [];
+        for (const member of TEAM_MEMBERS) {
+            const existing = await ctx.db
+                .query("teamMembers")
+                .filter((q) => q.eq(q.field("email"), member.email))
+                .first();
+
+            if (!existing) {
+                const id = await ctx.db.insert("teamMembers", {
+                    ...member,
+                    createdAt: Date.now(),
+                });
+                results.push({ id, name: member.name, status: "created" });
+            } else {
+                results.push({ id: existing._id, name: member.name, status: "already exists" });
+            }
+        }
+        return results;
+    },
+});

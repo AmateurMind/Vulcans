@@ -31,7 +31,7 @@ export default function OBJViewerPage() {
     return (
         <main className="min-h-screen bg-vulcan-bg-primary text-vulcan-text-primary">
             <section className="pt-28 pb-6 px-6 text-center">
-                <h1 className="text-4xl md:text-5xl font-bold">3D Model Viewer</h1>
+                <h1 className="text-4xl md:text-5xl font-bold text-vulcan-text-primary">3D Model Viewer</h1>
                 <p className="text-vulcan-text-muted mt-3">Switch between your R2 OBJ and GLB models</p>
             </section>
 
@@ -44,9 +44,9 @@ export default function OBJViewerPage() {
                                 key={model.id}
                                 type="button"
                                 onClick={() => setSelectedModelId(model.id)}
-                                className={`px-3 py-2 rounded-xs border text-sm transition-colors ${isActive
-                                        ? 'bg-vulcan-accent text-white border-vulcan-accent'
-                                        : 'bg-vulcan-bg-secondary border-vulcan-border text-vulcan-text-muted hover:text-vulcan-text-primary'
+                                className={`px-4 py-2 rounded-xs border text-sm font-medium transition-colors ${isActive
+                                    ? 'bg-primary text-white border-primary shadow-sm'
+                                    : 'bg-vulcan-bg-secondary border-vulcan-border text-vulcan-text-primary hover:bg-vulcan-bg-primary hover:border-vulcan-text-muted'
                                     }`}
                             >
                                 {model.label}
@@ -55,7 +55,7 @@ export default function OBJViewerPage() {
                     })}
                 </div>
 
-                <div className="max-w-6xl mx-auto glass bg-vulcan-bg-secondary border-vulcan-border rounded-xs overflow-hidden">
+                <div className="max-w-6xl mx-auto glass bg-vulcan-bg-secondary border-vulcan-border rounded-xs overflow-hidden shadow-xl">
                     <div className="h-[72vh] min-h-[520px] w-full relative">
                         <OBJViewer src={selectedModel.src} className="w-full h-full" />
 

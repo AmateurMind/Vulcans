@@ -71,6 +71,29 @@ export const remove = mutation({
     },
 });
 
+// Remove test members by name pattern (public - for cleanup)
+export const removeTestMembers = mutation({
+    args: {},
+    handler: async (ctx) => {
+        const testPatterns = ["AI Tester", "Test Person", "TP", "Automator"];
+        const allMembers = await ctx.db.query("teamMembers").collect();
+        const removed = [];
+
+        for (const member of allMembers) {
+            const isTestMember = testPatterns.some(pattern =>
+                member.name?.toLowerCase().includes(pattern.toLowerCase()) ||
+                member.email?.toLowerCase().includes(pattern.toLowerCase())
+            );
+
+            if (isTestMember) {
+                await ctx.db.delete(member._id);
+                removed.push({ id: member._id, name: member.name });
+            }
+        }
+        return removed;
+    },
+});
+
 // Clear all team members (authenticated)
 export const clearAll = mutation({
     args: {},

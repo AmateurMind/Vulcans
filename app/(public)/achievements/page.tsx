@@ -301,7 +301,7 @@ function FlipCard({ achievement, index }: { achievement: typeof achievements[0];
 
                 {/* Back Side */}
                 <div
-                    className={`absolute inset-0 glass p-6 rounded-2xl bg-gradient-to-br ${achievement.color} border border-[var(--primary)]/30 flex flex-col ${index % 2 === 1 ? 'items-end text-right' : ''
+                    className={`absolute inset-0 glass p-6 rounded-2xl bg-gradient-to-br ${achievement.color} border border-[var(--primary)]/30 flex flex-col
                         }`}
                     style={{
                         backfaceVisibility: 'hidden',
@@ -322,7 +322,7 @@ function FlipCard({ achievement, index }: { achievement: typeof achievements[0];
                         <p className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-2">
                             Technical Specifications:
                         </p>
-                        <ul className={`space-y-1.5 ${index % 2 === 1 ? 'text-right' : ''}`}>
+                        <ul className="space-y-1.5">
                             {achievement.fullDesc.map((item, i) => (
                                 <li key={i} className="text-sm text-[var(--foreground)] flex items-start gap-2">
                                     <span className="text-[var(--primary)] mt-1.5 shrink-0">•</span>

@@ -148,10 +148,69 @@ function EventsManager() {
   );
 }
 
+function SeedMembersButton({ seedMembers, clearAll }: { seedMembers: any; clearAll: any }) {
+  const [seeding, setSeeding] = useState(false);
+  const [clearing, setClearing] = useState(false);
+
+  const handleSeed = async () => {
+    if (!confirm("Import all 28 team members?")) return;
+    setSeeding(true);
+    try {
+      const res = await seedMembers();
+      alert(`Imported ${res.filter((r: any) => r.status === "created").length} new members`);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to seed members. Make sure you're signed in.");
+    } finally {
+      setSeeding(false);
+    }
+  };
+
+  const handleClear = async () => {
+    if (!confirm("Remove ALL team members? This cannot be undone!")) return;
+    setClearing(true);
+    try {
+      const count = await clearAll();
+      alert(`Removed ${count} team members`);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to clear members");
+    } finally {
+      setClearing(false);
+    }
+  };
+
+  return (
+    <div className="space-y-3">
+      <button
+        onClick={handleSeed}
+        disabled={seeding}
+        className="w-full py-2.5 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 flex items-center justify-center gap-2 disabled:opacity-50"
+      >
+        {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Import All Team Members (28)</>}
+      </button>
+
+      <button
+        onClick={handleClear}
+        disabled={clearing}
+        className="w-full py-2 bg-red-600/80 text-white rounded-lg font-medium hover:bg-red-600 flex items-center justify-center gap-2 disabled:opacity-50 text-sm"
+      >
+        {clearing ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Clear All Members</>}
+      </button>
+
+      <p className="text-xs text-[var(--muted-foreground)] text-center">
+        Import adds all 28 members with LinkedIn profiles
+      </p>
+    </div>
+  );
+}
+
 function TeamManager() {
   const members = useQuery(api.teamMembers.list) ?? [];
   const createMember = useMutation(api.teamMembers.create);
   const removeMember = useMutation(api.teamMembers.remove);
+  const seedMembers = useMutation(api.seedTeamMembers.seedTeamMembers);
+  const clearAll = useMutation(api.teamMembers.clearAll);
   // Re-use event's generateUploadUrl for simplicity since it just calls ctx.storage.generateUploadUrl()
   const generateUploadUrl = useMutation(api.events.generateUploadUrl);
 
@@ -212,6 +271,10 @@ function TeamManager() {
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Plus className="w-4 h-4" /> Add Member</>}
           </button>
         </form>
+
+        <div className="mt-6 pt-6 border-t border-[var(--border)]">
+          <SeedMembersButton seedMembers={seedMembers} clearAll={clearAll} />
+        </div>
       </div>
 
       {/* List */}
@@ -226,6 +289,12 @@ function TeamManager() {
               <div className="flex flex-col">
                 <span className="font-semibold text-[var(--foreground)]">{member.name}</span>
                 <span className="text-sm text-[var(--muted-foreground)]">{member.role} {member.department ? ` - ${member.department}` : ""}</span>
+                {member.email && <span className="text-xs text-[var(--muted-foreground)]">{member.email}</span>}
+                {member.linkedIn && (
+                  <a href={member.linkedIn} target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--primary)] hover:underline">
+                    LinkedIn Profile
+                  </a>
+                )}
               </div>
               <button onClick={() => { if (confirm("Remove this member?")) removeMember({ id: member._id }) }} className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                 <Trash2 className="w-4 h-4" />

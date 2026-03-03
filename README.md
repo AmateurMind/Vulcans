@@ -36,7 +36,8 @@ npm install
 
 Then run these at the same time in 3 terminals:
 
-Terminal 1 (Convex backend):
+Terminal 1 (Convex backend):(mohammad_suhail_entc@moderncoe.edu.in)
+create an account on convex first
 
 ```bash
 cd f:\Vulcans

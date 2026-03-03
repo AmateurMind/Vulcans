@@ -24,6 +24,8 @@ export default defineSchema({
 
     teamMembers: defineTable({
         name: v.string(),
+        email: v.optional(v.string()),
+        linkedIn: v.optional(v.string()),
         role: v.string(),
         department: v.string(), // or Year
         imageId: v.optional(v.id("_storage")),

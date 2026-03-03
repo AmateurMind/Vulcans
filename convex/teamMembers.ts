@@ -14,6 +14,8 @@ export const list = query({
 export const create = mutation({
     args: {
         name: v.string(),
+        email: v.optional(v.string()),
+        linkedIn: v.optional(v.string()),
         role: v.string(),
         department: v.string(),
         imageId: v.optional(v.id("_storage")),
@@ -28,6 +30,33 @@ export const create = mutation({
     },
 });
 
+// Bulk import team members (authenticated)
+export const bulkImport = mutation({
+    args: {
+        members: v.array(v.object({
+            name: v.string(),
+            email: v.optional(v.string()),
+            linkedIn: v.optional(v.string()),
+            role: v.string(),
+            department: v.string(),
+        })),
+    },
+    handler: async (ctx, args) => {
+        const userId = await getAuthUserId(ctx);
+        if (!userId) throw new Error("Not authenticated");
+
+        const results = [];
+        for (const member of args.members) {
+            const id = await ctx.db.insert("teamMembers", {
+                ...member,
+                createdAt: Date.now(),
+            });
+            results.push({ id, name: member.name });
+        }
+        return results;
+    },
+});
+
 // Delete team member (authenticated)
 export const remove = mutation({
     args: { id: v.id("teamMembers") },
@@ -39,5 +68,25 @@ export const remove = mutation({
             await ctx.storage.delete(teamMember.imageId);
         }
         await ctx.db.delete(id);
+    },
+});
+
+// Clear all team members (authenticated)
+export const clearAll = mutation({
+    args: {},
+    handler: async (ctx) => {
+        const userId = await getAuthUserId(ctx);
+        if (!userId) throw new Error("Not authenticated");
+
+        const members = await ctx.db.query("teamMembers").collect();
+        let count = 0;
+        for (const member of members) {
+            if (member.imageId) {
+                await ctx.storage.delete(member.imageId);
+            }
+            await ctx.db.delete(member._id);
+            count++;
+        }
+        return count;
     },
 });

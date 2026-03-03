@@ -17,10 +17,17 @@ export default function TeamPage() {
 
     const groupedTeams = useMemo(() => {
         if (!members) return {};
-        return members.reduce((acc, m) => {
-            const dept = m.department || "Other";
-            if (!acc[dept]) acc[dept] = [];
-            acc[dept].push(m);
+        // Sort members: Captain first, then others alphabetically
+        const sortedMembers = [...members].sort((a, b) => {
+            if (a.role?.toLowerCase().includes("captain")) return -1;
+            if (b.role?.toLowerCase().includes("captain")) return 1;
+            return a.name.localeCompare(b.name);
+        });
+        // Group by role instead of department
+        return sortedMembers.reduce((acc, m) => {
+            const role = m.role || "Team Member";
+            if (!acc[role]) acc[role] = [];
+            acc[role].push(m);
             return acc;
         }, {} as Record<string, typeof members>);
     }, [members]);
@@ -72,16 +79,21 @@ export default function TeamPage() {
                                         <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarColors[(ti + mi) % avatarColors.length]} flex items-center justify-center text-xl font-bold text-white shadow-lg mb-4 group-hover:scale-105 transition-transform`}>
                                             {m.name ? getInitials(m.name) : <User className="w-8 h-8" />}
                                         </div>
-                                        <h3 className="font-bold text-lg text-[var(--foreground)]">{m.name}</h3>
-                                        <p className="text-[var(--primary)] text-sm font-semibold mt-1">{m.role}</p>
+                                        <h3 className="font-bold text-xl text-[var(--foreground)]">{m.name}</h3>
+                                        <p className="text-[var(--muted-foreground)] text-xs mt-1">{m.department}</p>
 
                                         {/* Social Links */}
                                         <div className="flex gap-3 mt-4">
-                                            {[Github, Linkedin, Mail].map((Icon, idx) => (
-                                                <button key={idx} className="p-2 rounded-lg bg-[var(--background)]/60 hover:bg-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">
-                                                    <Icon className="w-4 h-4" />
-                                                </button>
-                                            ))}
+                                            {m.linkedIn && (
+                                                <a
+                                                    href={m.linkedIn}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 rounded-lg bg-[var(--background)]/60 hover:bg-[var(--primary)]/20 text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-all"
+                                                >
+                                                    <Linkedin className="w-4 h-4" />
+                                                </a>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

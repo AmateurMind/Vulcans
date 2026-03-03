@@ -17,11 +17,6 @@ export default function OBJViewerPage() {
                 src: '/models/R2%20(base%2Bdrive%2Bshooter).glb',
             },
             {
-                id: 'r2-base-drive-shooter',
-                label: 'R2 (base+drive+shooter)',
-                src: '/models/R2-base-drive-shooter.obj',
-            },
-            {
                 id: 'r2-2k24',
                 label: 'R2 2k24',
                 src: '/models/R2-2k24.obj',
@@ -49,11 +44,10 @@ export default function OBJViewerPage() {
                                 key={model.id}
                                 type="button"
                                 onClick={() => setSelectedModelId(model.id)}
-                                className={`px-3 py-2 rounded-xs border text-sm transition-colors ${
-                                    isActive
+                                className={`px-3 py-2 rounded-xs border text-sm transition-colors ${isActive
                                         ? 'bg-vulcan-accent text-white border-vulcan-accent'
                                         : 'bg-vulcan-bg-secondary border-vulcan-border text-vulcan-text-muted hover:text-vulcan-text-primary'
-                                }`}
+                                    }`}
                             >
                                 {model.label}
                             </button>

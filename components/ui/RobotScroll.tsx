@@ -141,8 +141,8 @@ export default function RobotScroll() {
         };
     }, [frameBase]);
 
-        useEffect(() => {
-          const unsubscribe = scrollYProgress.on('change', (v) => {
+    useEffect(() => {
+        const unsubscribe = scrollYProgress.on('change', (v) => {
             setProgress(v);
             const canvas = canvasRef.current;
             if (!canvas || !loaded) return;
@@ -152,15 +152,15 @@ export default function RobotScroll() {
             if (!img || !img.complete) return;
 
             drawFrameToCanvas(
-              canvas,
-              img,
-              isMobile ? 'cover' : 'contain',
-              0,
-              isMobile
+                canvas,
+                img,
+                isMobile ? 'cover' : 'contain',
+                0,
+                isMobile
             );
-          });
-          return unsubscribe;
-        }, [loaded, isMobile]);
+        });
+        return unsubscribe;
+    }, [loaded, isMobile]);
 
     useEffect(() => {
         if (!loaded) return;

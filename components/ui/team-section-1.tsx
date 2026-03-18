@@ -10,7 +10,7 @@ interface TeamMember {
     name: string;
     designation: string;
     imageSrc: string;
-    socialLinks?: SocialLink[];
+    socialLinks?: readonly SocialLink[];
 }
 
 interface TeamSectionProps extends React.HTMLAttributes<HTMLDivElement> {

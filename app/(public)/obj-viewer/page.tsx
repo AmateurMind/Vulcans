@@ -19,7 +19,7 @@ export default function OBJViewerPage() {
             {
                 id: 'r2-2k24',
                 label: 'R2 2k24',
-                src: '/models/R2-2k24.obj',
+                src: '/models/R2%202k24.obj',
             },
         ],
         []

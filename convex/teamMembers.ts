@@ -6,7 +6,13 @@ import { getAuthUserId } from "@convex-dev/auth/server";
 export const list = query({
     args: {},
     handler: async (ctx) => {
-        return await ctx.db.query("teamMembers").order("desc").collect();
+        const members = await ctx.db.query("teamMembers").order("desc").collect();
+        return await Promise.all(
+            members.map(async (member) => ({
+                ...member,
+                imageUrl: member.imageId ? await ctx.storage.getUrl(member.imageId) : null,
+            }))
+        );
     },
 });
 

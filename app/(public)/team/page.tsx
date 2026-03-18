@@ -2,106 +2,166 @@
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Github, Linkedin, Mail, User } from "lucide-react";
-import { useMemo } from "react";
+import { Linkedin } from "lucide-react";
+import { TeamSection } from "@/components/ui/team-section-1";
 
-const avatarColors = [
-    "from-[var(--primary)] to-[var(--primary)]",
-    "from-blue-600 to-cyan-700",
-    "from-rose-600 to-pink-700",
-    "from-orange-600 to-amber-700",
+const ID_CARD_IMAGES = [
+    "/ID CARD/core/Asmi Patil.jpg",
+    "/ID CARD/core/advait.jpeg",
+    "/ID CARD/core/Passport (Sarvesh) .jpeg",
+    "/ID CARD/Aditya_garad.jpg",
+    "/ID CARD/ashwin.png",
+    "/ID CARD/ayush tiwari.jpg",
+    "/ID CARD/Harshal Raje.jpg",
+    "/ID CARD/IMG_4546(Harsh Jain).PNG",
+    "/ID CARD/jahnvi.jpg",
+    "/ID CARD/Laukik_Meshram.jpeg",
+    "/ID CARD/passport_photo_meherdeep_chapade.jpg",
+    "/ID CARD/Pranav_Shinde.jpeg",
+    "/ID CARD/Prathamesh_Shingade.jpg",
+    "/ID CARD/Vedant Kaulgekar.jpeg",
+    "/ID CARD/Yash Doke.jpg",
 ];
 
+const NAME_ALIASES: Record<string, string[]> = {
+    janhavipawar: ["jahnvi"],
+    vaishnavisutar: ["vaishanvi"],
+    athravghorpade: ["atharv"],
+};
+
+function normalize(value: string) {
+    return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function getBestImageForName(name: string) {
+    const normalizedName = normalize(name);
+    const tokens = name
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((token) => token.length > 2);
+    const aliases = NAME_ALIASES[normalizedName] ?? [];
+
+    let bestPath: string | null = null;
+    let bestScore = 0;
+
+    for (const imagePath of ID_CARD_IMAGES) {
+        const normalizedPath = normalize(imagePath);
+        let score = 0;
+
+        if (normalizedPath.includes(normalizedName)) score += 100;
+        for (const token of tokens) {
+            if (normalizedPath.includes(token)) score += 10;
+        }
+        for (const alias of aliases) {
+            if (normalizedPath.includes(normalize(alias))) score += 30;
+        }
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestPath = imagePath;
+        }
+    }
+
+    return bestScore > 0 ? bestPath : null;
+}
+
 export default function TeamPage() {
-    const members = useQuery(api.teamMembers.list);
+    const dbMembers = useQuery(api.teamMembers.list);
 
-    const groupedTeams = useMemo(() => {
-        if (!members) return {};
-        // Sort members: Captain first, then others alphabetically
-        const sortedMembers = [...members].sort((a, b) => {
-            if (a.role?.toLowerCase().includes("captain")) return -1;
-            if (b.role?.toLowerCase().includes("captain")) return 1;
-            return a.name.localeCompare(b.name);
-        });
-        // Group by role instead of department
-        return sortedMembers.reduce((acc, m) => {
-            const role = m.role || "Team Member";
-            if (!acc[role]) acc[role] = [];
-            acc[role].push(m);
-            return acc;
-        }, {} as Record<string, typeof members>);
-    }, [members]);
+    // Hardcoded leaders to display exactly as requested at the very top
+    const leaders = [
+        {
+            name: "Shreyas Kumbhar",
+            designation: "Captain",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/shreyaskumbhar185" }],
+        },
+        {
+            name: "Chase Gunjal",
+            designation: "Vice Captain",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/chase-gunjal-b5a1b92b4" }],
+        },
+        {
+            name: "Asmi Patil",
+            designation: "Electronics Lead",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/asmipatil/" }],
+        },
+        {
+            name: "Advait Deo",
+            designation: "Software Lead",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/advait-deo-20b179345/" }],
+        },
+        {
+            name: "Sarvesh Daphale",
+            designation: "Mechanical Lead",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/sarvesh-daphale-3443a8316" }],
+        },
+        {
+            name: "Harshal Raje",
+            designation: "Co-Secretary",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/harshal-raje-a0b391323" }],
+        },
+        {
+            name: "Vaishnavi Sutar",
+            designation: "Co-Secretary",
+            socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/vaishnavi-sutar-2bba892b4" }],
+        },
+        {
+            name: "Samiksha Mote",
+            designation: "Joint Secretary",
+            socialLinks: [{ icon: Linkedin, href: "#" }],
+        }
+    ] as const;
 
-    const getInitials = (name: string) => {
-        return name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+    const matchedPool = [
+        ...leaders.map((member) => getBestImageForName(member.name)).filter(Boolean),
+        ...(dbMembers ?? []).map((member) => getBestImageForName(member.name)).filter(Boolean),
+    ] as string[];
+    const fallbackPool = matchedPool.length > 0 ? matchedPool : ["/ID CARD/core/Asmi Patil.jpg"];
+    let fallbackCursor = 0;
+    const getFallbackImage = () => {
+        const image = fallbackPool[fallbackCursor % fallbackPool.length];
+        fallbackCursor += 1;
+        return image;
     };
 
+    const leadersWithImages = leaders.map((member) => ({
+        ...member,
+        imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
+    }));
+
+    const coreNames = new Set(leaders.map((member) => member.name.toLowerCase()));
+    const otherMembers = (dbMembers ?? [])
+        .filter((member) => !coreNames.has(member.name.toLowerCase()))
+        .map((member) => ({
+            name: member.name,
+            designation:
+                member.role === "Team Member"
+                    ? member.department || "NA"
+                    : member.department
+                        ? `${member.role} - ${member.department}`
+                        : member.role || "Team Member",
+            imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
+            socialLinks: [{ icon: Linkedin, href: member.linkedIn || "#" }],
+        }));
+
     return (
-        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-            {/* Hero */}
-            <section className="pt-32 pb-20 px-6 grid-bg relative">
-                <div className="absolute top-20 right-1/3 w-96 h-96 bg-blue-700/10 rounded-full blur-[120px] pointer-events-none" />
-                <div className="max-w-4xl mx-auto text-center relative">
-                    <p className="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-4">The People</p>
-                    <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                        Meet the <span className="text-shimmer">Team</span>
-                    </h1>
-                    <p className="text-[var(--muted-foreground)] text-xl leading-relaxed max-w-2xl mx-auto">
-                        Vulcans is powered by passionate engineers, designers, and innovators working as one.
-                    </p>
-                </div>
-            </section>
+        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pt-10">
+            <TeamSection
+                title="Core Team"
+                description="The core team driving Team Vulcans forward with innovation, teamwork, and technical excellence."
+                members={leadersWithImages}
+                className="pt-6 md:pt-10 lg:pt-12"
+            />
 
-            {/* Teams */}
-            <section className="py-10 px-6 pb-24">
-                <div className="max-w-6xl mx-auto flex flex-col gap-16">
-                    {members === undefined && (
-                        <div className="text-center text-[var(--muted-foreground)]">Loading team members...</div>
-                    )}
+            {otherMembers.length > 0 && (
+                <TeamSection
+                    title="Other Members"
+                    description="Our extended team members across departments."
+                    members={otherMembers}
+                    className="pt-0 md:pt-4 lg:pt-6"
+                />
+            )}
 
-                    {members && members.length === 0 && (
-                        <div className="text-center text-[var(--muted-foreground)]">No team members found.</div>
-                    )}
-
-                    {Object.entries(groupedTeams).map(([department, teamMembers], ti) => (
-                        <div key={ti}>
-                            <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-                                <span className="w-8 h-px bg-[var(--primary)]" />
-                                {department}
-                            </h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                                {teamMembers.map((m, mi) => (
-                                    <div
-                                        key={mi}
-                                        className="glass p-6 rounded-2xl hover:border-[var(--primary)]/20 transition-all duration-300 hover:-translate-y-1 group flex flex-col items-center text-center"
-                                    >
-                                        {/* Avatar */}
-                                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarColors[(ti + mi) % avatarColors.length]} flex items-center justify-center text-xl font-bold text-white shadow-lg mb-4 group-hover:scale-105 transition-transform`}>
-                                            {m.name ? getInitials(m.name) : <User className="w-8 h-8" />}
-                                        </div>
-                                        <h3 className="font-bold text-xl text-[var(--foreground)]">{m.name}</h3>
-                                        <p className="text-[var(--muted-foreground)] text-xs mt-1">{m.department}</p>
-
-                                        {/* Social Links */}
-                                        <div className="flex gap-3 mt-4">
-                                            {m.linkedIn && (
-                                                <a
-                                                    href={m.linkedIn}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="p-2 rounded-lg bg-[var(--background)]/60 hover:bg-[var(--primary)]/20 text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-all"
-                                                >
-                                                    <Linkedin className="w-4 h-4" />
-                                                </a>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
         </main>
     );
 }

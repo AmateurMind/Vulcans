@@ -12,7 +12,7 @@ export default function EventsPage() {
                         Past & Upcoming <span className="text-shimmer">Events</span>
                     </h1>
                     <p className="text-[var(--muted-foreground)] text-xl leading-relaxed max-w-2xl mx-auto">
-                        Discover what we've been up to, from workshops and seminars to national robotics competitions.
+                        Discover what we&apos;ve been up to, from workshops and seminars to national robotics competitions.
                     </p>
                 </div>
             </section>

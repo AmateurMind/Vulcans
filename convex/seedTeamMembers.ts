@@ -7,7 +7,7 @@ import { getAuthUserId } from "@convex-dev/auth/server";
 // Team members data from the spreadsheet
 const TEAM_MEMBERS = [
     {
-        name: "Shreyash Kumbhar",
+        name: "Shreyas Kumbhar",
         email: "kumbhar_shreyas_entc@moderncoe.edu.in",
         linkedIn: "https://www.linkedin.com/in/shreyaskumbhar185",
         role: "Captain",
@@ -23,21 +23,21 @@ const TEAM_MEMBERS = [
     {
         name: "Asmi Patil",
         email: "patil_asmi_entc@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "ENTC",
     },
     {
         name: "Advait Deo",
         email: "deo_advait_entc@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "ENTC",
     },
     {
         name: "Snehal Shirur",
         email: "snehal_shirur_entc@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "ENTC",
     },
@@ -65,14 +65,14 @@ const TEAM_MEMBERS = [
     {
         name: "Janhavi Pawar",
         email: "pawar_janhavi_entc@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "ENTC",
     },
     {
         name: "Pradyumna Rawas",
         email: "pradyumna_rawas_entc@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "ENTC",
     },
@@ -114,7 +114,7 @@ const TEAM_MEMBERS = [
     {
         name: "Vedant Thakare",
         email: "vedant_thakare_mech@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "Mech",
     },
@@ -135,7 +135,7 @@ const TEAM_MEMBERS = [
     {
         name: "Athrav Ghorpade",
         email: "atharv_ghorpade_elect@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "Elect",
     },
@@ -198,7 +198,7 @@ const TEAM_MEMBERS = [
     {
         name: "Laukik Meshram",
         email: "laukik_meshram_entc@moderncoe.edu.in",
-        linkedIn: undefined,
+        linkedIn: "#",
         role: "Team Member",
         department: "ENTC",
     },

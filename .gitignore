@@ -29,12 +29,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# large 3D models (GitHub 100MB limit)
-/public/models/*.obj
-/public/models/*.glb
-/public/models/*.gltf
-/public/models/*.stl
-.pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
 .env*

@@ -6,6 +6,7 @@ import { Linkedin } from "lucide-react";
 import { TeamSection } from "@/components/ui/team-section-1";
 
 const ID_CARD_IMAGES = [
+    "/ID CARD/core/shreyas.jpg",
     "/ID CARD/core/Asmi Patil.jpg",
     "/ID CARD/core/advait.jpeg",
     "/ID CARD/core/Passport (Sarvesh) .jpeg",
@@ -22,6 +23,8 @@ const ID_CARD_IMAGES = [
     "/ID CARD/Vedant Kaulgekar.jpeg",
     "/ID CARD/Yash Doke.jpg",
 ];
+const GENERIC_PROFILE_IMAGE =
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&h=400&fit=crop";
 
 const NAME_ALIASES: Record<string, string[]> = {
     janhavipawar: ["jahnvi"],
@@ -112,26 +115,23 @@ export default function TeamPage() {
         }
     ] as const;
 
-    const matchedPool = [
-        ...leaders.map((member) => getBestImageForName(member.name)).filter(Boolean),
-        ...(dbMembers ?? []).map((member) => getBestImageForName(member.name)).filter(Boolean),
-    ] as string[];
-    const fallbackPool = matchedPool.length > 0 ? matchedPool : ["/ID CARD/core/Asmi Patil.jpg"];
-    let fallbackCursor = 0;
-    const getFallbackImage = () => {
-        const image = fallbackPool[fallbackCursor % fallbackPool.length];
-        fallbackCursor += 1;
-        return image;
-    };
+    const getFallbackImage = () => GENERIC_PROFILE_IMAGE;
 
     const leadersWithImages = leaders.map((member) => ({
         ...member,
         imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
     }));
 
-    const coreNames = new Set(leaders.map((member) => member.name.toLowerCase()));
+    const coreNames = new Set([
+        ...leaders.map((member) => member.name.toLowerCase()),
+        "shreayas kumbhar",
+    ]);
     const otherMembers = (dbMembers ?? [])
-        .filter((member) => !coreNames.has(member.name.toLowerCase()))
+        .filter((member) => {
+            const lowerName = member.name.toLowerCase();
+            const isShreyasVariant = lowerName.includes("kumbhar") && lowerName.includes("shre");
+            return !coreNames.has(lowerName) && !isShreyasVariant;
+        })
         .map((member) => ({
             name: member.name,
             designation:
@@ -155,8 +155,8 @@ export default function TeamPage() {
 
             {otherMembers.length > 0 && (
                 <TeamSection
-                    title="Other Members"
-                    description="Our extended team members across departments."
+                    title="Team Members"
+                    description="Our talented members across all departments."
                     members={otherMembers}
                     className="pt-0 md:pt-4 lg:pt-6"
                 />

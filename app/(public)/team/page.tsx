@@ -169,7 +169,10 @@ export default function TeamPage() {
 
   const leadersWithImages = leaders.map((member) => ({
     ...member,
-    imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
+    imageSrc:
+      member.name === "Samiksha Mote"
+        ? "/ID CARD/FE/Samiksha mote.jpg"
+        : getBestImageForName(member.name) ?? getFallbackImage(),
   }));
 
   const coreNames = new Set([
@@ -251,25 +254,28 @@ export default function TeamPage() {
           <div className="relative flex overflow-hidden w-full group/marquee pb-8 px-4">
             <style>{`
               @keyframes marquee {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-100%); }
+                0% { transform: translate3d(0, 0, 0); }
+                100% { transform: translate3d(-100%, 0, 0); }
               }
               .animate-marquee {
-                animation: marquee 30s linear infinite;
+                animation: marquee 36s linear infinite;
+                transform: translate3d(0, 0, 0);
               }
             `}</style>
 
-            <div className="flex shrink-0 animate-marquee group-hover/marquee:[animation-play-state:paused] items-center gap-8 pr-8">
+            <div className="flex shrink-0 animate-marquee will-change-transform group-hover/marquee:paused items-center gap-8 pr-8">
               {FE_STUDENTS.map((student, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center gap-4 min-w-[120px] group"
+                  className="flex flex-col items-center gap-4 min-w-30 group/student"
                 >
-                  <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-transparent bg-background/20 transition-all duration-500 ease-out group-hover:border-primary group-hover:scale-105 shadow-md">
+                  <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-border/50 bg-background/20 transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.03] shadow-md">
                     <img
                       src={student.imageSrc}
                       alt={student.name}
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.06]"
                     />
                   </div>
                   <span className="text-base font-semibold text-foreground text-center leading-tight whitespace-nowrap">
@@ -280,19 +286,21 @@ export default function TeamPage() {
             </div>
 
             <div
-              className="flex shrink-0 animate-marquee group-hover/marquee:[animation-play-state:paused] items-center gap-8 pr-8"
+              className="flex shrink-0 animate-marquee will-change-transform group-hover/marquee:paused items-center gap-8 pr-8"
               aria-hidden="true"
             >
               {FE_STUDENTS.map((student, index) => (
                 <div
                   key={`duplicate-${index}`}
-                  className="flex flex-col items-center gap-4 min-w-[120px] group"
+                  className="flex flex-col items-center gap-4 min-w-30 group/student"
                 >
-                  <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-transparent bg-background/20 transition-all duration-500 ease-out group-hover:border-primary group-hover:scale-105 shadow-md">
+                  <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-border/50 bg-background/20 transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.03] shadow-md">
                     <img
                       src={student.imageSrc}
                       alt={student.name}
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.06]"
                     />
                   </div>
                   <span className="text-base font-semibold text-foreground text-center leading-tight whitespace-nowrap">

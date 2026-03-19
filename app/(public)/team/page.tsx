@@ -4,6 +4,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Linkedin } from "lucide-react";
 import { TeamSection } from "@/components/ui/team-section-1";
+import Image from "next/image";
 
 const ID_CARD_IMAGES = [
   "/ID CARD/core/shreyas.jpg",
@@ -199,7 +200,7 @@ export default function TeamPage() {
     }));
 
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pt-10">
+    <main className="min-h-screen bg-background text-foreground pt-10">
       <TeamSection
         title="Core Team"
         description="The core team driving Team Vulcans forward with innovation, teamwork, and technical excellence."
@@ -270,9 +271,11 @@ export default function TeamPage() {
                   className="flex flex-col items-center gap-4 min-w-30 group/student"
                 >
                   <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-border/50 bg-background/20 transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.03] shadow-md">
-                    <img
+                    <Image
                       src={student.imageSrc}
                       alt={student.name}
+                      width={112}
+                      height={112}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-cover transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.06]"
@@ -295,9 +298,11 @@ export default function TeamPage() {
                   className="flex flex-col items-center gap-4 min-w-30 group/student"
                 >
                   <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-border/50 bg-background/20 transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.03] shadow-md">
-                    <img
+                    <Image
                       src={student.imageSrc}
                       alt={student.name}
+                      width={112}
+                      height={112}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-cover transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.06]"

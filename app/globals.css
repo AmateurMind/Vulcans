@@ -3,11 +3,7 @@
 
 :root {
   /* Light Mode (Premium / Clean) */
-<<<<<<< HEAD
   --background: #FFFFFF;
-=======
-  --background: #F4F4F6;
->>>>>>> b1ab68270ebef5af9db29a08859f5c1b9d73cbac
   --foreground: #111111;
   --card: #FFFFFF;
   --card-foreground: #111111;
@@ -20,11 +16,7 @@
   --primary-hover: #FF3B1F;
   --primary-dark: #9B0000;
 
-<<<<<<< HEAD
   --vulcan-bg-primary: #FFFFFF;
-=======
-  --vulcan-bg-primary: #F4F4F6;
->>>>>>> b1ab68270ebef5af9db29a08859f5c1b9d73cbac
   --vulcan-bg-secondary: #FFFFFF;
   --vulcan-border: #E2E2E8;
   --vulcan-text-primary: #111111;
@@ -84,11 +76,7 @@
 }
 
 .light {
-<<<<<<< HEAD
   --background: #FFFFFF;
-=======
-  --background: #F4F4F6;
->>>>>>> b1ab68270ebef5af9db29a08859f5c1b9d73cbac
   --foreground: #111111;
   --card: #FFFFFF;
   --card-foreground: #111111;
@@ -100,11 +88,7 @@
   --primary-hover: #FF3B1F;
   --primary-dark: #9B0000;
 
-<<<<<<< HEAD
   --vulcan-bg-primary: #FFFFFF;
-=======
-  --vulcan-bg-primary: #F4F4F6;
->>>>>>> b1ab68270ebef5af9db29a08859f5c1b9d73cbac
   --vulcan-bg-secondary: #FFFFFF;
   --vulcan-border: #E2E2E8;
   --vulcan-text-primary: #111111;

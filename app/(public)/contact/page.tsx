@@ -142,15 +142,6 @@ export default function ContactPage() {
                             </div>
                         </div>
 
-                        {/* Google Map */}
-                        <div className="glass rounded-2xl p-4 overflow-hidden">
-                            <h2 className="text-xl font-bold mb-4 px-3 pt-3">Find Us</h2>
-                            <div
-                                ref={mapRef}
-                                className="w-full h-64 rounded-xl overflow-hidden"
-                                style={{ minHeight: '250px' }}
-                            />
-                        </div>
                     </div>
 
                     {/* Form Side */}
@@ -214,7 +205,7 @@ export default function ContactPage() {
                                         <textarea
                                             name="message"
                                             required
-                                            rows={5}
+                                            rows={2}
                                             placeholder="Tell us more about your interest or query..."
                                             value={form.message}
                                             onChange={handleChange}
@@ -231,6 +222,23 @@ export default function ContactPage() {
                                 </form>
                             </>
                         )}
+                    </div>
+                </div>
+
+                {/* Google Map - Full Width below info and form */}
+                <div className="max-w-6xl mx-auto mt-10">
+                    <div className="glass rounded-2xl p-4 overflow-hidden">
+                        <div className="flex items-center justify-between mb-4 px-3 pt-3">
+                            <h2 className="text-xl font-bold">Our Location</h2>
+                            <p className="text-xs text-[var(--muted-foreground)] flex items-center gap-1.5">
+                                <MapPin className="w-3.5 h-3.5 text-[var(--primary)]" /> PES&apos;s Modern College of Engineering, Pune
+                            </p>
+                        </div>
+                        <div
+                            ref={mapRef}
+                            className="w-full h-[450px] rounded-xl overflow-hidden grayscale-[0.2] hover:grayscale-0 transition-all duration-500 shadow-inner"
+                            style={{ minHeight: '400px' }}
+                        />
                     </div>
                 </div>
             </section>

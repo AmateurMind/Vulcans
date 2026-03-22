@@ -199,7 +199,11 @@ export default function RobotScroll() {
                 </div>
             )}
 
+<<<<<<< HEAD
             <div className={`sticky w-full overflow-hidden bg-[#0B0B0F] ${isMobile ? 'top-0 h-[100dvh]' : 'top-16 h-[calc(100vh-4rem)]'}`}>
+=======
+            <div className={`sticky w-full overflow-hidden ${isMobile ? 'top-0 h-[100dvh]' : 'top-16 h-[calc(100vh-4rem)]'}`}>
+>>>>>>> b1ab68270ebef5af9db29a08859f5c1b9d73cbac
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full"
@@ -207,7 +211,11 @@ export default function RobotScroll() {
                 />
 
                 <div className="absolute inset-0 pointer-events-none" style={{
+<<<<<<< HEAD
                     background: 'radial-gradient(ellipse 75% 100% at 50% 50%, transparent 20%, #0B0B0F 80%)',
+=======
+                    background: 'radial-gradient(ellipse 75% 100% at 50% 50%, transparent 20%, var(--background) 80%)',
+>>>>>>> b1ab68270ebef5af9db29a08859f5c1b9d73cbac
                 }} />
 
                 {loaded && activeOverlay && (

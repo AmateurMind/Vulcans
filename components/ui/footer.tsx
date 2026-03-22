@@ -28,11 +28,8 @@ const navColumns = [
 ]
 
 const socials = [
-    { icon: <Instagram className="w-4 h-4" />, href: '#', label: 'Instagram' },
-    { icon: <Twitter className="w-4 h-4" />, href: '#', label: 'Twitter' },
-    { icon: <Linkedin className="w-4 h-4" />, href: '#', label: 'LinkedIn' },
-    { icon: <Youtube className="w-4 h-4" />, href: '#', label: 'YouTube' },
-    { icon: <Github className="w-4 h-4" />, href: '#', label: 'GitHub' },
+    { icon: <Instagram className="w-4 h-4" />, href: 'https://www.instagram.com/mcoeteamvulcans/', label: 'Instagram' },
+    { icon: <Linkedin className="w-4 h-4" />, href: 'https://www.linkedin.com/company/vulcan-robotics-team/', label: 'LinkedIn' },
 ]
 
 export function Footer() {
@@ -56,9 +53,9 @@ export function Footer() {
                         </p>
 
                         <div className="flex flex-col gap-2.5 text-sm text-[var(--muted-foreground)]">
-                            <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-[var(--primary)]" /> vulcans@college.edu</span>
-                            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[var(--primary)]" /> Robotics Lab, Block C, Campus</span>
-                            <span className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--primary)]" /> +91 98765 43210</span>
+                            <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-[var(--primary)]" /> robocon_teamvulcans@moderncoe.edu.in</span>
+                            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[var(--primary)]" /> PES&apos;s Modern College of Engineering, Pune</span>
+                            <span className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--primary)]" /> +91 75882 48009</span>
                         </div>
                     </div>
 

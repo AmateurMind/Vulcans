@@ -3,3 +3,6 @@
 *.obj filter=lfs diff=lfs merge=lfs -text
 *.stl filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text
+
+# Ensure deployed web models are regular git blobs (not LFS pointers), keep binary mode
+public/models/*.glb -filter -diff -merge -text

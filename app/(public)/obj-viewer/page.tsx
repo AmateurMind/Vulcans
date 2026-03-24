@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 const OBJViewer = dynamic(
     () => import('@/components/ui/obj-viewer').then((mod) => ({ default: mod.OBJViewer })),
@@ -14,49 +14,19 @@ export default function OBJViewerPage() {
             {
                 id: 'r2-base-drive-shooter-obj',
                 label: 'R2 (base+drive+shooter) OBJ',
-                src: '/models/R2%20(base%2Bdrive%2Bshooter).obj',
+                src: '/models/r2-base-drive-shooter.obj',
             },
             {
                 id: 'r2-2k24',
                 label: 'R2 2k24',
-                src: '/models/R2%202k24.obj',
+                src: '/models/r2-2k24.obj',
             },
         ],
         []
     )
 
-    const [availableModels, setAvailableModels] = useState(models)
+    const [availableModels] = useState(models)
     const [selectedModelId, setSelectedModelId] = useState(models[0].id)
-
-    useEffect(() => {
-        let cancelled = false
-
-        const checkAvailability = async () => {
-            const checks = await Promise.all(
-                models.map(async (model) => {
-                    try {
-                        const response = await fetch(model.src, { method: 'HEAD' })
-                        return response.ok ? model : null
-                    } catch {
-                        return null
-                    }
-                })
-            )
-
-            if (cancelled) return
-
-            const existing = checks.filter((model): model is (typeof models)[number] => model !== null)
-            setAvailableModels(existing)
-            if (existing.length > 0) {
-                setSelectedModelId(existing[0].id)
-            }
-        }
-
-        checkAvailability()
-        return () => {
-            cancelled = true
-        }
-    }, [models])
 
     const selectedModel = availableModels.find((model) => model.id === selectedModelId) ?? availableModels[0]
 

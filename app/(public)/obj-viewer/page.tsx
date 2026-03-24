@@ -13,13 +13,13 @@ export default function OBJViewerPage() {
         () => [
             {
                 id: 'r2-base-drive-shooter-obj',
-                label: 'R2 (base+drive+shooter) OBJ',
-                src: '/models/r2-base-drive-shooter.obj',
+                label: 'R2 (base+drive+shooter)',
+                src: '/models/r2-base-drive-shooter.glb',
             },
             {
                 id: 'r2-2k24',
                 label: 'R2 2k24',
-                src: '/models/r2-2k24.obj',
+                src: '/models/r2-2k24.glb',
             },
         ],
         []

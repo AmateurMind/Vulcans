@@ -126,23 +126,59 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
             const gltfLoader = new GLTFLoader()
             const loadGlb = async () => {
                 try {
-                    const response = await fetch(src, { cache: 'no-store' })
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status} while fetching model`)
+                    const GLB_MAGIC = 0x46546c67 // "glTF" in little-endian
+                    const buildAttemptUrl = (attempt: number) => {
+                        if (attempt === 0) return src
+                        const sep = src.includes('?') ? '&' : '?'
+                        return `${src}${sep}cb=${Date.now()}-${attempt}`
                     }
 
-                    const buffer = await response.arrayBuffer()
-                    const probeSize = Math.min(buffer.byteLength, 160)
-                    const probeText = new TextDecoder().decode(new Uint8Array(buffer.slice(0, probeSize)))
+                    const fetchGlbWithRetry = async (maxAttempts = 3) => {
+                        let lastError: unknown = null
+                        for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+                            try {
+                                const url = buildAttemptUrl(attempt)
+                                const response = await fetch(url, { cache: 'no-store' })
+                                if (!response.ok) {
+                                    throw new Error(`HTTP ${response.status} while fetching model`)
+                                }
 
-                    if (probeText.startsWith('version https://git-lfs.github.com/spec/v1')) {
-                        throw new Error('Model URL returned a Git LFS pointer file, not a GLB binary')
+                                const buffer = await response.arrayBuffer()
+                                const probeSize = Math.min(buffer.byteLength, 160)
+                                const probeText = new TextDecoder().decode(new Uint8Array(buffer.slice(0, probeSize)))
+                                if (probeText.startsWith('version https://git-lfs.github.com/spec/v1')) {
+                                    throw new Error('Model URL returned a Git LFS pointer file, not a GLB binary')
+                                }
+
+                                const trimmedProbe = probeText.trimStart().toLowerCase()
+                                if (trimmedProbe.startsWith('<!doctype') || trimmedProbe.startsWith('<html')) {
+                                    throw new Error('Model URL returned HTML instead of a GLB file')
+                                }
+
+                                if (buffer.byteLength < 12) {
+                                    throw new Error('GLB response is too small to be valid')
+                                }
+
+                                const header = new DataView(buffer, 0, 12)
+                                const magic = header.getUint32(0, true)
+                                const declaredLength = header.getUint32(8, true)
+                                if (magic !== GLB_MAGIC) {
+                                    throw new Error('Response is not a valid GLB binary (missing glTF header)')
+                                }
+                                if (declaredLength !== buffer.byteLength) {
+                                    throw new Error(
+                                        `GLB size mismatch: declared ${declaredLength} bytes, received ${buffer.byteLength} bytes`
+                                    )
+                                }
+                                return buffer
+                            } catch (error) {
+                                lastError = error
+                            }
+                        }
+                        throw lastError ?? new Error('Unknown GLB fetch error')
                     }
 
-                    const trimmedProbe = probeText.trimStart().toLowerCase()
-                    if (trimmedProbe.startsWith('<!doctype') || trimmedProbe.startsWith('<html')) {
-                        throw new Error('Model URL returned HTML instead of a GLB file')
-                    }
+                    const buffer = await fetchGlbWithRetry()
 
                     gltfLoader.parse(
                         buffer,
@@ -161,7 +197,7 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
                     if (cancelled) return
                     console.error('Failed to load GLB:', error)
                     const message = error instanceof Error ? error.message : 'Unknown GLB loading error'
-                    setLoadError(message)
+                    setLoadError(`${message}. Try redeploy + hard refresh.`)
                 }
             }
             void loadGlb()

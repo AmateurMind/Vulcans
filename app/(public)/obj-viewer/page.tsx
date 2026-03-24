@@ -14,12 +14,12 @@ export default function OBJViewerPage() {
             {
                 id: 'r2-base-drive-shooter-obj',
                 label: 'R2 (base+drive+shooter)',
-                src: '/models/r2-base-drive-shooter.glb',
+                src: '/models/r2-base-drive-shooter.glb?v=2',
             },
             {
                 id: 'r2-2k24',
                 label: 'R2 2k24',
-                src: '/models/r2-2k24.glb',
+                src: '/models/r2-2k24.glb?v=2',
             },
         ],
         []
@@ -34,7 +34,7 @@ export default function OBJViewerPage() {
         <main className="min-h-screen bg-vulcan-bg-primary text-vulcan-text-primary">
             <section className="pt-28 pb-6 px-6 text-center">
                 <h1 className="text-4xl md:text-5xl font-bold text-vulcan-text-primary">3D Model Viewer</h1>
-                <p className="text-vulcan-text-muted mt-3">Switch between your R2 OBJ models</p>
+                <p className="text-vulcan-text-muted mt-3">Switch between your R2 3D models</p>
             </section>
 
             <section className="px-6 pb-16">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -13,11 +13,14 @@ interface OBJViewerProps {
 
 export function OBJViewer({ src, className = '' }: OBJViewerProps) {
     const containerRef = useRef<HTMLDivElement>(null)
+    const [loadError, setLoadError] = useState<string | null>(null)
 
     useEffect(() => {
         if (!containerRef.current) return
 
         const container = containerRef.current
+        let cancelled = false
+        setLoadError(null)
 
         // Scene setup
         const scene = new THREE.Scene()
@@ -119,16 +122,49 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
             fitCameraToObject(object)
         }
 
-        if (src.toLowerCase().endsWith('.glb')) {
+        if (src.toLowerCase().includes('.glb')) {
             const gltfLoader = new GLTFLoader()
-            gltfLoader.load(
-                src,
-                (gltf) => normalizeLoadedObject(gltf.scene, false),
-                undefined,
-                (error) => {
+            const loadGlb = async () => {
+                try {
+                    const response = await fetch(src, { cache: 'no-store' })
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status} while fetching model`)
+                    }
+
+                    const buffer = await response.arrayBuffer()
+                    const probeSize = Math.min(buffer.byteLength, 160)
+                    const probeText = new TextDecoder().decode(new Uint8Array(buffer.slice(0, probeSize)))
+
+                    if (probeText.startsWith('version https://git-lfs.github.com/spec/v1')) {
+                        throw new Error('Model URL returned a Git LFS pointer file, not a GLB binary')
+                    }
+
+                    const trimmedProbe = probeText.trimStart().toLowerCase()
+                    if (trimmedProbe.startsWith('<!doctype') || trimmedProbe.startsWith('<html')) {
+                        throw new Error('Model URL returned HTML instead of a GLB file')
+                    }
+
+                    gltfLoader.parse(
+                        buffer,
+                        '',
+                        (gltf) => {
+                            if (cancelled) return
+                            normalizeLoadedObject(gltf.scene, false)
+                        },
+                        (error) => {
+                            if (cancelled) return
+                            console.error('Failed to parse GLB:', error)
+                            setLoadError('Failed to parse GLB model. Check if the deployed file is a valid binary.')
+                        }
+                    )
+                } catch (error) {
+                    if (cancelled) return
                     console.error('Failed to load GLB:', error)
+                    const message = error instanceof Error ? error.message : 'Unknown GLB loading error'
+                    setLoadError(message)
                 }
-            )
+            }
+            void loadGlb()
         } else {
             const objLoader = new OBJLoader()
             objLoader.load(
@@ -137,6 +173,7 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
                 undefined,
                 (error) => {
                     console.error('Failed to load OBJ:', error)
+                    setLoadError('Failed to load OBJ model.')
                 }
             )
         }
@@ -160,6 +197,7 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
 
         // Cleanup
         return () => {
+            cancelled = true
             cancelAnimationFrame(animationId)
             window.removeEventListener('resize', handleResize)
             if (loadedObject) {
@@ -175,6 +213,12 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
             ref={containerRef}
             className={`w-full h-full ${className}`}
             style={{ minHeight: '400px' }}
-        />
+        >
+            {loadError && (
+                <div className="absolute inset-0 flex items-center justify-center p-6 text-center text-sm text-red-700 bg-red-50/90">
+                    {loadError}
+                </div>
+            )}
+        </div>
     )
 }

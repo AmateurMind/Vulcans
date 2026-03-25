@@ -58,19 +58,16 @@ export default function OBJViewerPage() {
                 </div>
 
                 <div className="max-w-6xl mx-auto glass bg-vulcan-bg-secondary border-vulcan-border rounded-xs overflow-hidden shadow-xl">
-                    <div className="h-[72vh] min-h-[520px] w-full relative">
+                        <div className="h-[72vh] min-h-[520px] w-full relative">
                         {selectedModel ? (
-                            <OBJViewer src={selectedModel.src} className="w-full h-full" />
+                            <OBJViewer 
+                                src={selectedModel.src} 
+                                modelName={selectedModel.label}
+                                className="w-full h-full" 
+                            />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center text-vulcan-text-muted px-6 text-center">
                                 No model files found in <code className="mx-1">public/models</code>. Add a <code className="mx-1">.obj</code> or <code className="mx-1">.glb</code> file and refresh.
-                            </div>
-                        )}
-
-                        {selectedModel && (
-                            <div className="absolute top-4 left-4 px-3 py-2 bg-black/50 backdrop-blur-sm rounded-lg border border-white/20 text-sm text-white/90">
-                                <div className="font-semibold">Model: {selectedModel.label}</div>
-                                <div className="text-white/70 text-xs">Drag to orbit | Scroll to zoom</div>
                             </div>
                         )}
                     </div>

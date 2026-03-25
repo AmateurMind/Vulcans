@@ -22,7 +22,7 @@ export function LandingHero() {
 
             <div className="flex flex-col md:flex-row h-full">
                 {/* Left content */}
-                <div className="flex-1 p-8 md:p-16 relative z-10 flex flex-col justify-center">
+                <div className="flex-1 p-8 md:p-16 relatgit reset --hard origin/mastergit reset --hard origin/masterive z-10 flex flex-col justify-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}

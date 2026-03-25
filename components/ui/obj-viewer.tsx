@@ -5,15 +5,19 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+import { CircularLoader } from '@/components/ui/circular-loader'
 
 interface OBJViewerProps {
     src: string
     className?: string
+    modelName?: string
 }
 
-export function OBJViewer({ src, className = '' }: OBJViewerProps) {
+export function OBJViewer({ src, className = '', modelName = 'R2 (base+drive+shooter)' }: OBJViewerProps) {
     const containerRef = useRef<HTMLDivElement>(null)
     const [loadError, setLoadError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [progress, setProgress] = useState(0)
 
     useEffect(() => {
         if (!containerRef.current) return
@@ -21,6 +25,8 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
         const container = containerRef.current
         let cancelled = false
         setLoadError(null)
+        setLoading(true)
+        setProgress(0)
 
         // Scene setup
         const scene = new THREE.Scene()
@@ -65,7 +71,7 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
         rimLight.position.set(-120, 60, -100)
         scene.add(rimLight)
 
-        // Subtle ground cue (no strong blue grid)
+        // Subtle ground cue
         const grid = new THREE.GridHelper(440, 16, 0xd2d2d2, 0xd8d8d8)
         grid.position.y = -0.005
         ;(grid.material as THREE.Material).transparent = true
@@ -120,6 +126,14 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
             loadedObject = object
             scene.add(object)
             fitCameraToObject(object)
+            setLoading(false)
+        }
+
+        const onProgress = (xhr: ProgressEvent) => {
+            if (xhr.lengthComputable) {
+                const percentComplete = (xhr.loaded / xhr.total) * 100
+                setProgress(Math.round(percentComplete))
+            }
         }
 
         if (src.toLowerCase().includes('.glb')) {
@@ -190,14 +204,16 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
                         (error) => {
                             if (cancelled) return
                             console.error('Failed to parse GLB:', error)
-                            setLoadError('Failed to parse GLB model. Check if the deployed file is a valid binary.')
+                            setLoadError('Failed to parse GLB model.')
+                            setLoading(false)
                         }
                     )
                 } catch (error) {
                     if (cancelled) return
                     console.error('Failed to load GLB:', error)
                     const message = error instanceof Error ? error.message : 'Unknown GLB loading error'
-                    setLoadError(`${message}. Try redeploy + hard refresh.`)
+                    setLoadError(`${message}.`)
+                    setLoading(false)
                 }
             }
             void loadGlb()
@@ -206,10 +222,11 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
             objLoader.load(
                 src,
                 (object) => normalizeLoadedObject(object, true),
-                undefined,
+                onProgress,
                 (error) => {
                     console.error('Failed to load OBJ:', error)
                     setLoadError('Failed to load OBJ model.')
+                    setLoading(false)
                 }
             )
         }
@@ -245,14 +262,46 @@ export function OBJViewer({ src, className = '' }: OBJViewerProps) {
     }, [src])
 
     return (
-        <div
-            ref={containerRef}
-            className={`w-full h-full ${className}`}
-            style={{ minHeight: '400px' }}
-        >
+        <div className={`relative w-full h-full group ${className}`} style={{ minHeight: '400px' }}>
+            <div ref={containerRef} className="w-full h-full" />
+            
+            {/* Info Overlay */}
+            <div className="absolute top-4 left-4 pointer-events-none select-none">
+                <div className="bg-black/60 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 shadow-2xl">
+                    <div className="flex flex-col gap-0.5">
+                        <span className="text-[10px] text-white/50 font-tech uppercase tracking-[0.2em]">Model System</span>
+                        <h3 className="text-sm text-white/90 font-bold font-tech tracking-wide leading-none">{modelName}</h3>
+                        <p className="text-[9px] text-white/40 font-medium mt-1 uppercase tracking-wider">Drag to orbit | Scroll to zoom</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Error State */}
             {loadError && (
-                <div className="absolute inset-0 flex items-center justify-center p-6 text-center text-sm text-red-700 bg-red-50/90">
-                    {loadError}
+                <div className="absolute inset-0 flex items-center justify-center p-6 text-center text-sm font-tech text-red-500 bg-[#0B0B0F]/90 backdrop-blur-sm z-30">
+                    <div className="max-w-xs space-y-2">
+                        <div className="text-xl">⚠️</div>
+                        <p className="leading-relaxed opacity-90">{loadError}</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Loading State */}
+            {loading && !loadError && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0B0B0F]/5 z-20 backdrop-blur-[2px]">
+                    <div className="relative flex flex-col items-center p-8 rounded-2xl w-full">
+                        <CircularLoader text="Loading" className="scale-90" />
+                        {progress > 0 && (
+                            <div className="mt-8 flex flex-col items-center gap-2">
+                                <span className="text-[10px] font-tech text-black/40 uppercase tracking-[0.3em] font-bold">
+                                    Decoding Stream
+                                </span>
+                                <div className="text-xs font-tech text-black/60 font-medium">
+                                    {progress}%
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

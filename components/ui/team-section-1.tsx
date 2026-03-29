@@ -148,11 +148,11 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                                 )}
 
                                 {/* Text - Bottom Left */}
-                                <div className="relative z-10 p-6 flex flex-col justify-end items-start text-left w-full">
-                                    <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight drop-shadow-sm mb-1.5">
+                                <div className="relative z-10 p-6 flex flex-col justify-end items-start text-left w-full mt-auto bg-gradient-to-t from-black/90 pt-8">
+                                    <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight drop-shadow-sm mb-1">
                                         {member.name}
                                     </h3>
-                                    <p className="text-sm md:text-base font-medium text-gray-300">
+                                    <p className="text-sm md:text-base font-medium text-primary drop-shadow-sm">
                                         {member.designation}
                                     </p>
                                 </div>

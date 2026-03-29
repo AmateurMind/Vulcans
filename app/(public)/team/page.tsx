@@ -189,12 +189,8 @@ export default function TeamPage() {
     })
     .map((member) => ({
       name: member.name,
-      designation:
-        member.role === "Team Member"
-          ? member.department || "NA"
-          : member.department
-            ? `${member.role} - ${member.department}`
-            : member.role || "Team Member",
+      designation: member.role && member.role !== "Team Member" ? member.role : "Team Member",
+      department: member.department || "",
       imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
       socialLinks: [{ icon: Linkedin, href: member.linkedIn || "#" }],
     }));

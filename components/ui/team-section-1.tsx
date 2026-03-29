@@ -115,55 +115,47 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                         </div>
                     )}
 
-                    <div className="relative z-10 mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-8 mt-12">
+                    <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 mt-12">
                         {members.map((member, index) => (
                             <div
                                 key={index}
-                                className="group relative flex flex-col items-center justify-end overflow-hidden rounded-xl bg-card p-6 text-center shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-2xl border border-muted"
-                                style={{
-                                    color: "hsl(var(--foreground))",
-                                }}
+                                className="group relative flex flex-col justify-end overflow-hidden rounded-xl shadow-lg transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-xl aspect-[4/5] bg-background"
                             >
-                                <div
-                                    className="absolute bottom-0 left-0 right-0 h-1/2 origin-bottom scale-y-0 transform rounded-t-full bg-gradient-to-t from-primary/20 to-transparent transition-transform duration-500 ease-out group-hover:scale-y-100"
-                                    style={{ transitionDelay: `${index * 50}ms` }}
+                                <img
+                                    src={member.imageSrc}
+                                    alt={member.name}
+                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
+                                
+                                {/* Subtle dark gradient for text readability at the bottom */}
+                                <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 transition-opacity duration-300" />
 
-                                <div
-                                    className="relative z-10 h-32 w-32 overflow-hidden rounded-full border-4 border-transparent bg-background/20 transition-all duration-500 ease-out group-hover:border-primary group-hover:scale-105"
-                                    style={{ transitionDelay: `${index * 100}ms` }}
-                                >
-                                    <img
-                                        src={member.imageSrc}
-                                        alt={member.name}
-                                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                                    />
-                                </div>
-
-                                <div className="relative z-10 mt-6 min-h-[80px] flex flex-col justify-start">
-                                    <h3 className="text-xl font-semibold text-foreground leading-tight">
-                                        {member.name}
-                                    </h3>
-                                    <p className="text-sm font-medium text-primary mt-1">
-                                        {member.designation}
-                                    </p>
-                                </div>
-
+                                {/* Social links - Top Right square overlays */}
                                 {member.socialLinks && member.socialLinks.length > 0 && (
-                                    <div className="relative z-10 mt-4 flex gap-3 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                                    <div className="absolute top-4 right-4 flex gap-2 z-20">
                                         {member.socialLinks.map((link, linkIndex) => (
                                             <a
                                                 key={linkIndex}
                                                 href={link.href}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-muted-foreground hover:text-primary transition-colors"
+                                                className="flex items-center justify-center h-8 w-8 text-foreground hover:text-primary-foreground hover:bg-primary transition-colors bg-background/60 backdrop-blur-md rounded-sm shadow-sm"
                                             >
-                                                <link.icon className="h-5 w-5" />
+                                                <link.icon className="h-4 w-4" />
                                             </a>
                                         ))}
                                     </div>
                                 )}
+
+                                {/* Text - Bottom Left */}
+                                <div className="relative z-10 p-6 flex flex-col justify-end items-start text-left w-full">
+                                    <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight drop-shadow-sm mb-1.5">
+                                        {member.name}
+                                    </h3>
+                                    <p className="text-sm md:text-base font-medium text-gray-300">
+                                        {member.designation}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>

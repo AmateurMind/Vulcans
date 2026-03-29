@@ -26,6 +26,7 @@ const ID_CARD_IMAGES = [
 ];
 const GENERIC_PROFILE_IMAGE =
   "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&h=400&fit=crop";
+const TEAM_LINKEDIN_URL = "https://www.linkedin.com/company/teamvulcans/";
 
 const FE_STUDENTS = [
   { name: "Aditya Jadhav", imageSrc: "/ID CARD/FE/Aditya jadhav.jpg" },
@@ -98,7 +99,7 @@ export default function TeamPage() {
       socialLinks: [
         {
           icon: Linkedin,
-          href: "https://www.linkedin.com/in/shreyaskumbhar185",
+          href: TEAM_LINKEDIN_URL,
         },
       ],
     },
@@ -108,16 +109,14 @@ export default function TeamPage() {
       socialLinks: [
         {
           icon: Linkedin,
-          href: "https://www.linkedin.com/in/chase-gunjal-b5a1b92b4",
+          href: TEAM_LINKEDIN_URL,
         },
       ],
     },
     {
       name: "Asmi Patil",
       designation: "Electronics Lead",
-      socialLinks: [
-        { icon: Linkedin, href: "https://www.linkedin.com/in/asmipatil/" },
-      ],
+      socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
     },
     {
       name: "Advait Deo",
@@ -125,7 +124,7 @@ export default function TeamPage() {
       socialLinks: [
         {
           icon: Linkedin,
-          href: "https://www.linkedin.com/in/advait-deo-20b179345/",
+          href: TEAM_LINKEDIN_URL,
         },
       ],
     },
@@ -135,7 +134,7 @@ export default function TeamPage() {
       socialLinks: [
         {
           icon: Linkedin,
-          href: "https://www.linkedin.com/in/sarvesh-daphale-3443a8316",
+          href: TEAM_LINKEDIN_URL,
         },
       ],
     },
@@ -145,7 +144,7 @@ export default function TeamPage() {
       socialLinks: [
         {
           icon: Linkedin,
-          href: "https://www.linkedin.com/in/harshal-raje-a0b391323",
+          href: TEAM_LINKEDIN_URL,
         },
       ],
     },
@@ -155,14 +154,14 @@ export default function TeamPage() {
       socialLinks: [
         {
           icon: Linkedin,
-          href: "https://www.linkedin.com/in/vaishnavi-sutar-2bba892b4",
+          href: TEAM_LINKEDIN_URL,
         },
       ],
     },
     {
       name: "Samiksha Mote",
       designation: "Joint Secretary",
-      socialLinks: [{ icon: Linkedin, href: "#" }],
+      socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
     },
   ] as const;
 
@@ -192,7 +191,7 @@ export default function TeamPage() {
       designation: member.role && member.role !== "Team Member" ? member.role : "Team Member",
       department: member.department || "",
       imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
-      socialLinks: [{ icon: Linkedin, href: member.linkedIn || "#" }],
+      socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
     }));
 
   return (

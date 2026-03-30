@@ -85,7 +85,7 @@ export default function Home() {
             </h2>
             <p className="text-[var(--muted-foreground)] text-lg leading-relaxed mb-8">
               Vulcans Robotics Club at PESMCOE is a student-led engineering team focused on design, manufacturing,
-              embedded systems, and autonomous control. For 8+ years, our members have built robots that perform on
+              embedded systems, and autonomous control. For 15+ years, our members have built robots that perform on
               national competition stages while mentoring the next generation of builders on campus.
             </p>
             <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary-hover)] font-semibold transition-all duration-200 group shadow-lg shadow-[var(--primary-glow)]">

@@ -89,7 +89,7 @@ const overlays: TextOverlay[] = [
         align: 'center',
         eyebrow: 'WE ARE',
         heading: 'Built by\nVulcans.',
-        sub: '8+ years. 24+ competition wins. 60+ active members.',
+        sub: '15+ years. 20+ competition . 50+ active members.',
     },
 ];
 

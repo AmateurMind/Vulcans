@@ -161,6 +161,11 @@ export const update = mutation({
         // With `patch`, if `imageId` is `undefined`, it will update the field to `undefined`! 
         // Oh wait, `v.optional` means if it's omitted, it won't be in `args`. If it's explicitly undefined, it might not be in `args` either.
         
+        const existingEvent = await ctx.db.get(id);
+        if (!existingEvent) {
+            throw new Error("Event not found. It may have been deleted.");
+        }
+
         await ctx.db.patch(id, {
             title: updateData.title,
             slug: updateData.slug,

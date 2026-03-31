@@ -5,7 +5,7 @@ import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Loader2, Plus, Trash2, Edit2, X } from "lucide-react";
+import { Loader2, Plus, Trash2, Edit2, X, Eye } from "lucide-react";
 
 function slugify(input: string) {
   return input
@@ -58,7 +58,7 @@ export default function Home() {
 }
 
 function EventsManager() {
-  const events = useQuery(api.events.list) ?? [];
+  const events = useQuery(api.events.listWithImageUrls);
   const createEvent = useMutation(api.events.create);
   const updateEvent = useMutation(api.events.update);
   const removeEvent = useMutation(api.events.remove);
@@ -66,6 +66,7 @@ function EventsManager() {
 
   const [loading, setLoading] = useState(false);
   const [editingEventId, setEditingEventId] = useState<Id<"events"> | null>(null);
+  const [previewEvent, setPreviewEvent] = useState<any>(null);
   const [formData, setFormData] = useState<{ title: string; slug: string; description: string; date: string; status: "upcoming" | "past" }>({
     title: "",
     slug: "",
@@ -105,15 +106,24 @@ function EventsManager() {
       }
 
       if (editingEventId) {
-        await updateEvent({ id: editingEventId, ...payload });
+        try {
+          await updateEvent({ id: editingEventId, ...payload });
+        } catch (updateError: any) {
+          if (updateError.message?.includes("Event not found") || updateError.message?.includes("nonexistent document ID")) {
+            console.warn("Event not found for update, creating a new event instead...");
+            await createEvent(payload);
+          } else {
+            throw updateError;
+          }
+        }
       } else {
         await createEvent(payload);
       }
       
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert(editingEventId ? "Failed to update event" : "Failed to create event");
+      alert(error.message || (editingEventId ? "Failed to update event" : "Failed to create event"));
     } finally {
       setLoading(false);
     }
@@ -226,6 +236,9 @@ function EventsManager() {
                 </span>
               </div>
               <div className="flex items-center gap-2 ml-4">
+                <button onClick={() => setPreviewEvent(event)} className="p-2 text-green-500 hover:bg-green-500/10 rounded-lg transition-colors" title="Quick Preview">
+                  <Eye className="w-4 h-4" />
+                </button>
                 <button onClick={() => {
                   setEditingEventId(event._id);
                   setFormData({
@@ -236,10 +249,17 @@ function EventsManager() {
                     status: event.status || "upcoming",
                   });
                   window.scrollTo({ top: 0, behavior: "smooth" });
-                }} className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors">
+                }} className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors" title="Edit Event">
                   <Edit2 className="w-4 h-4" />
                 </button>
-                <button onClick={() => { if (confirm("Delete this event?")) removeEvent({ id: event._id }) }} className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
+                <button onClick={() => { 
+                  if (confirm("Delete this event?")) {
+                    removeEvent({ id: event._id });
+                    if (editingEventId === event._id) {
+                      resetForm();
+                    }
+                  }
+                }} className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors" title="Delete Event">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -247,6 +267,54 @@ function EventsManager() {
           ))
         )}
       </div>
+
+      {/* Admin Preview Modal */}
+      {previewEvent && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setPreviewEvent(null)}>
+          <div className="bg-background max-w-6xl w-full max-h-[90vh] overflow-y-auto rounded-2xl relative shadow-2xl" onClick={e => e.stopPropagation()}>
+            <button className="absolute top-4 right-4 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 z-10 backdrop-blur-md transition-colors" onClick={() => setPreviewEvent(null)}>
+              <X className="w-5 h-5" />
+            </button>
+            <div className="grid md:grid-cols-2 gap-0 h-full min-h-[60vh]">
+              {/* Left Side: Full Image */}
+              <div className="w-full h-full min-h-[400px] relative bg-black/5 flex flex-col items-center justify-center p-8 bg-zinc-950">
+                {previewEvent.imageUrls?.length > 0 ? (
+                  <div className="flex flex-col gap-4 w-full h-full items-center justify-center">
+                    {previewEvent.imageUrls.map((url: string, i: number) => (
+                      <img key={i} src={url} alt={`${previewEvent.title} - ${i}`} className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl" />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-zinc-600 flex flex-col items-center gap-2">
+                    <Eye className="w-8 h-8 opacity-20" />
+                    <p>No preview images</p>
+                  </div>
+                )}
+              </div>
+              
+              {/* Right Side: Description */}
+              <div className="p-8 md:p-12 flex flex-col justify-center bg-background border-l border-border">
+                <div className="mb-8">
+                  <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight leading-tight">{previewEvent.title}</h2>
+                  <div className="flex items-center gap-3">
+                    <span className="text-primary font-medium">{new Date(previewEvent.date).toLocaleDateString()}</span>
+                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md border ${previewEvent.status === "upcoming" ? "bg-primary/10 text-primary border-primary/30" : "bg-muted/50 text-muted-foreground border-border"}`}>
+                      {previewEvent.status === "upcoming" ? "Upcoming" : "Past"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <h3 className="text-xl font-bold mb-4 text-foreground border-b border-border pb-3">What we learned</h3>
+                  <div className="whitespace-pre-wrap text-muted-foreground leading-relaxed text-lg">
+                    {previewEvent.description || <span className="italic opacity-50">No description provided for this event.</span>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

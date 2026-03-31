@@ -1,11 +1,30 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 
-const categories = ['All', 'Competitions', 'Workshop', 'Team', 'Builds']
+const categories = ['All', 'Bots', 'Competitions', 'Workshop', 'Team', 'Builds']
+
+const botGallery = [
+    { id: 101, category: 'Bots', url: '/gallery/bots/2013 BOT.png', title: '2013 Bot', desc: 'Vulcans competition robot - 2013', cols: '' },
+    { id: 102, category: 'Bots', url: '/gallery/bots/2014 BOT.png', title: '2014 Bot', desc: 'Vulcans competition robot - 2014', cols: '' },
+    { id: 103, category: 'Bots', url: '/gallery/bots/2015 BOT.png', title: '2015 Bot', desc: 'Vulcans competition robot - 2015', cols: '' },
+    { id: 104, category: 'Bots', url: '/gallery/bots/2016 BOT.png', title: '2016 Bot', desc: 'Vulcans competition robot - 2016', cols: '' },
+    { id: 105, category: 'Bots', url: '/gallery/bots/2017 BOT.png', title: '2017 Bot', desc: 'Vulcans competition robot - 2017', cols: '' },
+    { id: 106, category: 'Bots', url: '/gallery/bots/2018 BOT.png', title: '2018 Bot', desc: 'Vulcans competition robot - 2018', cols: '' },
+    { id: 107, category: 'Bots', url: '/gallery/bots/2019 BOT.png', title: '2019 Bot', desc: 'Vulcans competition robot - 2019', cols: '' },
+    { id: 108, category: 'Bots', url: '/gallery/bots/2022 BOT 1.png', title: '2022 Bot 1', desc: 'Vulcans competition robot - 2022', cols: 'md:col-span-2' },
+    { id: 109, category: 'Bots', url: '/gallery/bots/2022 BOT 2.png', title: '2022 Bot 2', desc: 'Vulcans competition robot - 2022', cols: '' },
+    { id: 110, category: 'Bots', url: '/gallery/bots/2023 BOT 1.png', title: '2023 Bot 1', desc: 'Vulcans competition robot - 2023', cols: 'md:col-span-2' },
+    { id: 111, category: 'Bots', url: '/gallery/bots/2023 BOT 2.png', title: '2023 Bot 2', desc: 'Vulcans competition robot - 2023', cols: '' },
+    { id: 112, category: 'Bots', url: '/gallery/bots/2024 BOT 1.png', title: '2024 Bot 1', desc: 'Vulcans competition robot - 2024', cols: 'md:col-span-2' },
+    { id: 113, category: 'Bots', url: '/gallery/bots/2024 BOT 2.png', title: '2024 Bot 2', desc: 'Vulcans competition robot - 2024', cols: '' },
+    { id: 114, category: 'Bots', url: '/gallery/bots/2025 BOT 1.jpg', title: '2025 Bot 1', desc: 'Vulcans competition robot - 2025', cols: '' },
+    { id: 115, category: 'Bots', url: '/gallery/bots/2025 BOT 2.jpg', title: '2025 Bot 2', desc: 'Vulcans competition robot - 2025', cols: '' },
+]
 
 const gallery = [
+    ...botGallery,
     {
         id: 1, category: 'Competitions',
         url: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80',
@@ -58,7 +77,18 @@ const gallery = [
 
 export default function GalleryPage() {
     const [active, setActive] = useState('All')
+    const [selectedImage, setSelectedImage] = useState<null | { url: string; title: string; desc: string }>(null)
     const filtered = active === 'All' ? gallery : gallery.filter(g => g.category === active)
+
+    useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setSelectedImage(null)
+            }
+        }
+        window.addEventListener('keydown', onKeyDown)
+        return () => window.removeEventListener('keydown', onKeyDown)
+    }, [])
 
     return (
         <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -102,8 +132,9 @@ export default function GalleryPage() {
                     {filtered.map(item => (
                         <div
                             key={item.id}
+                            onClick={() => setSelectedImage({ url: item.url, title: item.title, desc: item.desc })}
                             className={cn(
-                                'group relative overflow-hidden rounded-2xl border border-[var(--border)] hover:border-[var(--primary)]/30 transition-all duration-300 hover:-translate-y-1',
+                                'group relative overflow-hidden rounded-2xl border border-[var(--border)] hover:border-[var(--primary)]/30 transition-all duration-300 hover:-translate-y-1 cursor-zoom-in',
                                 item.cols
                             )}
                         >
@@ -122,6 +153,25 @@ export default function GalleryPage() {
                     ))}
                 </div>
             </section>
+
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <div className="max-w-6xl w-full max-h-[92vh] flex flex-col gap-3" onClick={(e) => e.stopPropagation()}>
+                        <img
+                            src={selectedImage.url}
+                            alt={selectedImage.title}
+                            className="w-full max-h-[82vh] object-contain rounded-xl border border-white/20 bg-black/40"
+                        />
+                        <div className="text-center">
+                            <h3 className="text-white font-semibold text-lg">{selectedImage.title}</h3>
+                            <p className="text-white/75 text-sm">{selectedImage.desc}</p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     )
 }

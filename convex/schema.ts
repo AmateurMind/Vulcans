@@ -7,12 +7,14 @@ export default defineSchema({
 
     events: defineTable({
         title: v.string(),
+        slug: v.optional(v.string()),
         description: v.string(),
         date: v.string(),
         status: v.optional(v.union(v.literal("past"), v.literal("upcoming"))),
         imageId: v.optional(v.id("_storage")),
+        imageIds: v.optional(v.array(v.id("_storage"))),
         createdAt: v.number(),
-    }),
+    }).index("by_slug", ["slug"]),
 
     certificates: defineTable({
         title: v.string(),

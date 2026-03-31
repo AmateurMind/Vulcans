@@ -4,9 +4,10 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { CalendarDays } from "lucide-react";
 import { useMemo } from "react";
+import Link from "next/link";
 
 export function EventsList() {
-    const events = useQuery(api.events.list);
+    const events = useQuery(api.events.listWithImageUrls);
 
     const upcomingEvents = useMemo(() => {
         if (!events) return [];
@@ -36,14 +37,19 @@ export function EventsList() {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {upcomingEvents.map((h, i) => (
-                            <div key={i} className="p-7 rounded-2xl glass bg-[var(--card)] border border-[var(--border)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_20px_var(--primary-glow)] group">
+                            <Link key={i} href={`/events/${h.pathId}`} className="block p-7 rounded-2xl glass bg-[var(--card)] border border-[var(--border)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[0_0_20px_var(--primary-glow)] group">
+                                {h.imageUrls?.[0] && (
+                                    <div className="mb-4 overflow-hidden rounded-xl border border-[var(--border)]">
+                                        <img src={h.imageUrls[0]} alt={h.title} className="w-full h-44 object-cover group-hover:scale-[1.03] transition-transform duration-300" />
+                                    </div>
+                                )}
                                 <div className="mb-4 p-3 rounded-xl bg-[var(--primary-maroon)]/30 w-fit group-hover:scale-110 transition-transform">
                                     <CalendarDays className="w-7 h-7 text-[var(--primary)]" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2 text-[var(--foreground)]">{h.title}</h3>
                                 <p className="text-[var(--primary)] text-sm mb-2 font-medium">{h.date}</p>
                                 <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{h.description}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -57,14 +63,19 @@ export function EventsList() {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 opacity-80 hover:opacity-100 transition-opacity">
                         {pastEvents.map((h, i) => (
-                            <div key={i} className="p-7 rounded-2xl glass bg-[var(--card)] border border-[var(--border)] transition-all duration-300 group">
+                            <Link key={i} href={`/events/${h.pathId}`} className="block p-7 rounded-2xl glass bg-[var(--card)] border border-[var(--border)] transition-all duration-300 group">
+                                {h.imageUrls?.[0] && (
+                                    <div className="mb-4 overflow-hidden rounded-xl border border-[var(--border)]">
+                                        <img src={h.imageUrls[0]} alt={h.title} className="w-full h-44 object-cover" />
+                                    </div>
+                                )}
                                 <div className="mb-4 p-3 rounded-xl bg-[var(--muted)] w-fit group-hover:scale-110 transition-transform">
                                     <CalendarDays className="w-7 h-7 text-[var(--muted-foreground)]" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2 text-[var(--foreground)]">{h.title}</h3>
                                 <p className="text-[var(--muted-foreground)] text-sm mb-2 font-medium">{h.date}</p>
                                 <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{h.description}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>

@@ -25,7 +25,7 @@ const ID_CARD_IMAGES = [
   "/ID CARD/Yash Doke.jpg",
 ];
 const GENERIC_PROFILE_IMAGE =
-  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&h=400&fit=crop";
+  "";
 const TEAM_LINKEDIN_URL = "https://www.linkedin.com/company/teamvulcans/";
 
 const FE_STUDENTS = [

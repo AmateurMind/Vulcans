@@ -25,54 +25,6 @@ const botGallery = [
 
 const gallery = [
     ...botGallery,
-    {
-        id: 1, category: 'Competitions',
-        url: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80',
-        title: 'Robocon 2024', desc: 'Our bot taking the field at nationals',
-        cols: 'md:col-span-2',
-    },
-    {
-        id: 2, category: 'Builds',
-        url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80',
-        title: 'Circuit Design', desc: 'Precision PCB work by the electrical team',
-        cols: '',
-    },
-    {
-        id: 3, category: 'Workshop',
-        url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&q=80',
-        title: 'CAD Session', desc: 'Mechanical designs coming to life',
-        cols: '',
-    },
-    {
-        id: 4, category: 'Team',
-        url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80',
-        title: 'Team Celebration', desc: 'After our national semi-final win',
-        cols: '',
-    },
-    {
-        id: 5, category: 'Builds',
-        url: 'https://images.unsplash.com/photo-1563207153-f403bf289163?w=600&q=80',
-        title: 'Arm Mechanism', desc: 'Building our signature 6-DOF arm',
-        cols: 'md:col-span-2',
-    },
-    {
-        id: 6, category: 'Competitions',
-        url: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80',
-        title: 'Award Ceremony', desc: 'Accepting 3rd place at Robocon nationals',
-        cols: '',
-    },
-    {
-        id: 7, category: 'Workshop',
-        url: 'https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600&q=80',
-        title: 'ROS2 Workshop', desc: 'Training session for software team',
-        cols: '',
-    },
-    {
-        id: 8, category: 'Team',
-        url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80',
-        title: 'Strategy Planning', desc: 'Pre-competition strategy session',
-        cols: '',
-    },
 ]
 
 export default function GalleryPage() {

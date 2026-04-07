@@ -6,7 +6,7 @@ import Script from 'next/script'
 
 const socials = [
     { icon: <Instagram className="w-5 h-5" />, label: 'Instagram', href: 'https://www.instagram.com/mcoeteamvulcans/' },
-    { icon: <Linkedin className="w-5 h-5" />, label: 'LinkedIn', href: 'https://www.linkedin.com/company/vulcan-robotics-team/' },
+    { icon: <Linkedin className="w-5 h-5" />, label: 'LinkedIn', href: 'https://www.linkedin.com/company/teamvulcans/' },
 ]
 
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ''
@@ -115,20 +115,50 @@ export default function ContactPage() {
                         <div className="glass rounded-2xl p-7">
                             <h2 className="text-xl font-bold mb-6">Contact Info</h2>
                             <div className="flex flex-col gap-5">
-                                {[
-                                    { icon: <Mail className="w-5 h-5 text-[var(--primary)]" />, label: 'Email', value: 'robocon_teamvulcans@moderncoe.edu.in' },
-                                    { icon: <MapPin className="w-5 h-5 text-[var(--primary)]" />, label: 'Location', value: 'PES\'s Modern College of Engineering, Pune, Maharashtra 411005' },
-                                    { icon: <Phone className="w-5 h-5 text-[var(--primary)]" />, label: 'Phone', value: '+91 75882 48009' },
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-start gap-4">
-                                        <div className="p-2 rounded-xl bg-[var(--background)]/50 shrink-0">{item.icon}</div>
-                                        <div>
-                                            <p className="text-xs text-[var(--muted-foreground)] font-semibold uppercase tracking-wider">{item.label}</p>
-                                            <p className="text-[var(--foreground)] text-sm mt-0.5">{item.value}</p>
-                                        </div>
+                            {[
+                                { 
+                                    icon: <Mail className="w-5 h-5 text-[var(--primary)]" />, 
+                                    label: 'Email', 
+                                    value: 'robocon_teamvulcans@moderncoe.edu.in',
+                                    link: 'mailto:robocon_teamvulcans@moderncoe.edu.in'
+                                },
+                                { 
+                                    icon: <MapPin className="w-5 h-5 text-[var(--primary)]" />, 
+                                    label: 'Location', 
+                                    value: 'PES\'s Modern College of Engineering, Pune, Maharashtra 411005' 
+                                },
+                                { 
+                                    icon: <Phone className="w-5 h-5 text-[var(--primary)]" />, 
+                                    label: 'Phone', 
+                                    value: '+91 75882 48009',
+                                    link: 'tel:+917588248009'
+                                },
+                            ].map((item, i) => (
+                                <div key={i} className="flex items-start gap-4">
+                                    <div className="p-2 rounded-xl bg-[var(--background)]/50 shrink-0">
+                                        {item.icon}
                                     </div>
-                                ))}
-                            </div>
+                                    <div>
+                                        <p className="text-xs text-[var(--muted-foreground)] font-semibold uppercase tracking-wider">
+                                            {item.label}
+                                        </p>
+
+                                        {item.link ? (
+                                            <a 
+                                                href={item.link} 
+                                                className="text-[var(--foreground)] text-sm mt-0.5 hover:underline"
+                                            >
+                                                {item.value}
+                                            </a>
+                                        ) : (
+                                            <p className="text-[var(--foreground)] text-sm mt-0.5">
+                                                {item.value}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                         </div>
 
                         <div className="glass rounded-2xl p-7">

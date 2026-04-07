@@ -29,7 +29,7 @@ const navColumns = [
 
 const socials = [
     { icon: <Instagram className="w-4 h-4" />, href: 'https://www.instagram.com/mcoeteamvulcans/', label: 'Instagram' },
-    { icon: <Linkedin className="w-4 h-4" />, href: 'https://www.linkedin.com/company/vulcan-robotics-team/', label: 'LinkedIn' },
+    { icon: <Linkedin className="w-4 h-4" />, href: 'https://www.linkedin.com/company/teamvulcans/', label: 'LinkedIn' },
 ]
 
 export function Footer() {
@@ -39,11 +39,8 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-[var(--border)]">
                     <div className="md:col-span-2 flex flex-col gap-5">
                         <Link href="/" className="flex items-center gap-2.5 group w-fit">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg shadow-[var(--primary-glow)]" style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-dark))' }}>
-                                <Cpu className="w-5 h-5 text-white" />
-                            </div>
                             <span className="font-bold text-xl tracking-tight text-[var(--foreground)]">
-                                Vul<span className="text-[var(--primary)]">cans</span>
+                                Team <span className="text-[var(--primary)]">Vulcans</span>
                             </span>
                         </Link>
 
@@ -53,9 +50,9 @@ export function Footer() {
                         </p>
 
                         <div className="flex flex-col gap-2.5 text-sm text-[var(--muted-foreground)]">
-                            <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-[var(--primary)]" /> robocon_teamvulcans@moderncoe.edu.in</span>
+                            <a href='mailto:robocon_teamvulcans@moderncoe.edu.in'><span className="flex items-center gap-2"><Mail className="w-4 h-4 text-[var(--primary)]" /> robocon_teamvulcans@moderncoe.edu.in</span></a>
                             <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[var(--primary)]" /> PES&apos;s Modern College of Engineering, Pune</span>
-                            <span className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--primary)]" /> +91 75882 48009</span>
+                            <a href='tel:+917588248009'><span className="flex items-center gap-2"><Phone className="w-4 h-4 text-[var(--primary)]" /> +91 75882 48009</span></a>
                         </div>
                     </div>
 
@@ -80,7 +77,7 @@ export function Footer() {
 
                 <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-[var(--muted-foreground)] text-sm">
-                        © {new Date().getFullYear()} <span className="text-[var(--primary)] font-semibold">Vulcans</span> Robotics Club. All rights reserved.
+                        © {new Date().getFullYear()} <span className="text-[var(--primary)] font-semibold">Team Vulcans</span> Robotics Club PES MCOE. All rights reserved.
                     </p>
 
                     <div className="flex items-center gap-2">

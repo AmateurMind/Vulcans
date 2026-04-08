@@ -6,10 +6,10 @@ import Link from "next/link";
 
 
 const stats = [
-  { label: "National Ranks", value: "Top 5" },
-  { label: "Competitions Won", value: "24+" },
-  { label: "Active Members", value: "60+" },
-  { label: "Years Active", value: "8+" },
+  { label: "Best Ranks", value: "AIR 5" },
+  { label: "Competitions", value: "20+" },
+  { label: "Active Members", value: "50+" },
+  { label: "Years Active", value: "15+" },
 ];
 
 const features = [
@@ -84,7 +84,7 @@ export default function Home() {
               Engineering the <span className="text-shimmer">future</span>, one bot at a time.
             </h2>
             <p className="text-[var(--muted-foreground)] text-lg leading-relaxed mb-8">
-              Vulcans Robotics Club at PESMCOE is a student-led engineering team focused on design, manufacturing,
+              Team Vulcans Robotics Club at PESMCOE is a student-led engineering team focused on design, manufacturing,
               embedded systems, and autonomous control. For 15+ years, our members have built robots that perform on
               national competition stages while mentoring the next generation of builders on campus.
             </p>

@@ -1,31 +1,8 @@
 "use client";
-
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import { Linkedin } from "lucide-react";
 import { TeamSection } from "@/components/ui/team-section-1";
 import Image from "next/image";
 
-const ID_CARD_IMAGES = [
-  "/ID CARD/core/shreyas.jpg",
-  "/ID CARD/core/Asmi Patil.jpg",
-  "/ID CARD/core/advait.jpeg",
-  "/ID CARD/core/Passport (Sarvesh) .jpeg",
-  "/ID CARD/Aditya_garad.jpg",
-  "/ID CARD/ashwin.png",
-  "/ID CARD/ayush tiwari.jpg",
-  "/ID CARD/Harshal Raje.jpg",
-  "/ID CARD/IMG_4546(Harsh Jain).PNG",
-  "/ID CARD/jahnvi.jpg",
-  "/ID CARD/Laukik_Meshram.jpeg",
-  "/ID CARD/passport_photo_meherdeep_chapade.jpg",
-  "/ID CARD/Pranav_Shinde.jpeg",
-  "/ID CARD/Prathamesh_Shingade.jpg",
-  "/ID CARD/Vedant Kaulgekar.jpeg",
-  "/ID CARD/Yash Doke.jpg",
-];
-const GENERIC_PROFILE_IMAGE =
-  "";
 const TEAM_LINKEDIN_URL = "https://www.linkedin.com/company/teamvulcans/";
 
 const FE_STUDENTS = [
@@ -46,160 +23,200 @@ const FE_STUDENTS = [
   { name: "Venkatesh Deore", imageSrc: "/ID CARD/FE/Venkatesh deore.jpg" },
 ];
 
-const NAME_ALIASES: Record<string, string[]> = {
-  janhavipawar: ["jahnvi"],
-  vaishnavisutar: ["vaishanvi"],
-  athravghorpade: ["atharv"],
-};
-
-function normalize(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+interface SocialLink {
+    icon: React.ElementType;
+    href: string;
 }
 
-function getBestImageForName(name: string) {
-  const normalizedName = normalize(name);
-  const tokens = name
-    .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter((token) => token.length > 2);
-  const aliases = NAME_ALIASES[normalizedName] ?? [];
-
-  let bestPath: string | null = null;
-  let bestScore = 0;
-
-  for (const imagePath of ID_CARD_IMAGES) {
-    const normalizedPath = normalize(imagePath);
-    let score = 0;
-
-    if (normalizedPath.includes(normalizedName)) score += 100;
-    for (const token of tokens) {
-      if (normalizedPath.includes(token)) score += 10;
-    }
-    for (const alias of aliases) {
-      if (normalizedPath.includes(normalize(alias))) score += 30;
-    }
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestPath = imagePath;
-    }
-  }
-
-  return bestScore > 0 ? bestPath : null;
+interface TeamMember {
+    name: string;
+    designation: string;
+    imageSrc: string;
+    socialLinks?: readonly SocialLink[];
 }
+
+const leaders: TeamMember[] = [
+  {
+    name: "Shreyas Kumbhar",
+    designation: "Captain",
+    imageSrc: "/ID CARD/core/Shreyas Kumbhar.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Chase Gunjal",
+    designation: "Vice Captain",
+    imageSrc: "/ID CARD/core/Chase Gunjal.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Asmi Patil",
+    designation: "Electronics Lead",
+    imageSrc: "/ID CARD/core/Asmi Patil.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Advait Deo",
+    designation: "Software Lead",
+    imageSrc: "/ID CARD/core/Advait Deo.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Sarvesh Daphale",
+    designation: "Mechanical Lead",
+    imageSrc: "/ID CARD/core/sarvesh Daphale.jpg",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Harshal Raje",
+    designation: "Co-Secretary",
+    imageSrc: "/ID CARD/core/Harshal Raje.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Vaishnavi Sutar",
+    designation: "Co-Secretary",
+    imageSrc: "/ID CARD/core/Vaishnavi Sutar.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Samiksha Mote",
+    designation: "Joint Secretary",
+    imageSrc: "/ID CARD/FE/Samiksha mote.jpg",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+] as const;
+
+const otherMembers: TeamMember[] = [
+  {
+    name: "Laukik Mesharam",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "/ID CARD/Laukik Meshram.png", // Fixed extension & space
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Vedant Kaulgekar",
+    designation: "Jr. AI/ML Engineer",
+    imageSrc: "/ID CARD/Vedant Kaulgekar.jpeg", // Matches explorer
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Aditya Garad",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "/ID CARD/Aditya Garad.png", // Fixed extension & casing
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Yash Doke",
+    designation: "Jr. ROS Engineer",
+    imageSrc: "/ID CARD/Yash Doke.jpg", // Matches explorer
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Viraj Jadhao",
+    designation: "Jr. Software Developer",
+    imageSrc: "", // Not found in image
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Harsh Jain",
+    designation: "Jr. AI/ML Engineer",
+    imageSrc: "/ID CARD/IMG_4546(Harsh Jain).PNG", // Matches exact casing
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Meherdeep Chapade",
+    designation: "Jr. Electronics Engineer",
+    imageSrc: "/ID CARD/Meherdeep Chapade.png", // Updated to match explorer filename
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Ashwin Bobade",
+    designation: "Jr. Electronics Engineer",
+    imageSrc: "/ID CARD/Ashwin Bobade.png", // Fixed casing
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Anand Jad",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "/ID CARD/Anand Jad.png", // Added from explorer
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Athrav Ghorpade",
+    designation: "Jr. Electrical Engineer",
+    imageSrc: "", 
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Yashodhan Kulkarni",
+    designation: "Jr. Software Developer",
+    imageSrc: "", 
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Prathamesh Shingade",
+    designation: "Jr. Design Engineer (CAD)",
+    imageSrc: "/ID CARD/Prathamesh Shingade.png", // Fixed spelling & extension
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Aditya Darekar",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "/ID CARD/Aditya Darekar.png", // Fixed filename
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Vaibhav Pawar",
+    designation: "Jr. PCB Design Engineer",
+    imageSrc: "/ID CARD/Vaibhav Pawar.png", // Added from explorer
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Pranav Shinde",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "/ID CARD/Pranav Shinde.png", // Fixed extension
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Ayush Tiwari",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "/ID CARD/Ayush Tiwari.png", // Fixed extension
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Pradyumna Rawas",
+    designation: "Jr. Circuit Design Engineer",
+    imageSrc: "/ID CARD/Pradyumna Rawas.png", // Added from explorer
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Janhavi Pawar",
+    designation: "Jr. Media & Content Executive",
+    imageSrc: "/ID CARD/Janhavi Pawar.jpeg", // Fixed extension
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Aryan Shirkhe",
+    designation: "Jr. Embedded Engineer",
+    imageSrc: "", 
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+  {
+    name: "Snehal Shirur",
+    designation: "Jr. Electronics Engineer",
+    imageSrc: "/ID CARD/Snehal_Shirur.jpg", // Added from explorer
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+  },
+];
 
 export default function TeamPage() {
-  const dbMembers = useQuery(api.teamMembers.list);
-
-  // Hardcoded leaders to display exactly as requested at the very top
-  const leaders = [
-    {
-      name: "Shreyas Kumbhar",
-      designation: "Captain",
-      socialLinks: [
-        {
-          icon: Linkedin,
-          href: TEAM_LINKEDIN_URL,
-        },
-      ],
-    },
-    {
-      name: "Chase Gunjal",
-      designation: "Vice Captain",
-      socialLinks: [
-        {
-          icon: Linkedin,
-          href: TEAM_LINKEDIN_URL,
-        },
-      ],
-    },
-    {
-      name: "Asmi Patil",
-      designation: "Electronics Lead",
-      socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
-    },
-    {
-      name: "Advait Deo",
-      designation: "Software Lead",
-      socialLinks: [
-        {
-          icon: Linkedin,
-          href: TEAM_LINKEDIN_URL,
-        },
-      ],
-    },
-    {
-      name: "Sarvesh Daphale",
-      designation: "Mechanical Lead",
-      socialLinks: [
-        {
-          icon: Linkedin,
-          href: TEAM_LINKEDIN_URL,
-        },
-      ],
-    },
-    {
-      name: "Harshal Raje",
-      designation: "Co-Secretary",
-      socialLinks: [
-        {
-          icon: Linkedin,
-          href: TEAM_LINKEDIN_URL,
-        },
-      ],
-    },
-    {
-      name: "Vaishnavi Sutar",
-      designation: "Co-Secretary",
-      socialLinks: [
-        {
-          icon: Linkedin,
-          href: TEAM_LINKEDIN_URL,
-        },
-      ],
-    },
-    {
-      name: "Samiksha Mote",
-      designation: "Joint Secretary",
-      socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
-    },
-  ] as const;
-
-  const getFallbackImage = () => GENERIC_PROFILE_IMAGE;
-
-  const leadersWithImages = leaders.map((member) => ({
-    ...member,
-    imageSrc:
-      member.name === "Samiksha Mote"
-        ? "/ID CARD/FE/Samiksha mote.jpg"
-        : getBestImageForName(member.name) ?? getFallbackImage(),
-  }));
-
-  const coreNames = new Set([
-    ...leaders.map((member) => member.name.toLowerCase()),
-    "shreayas kumbhar",
-  ]);
-  const otherMembers = (dbMembers ?? [])
-    .filter((member) => {
-      const lowerName = member.name.toLowerCase();
-      const isShreyasVariant =
-        lowerName.includes("kumbhar") && lowerName.includes("shre");
-      return !coreNames.has(lowerName) && !isShreyasVariant;
-    })
-    .map((member) => ({
-      name: member.name,
-      designation: member.role && member.role !== "Team Member" ? member.role : "Team Member",
-      department: member.department || "",
-      imageSrc: getBestImageForName(member.name) ?? getFallbackImage(),
-      socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
-    }));
 
   return (
     <main className="min-h-screen bg-background text-foreground pt-10">
       <TeamSection
         title="Core Team"
         description="The core team driving Team Vulcans forward with innovation, teamwork, and technical excellence."
-        members={leadersWithImages}
+        members={leaders}
         className="pt-6 md:pt-10 lg:pt-12"
       />
 

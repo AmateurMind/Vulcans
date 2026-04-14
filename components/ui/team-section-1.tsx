@@ -130,7 +130,7 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     quality={member.imageSrc.includes("/core/") ? 100 : 75}
                                     loading="lazy"
-                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    className="absolute inset-0 h-full w-full object-cover object-bottom transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
                                 
                                 {/* Subtle dark gradient for text readability at the bottom */}

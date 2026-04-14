@@ -1,5 +1,5 @@
 "use client";
-import { Linkedin } from "lucide-react";
+import { Linkedin, Github, Star } from "lucide-react";
 import { TeamSection } from "@/components/ui/team-section-1";
 import Image from "next/image";
 
@@ -288,6 +288,8 @@ export default function TeamPage() {
                       alt={student.name}
                       width={112}
                       height={112}
+                      sizes="112px"
+                      quality={75}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-cover transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.06]"
@@ -315,6 +317,8 @@ export default function TeamPage() {
                       alt={student.name}
                       width={112}
                       height={112}
+                      sizes="112px"
+                      quality={75}
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-cover transition-transform duration-150 ease-out transform-gpu will-change-transform group-hover/student:scale-[1.06]"
@@ -325,6 +329,67 @@ export default function TeamPage() {
                   </span>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 md:px-6 pb-12 md:pb-24 max-w-5xl">
+        <div className="relative overflow-hidden rounded-3xl bg-card border border-border shadow-lg dark:bg-[#0a0a0f] dark:border-white/10 dark:shadow-[0_0_100px_rgba(100,50,255,0.05)]">
+          {/* Subtle glow effects */}
+          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-64 h-64 rounded-full bg-purple-500/10 dark:bg-purple-900/40 blur-[80px] dark:blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-64 h-64 rounded-full bg-blue-500/5 dark:bg-blue-900/20 blur-[80px] dark:blur-[100px] pointer-events-none" />
+
+          <div className="relative z-10 grid gap-6 lg:grid-cols-2 items-center p-5 md:p-6 lg:p-8">
+            <div className="flex flex-col gap-3 md:pr-4">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-foreground drop-shadow-sm">
+                Open Source Project
+              </h2>
+              <p className="text-sm md:text-base text-muted-foreground max-w-sm leading-relaxed font-medium">
+                We have made this project open source and available on GitHub. Feel free to contribute! Don't forget to star us on GitHub! ✨
+              </p>
+              <div className="flex flex-wrap gap-3 mt-2">
+                <a
+                  href="https://github.com/AmateurMind/Vulcans"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-xs md:text-sm font-semibold transition-all duration-300 shadow-sm border border-border/50 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:-translate-y-0.5 dark:bg-[#1c1c24] dark:text-white dark:border-white/10 dark:hover:bg-[#2a2a35] dark:hover:border-white/20"
+                >
+                  <Github className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                  <span>View on GitHub</span>
+                </a>
+                <a
+                  href="https://github.com/AmateurMind/Vulcans"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-xs md:text-sm font-semibold transition-all duration-300 shadow-sm border border-border/50 bg-slate-100 text-slate-800 hover:bg-slate-200 hover:-translate-y-0.5 dark:bg-[#1c1c24] dark:text-white dark:border-white/10 dark:hover:bg-[#2a2a35] dark:hover:border-white/20"
+                >
+                  <span>Star</span>
+                  <Star className="w-3.5 h-3.5 md:w-4 md:h-4 text-yellow-500 fill-yellow-500" />
+                </a>
+              </div>
+            </div>
+
+            <div className="relative rounded-xl overflow-hidden border border-border shadow-md transform transition-all hover:scale-[1.02] duration-500 bg-background lg:mt-0 mt-4 mx-auto w-full max-w-md lg:max-w-sm xl:max-w-md dark:border-white/10 dark:bg-[#0d1117] dark:shadow-[0_0_30px_rgba(100,50,255,0.15)] ring-1 ring-border/50 dark:ring-white/5">
+              {/* Fake browser header */}
+              <div className="flex items-center gap-2 px-3 py-2 border-b relative bg-slate-100 border-border/50 dark:bg-[#161b22] dark:border-white/10">
+                <div className="flex gap-1.5 pl-1">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400 dark:bg-red-500/90 shadow-sm"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-400 dark:bg-yellow-500/90 shadow-sm"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-400 dark:bg-green-500/90 shadow-sm"></div>
+                </div>
+                <div className="absolute left-1/2 -translate-x-1/2 rounded-md px-6 py-0.5 text-[9.5px] flex items-center gap-1.5 border bg-white border-border/50 text-slate-500 shadow-sm dark:bg-[#0d1117] dark:border-white/10 dark:text-white/50 dark:shadow-inner">
+                   <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 fill-current opacity-70"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" /></svg>
+                   AmateurMind/Vulcans
+                </div>
+              </div>
+              <Image 
+                src="/github.png" 
+                alt="Vulcans Repository on GitHub" 
+                width={600}
+                height={350}
+                className="w-full h-auto object-cover opacity-90 transition-opacity duration-300 hover:opacity-100 min-h-[150px] max-h-[200px] object-top"
+              />
             </div>
           </div>
         </div>

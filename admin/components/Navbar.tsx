@@ -7,7 +7,7 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 
 const NAV_LINKS = [
-    { label: "Dashboard", href: "/admin/dashboard" }, // Optional, maybe we keep it at "/"? Let's use ?tab=... for easy state management, or separate pages. Let's stick with query params for now on the homepage.
+    { label: "Dashboard", href: "/" },
     { label: "Events", href: "/?tab=events" },
     { label: "Team Members", href: "/?tab=team" },
 ];

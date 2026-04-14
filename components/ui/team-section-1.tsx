@@ -1,4 +1,5 @@
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface SocialLink {
@@ -121,9 +122,14 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                                 key={index}
                                 className="group relative flex flex-col justify-end overflow-hidden rounded-xl shadow-lg transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-xl aspect-[4/5] bg-background"
                             >
-                                <img
-                                    src={member.imageSrc}
+                                <Image
+                                    src={member.imageSrc || "/placeholder.svg"}
                                     alt={member.name}
+                                    fill
+                                    unoptimized={member.imageSrc.includes("/core/")}
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                    quality={member.imageSrc.includes("/core/") ? 100 : 75}
+                                    loading="lazy"
                                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
                                 

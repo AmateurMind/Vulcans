@@ -3,6 +3,8 @@
   <img src="https://komarev.com/ghpvc/?username=AmateurMind&repo=Vulcans&color=blue" />
 </p>
 
+main URL: https://teamvulcans-pesmcoe.com/
+
 This repo now has two separate Next.js apps:
 
 - Public website: root project (`f:\Vulcans`)

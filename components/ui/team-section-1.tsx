@@ -126,7 +126,6 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                                     src={member.imageSrc || "/placeholder.svg"}
                                     alt={member.name}
                                     fill
-                                    unoptimized={member.imageSrc.includes("/core/")}
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                     quality={member.imageSrc.includes("/core/") ? 100 : 75}
                                     loading="lazy"

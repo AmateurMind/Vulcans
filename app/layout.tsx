@@ -21,6 +21,21 @@ const alegreya = Alegreya({
 export const metadata: Metadata = {
   title: "Vulcans Robotics Club",
   description: "Vulcans - The premier robotics and engineering club. We build, compete, and innovate.",
+  keywords: [
+    "Vulcans",
+    "Vulcans Robotics Club",
+    "robotics club",
+    "robotics",
+    "PESMCOE",
+    "pesmcoe robotics",
+    "engineering club",
+    "robotics team",
+    "college robotics club",
+  ],
+  metadataBase: new URL("https://teamvulcans-pesmcoe.com"),
+  alternates: {
+    canonical: "/",
+  },
   verification: {
     google: "dYdWQD4JK5uBoHjZvqXaVPe6NojvzbZdnLh2z5JGMZg",
   },
@@ -35,7 +50,7 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${nunito.variable} ${alegreya.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300 font-sans`}
+          className={`${nunito.variable} ${alegreya.variable} antialiased min-h-screen bg-background text-foreground transition-colors duration-300 font-sans`}
         >
           {/* Google Analytics */}
           <Script

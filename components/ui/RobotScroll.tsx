@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useScroll, motion } from 'framer-motion';
 import Image from 'next/image';
 import { Component as QuantumPulseLoade } from '@/components/ui/quantum-pulse-loade';
@@ -98,16 +98,62 @@ export default function RobotScroll() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const framesRef = useRef<HTMLImageElement[]>([]);
     const loadedFramesRef = useRef<Set<number>>(new Set());
+    const progressRef = useRef(0);
+    const isMobileRef = useRef(false);
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
     const [frameBase, setFrameBase] = useState(DESKTOP_FRAME_BASE);
     const [isMobile, setIsMobile] = useState(false);
 
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ['start start', 'end end'],
+        trackContentSize: true,
+    });
+
+    const getDrawableFrameIndex = useCallback((targetIndex: number) => {
+        if (loadedFramesRef.current.has(targetIndex + 1)) return targetIndex;
+
+        for (let distance = 1; distance < FRAME_COUNT; distance++) {
+            const previous = targetIndex - distance;
+            const next = targetIndex + distance;
+
+            if (previous >= 0 && loadedFramesRef.current.has(previous + 1)) {
+                return previous;
+            }
+
+            if (next < FRAME_COUNT && loadedFramesRef.current.has(next + 1)) {
+                return next;
+            }
+        }
+
+        return -1;
+    }, []);
+
+    const drawProgressFrame = useCallback((value = progressRef.current) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const targetIndex = Math.min(Math.floor(value * FRAME_COUNT), FRAME_COUNT - 1);
+        const drawableIndex = getDrawableFrameIndex(targetIndex);
+        if (drawableIndex < 0) return;
+
+        const img = framesRef.current[drawableIndex];
+        if (!img || !img.complete) return;
+
+        drawFrameToCanvas(
+            canvas,
+            img,
+            isMobileRef.current ? 'cover' : 'contain',
+            0,
+            isMobileRef.current
+        );
+    }, [getDrawableFrameIndex]);
 
     useEffect(() => {
         const updateFrameBase = () => {
             const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+            isMobileRef.current = mobile;
             setIsMobile(mobile);
             setFrameBase(mobile ? MOBILE_FRAME_BASE : DESKTOP_FRAME_BASE);
         };
@@ -130,6 +176,7 @@ export default function RobotScroll() {
             const markReady = () => {
                 loadedFramesRef.current.add(index);
                 if (!cancelled && index === 1) setLoaded(true);
+                if (!cancelled) requestAnimationFrame(() => drawProgressFrame());
             };
 
             img.onload = () => {
@@ -165,43 +212,36 @@ export default function RobotScroll() {
             cancelled = true;
             window.clearTimeout(idleHandle);
         };
-    }, [frameBase]);
+    }, [drawProgressFrame, frameBase]);
 
     useEffect(() => {
         const unsubscribe = scrollYProgress.on('change', (v) => {
+            progressRef.current = v;
             setProgress(v);
-            const canvas = canvasRef.current;
-            if (!canvas || !loaded) return;
-
-            const idx = Math.min(Math.floor(v * FRAME_COUNT), FRAME_COUNT - 1);
-            const img = framesRef.current[idx];
-            if (!img || !img.complete || !loadedFramesRef.current.has(idx + 1)) return;
-
-            drawFrameToCanvas(
-                canvas,
-                img,
-                isMobile ? 'cover' : 'contain',
-                0,
-                isMobile
-            );
+            drawProgressFrame(v);
         });
         return unsubscribe;
-    }, [loaded, isMobile]);
+    }, [drawProgressFrame, scrollYProgress]);
 
     useEffect(() => {
         if (!loaded) return;
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const img = framesRef.current[0];
-        if (!img) return;
-        drawFrameToCanvas(
-            canvas,
-            img,
-            isMobile ? 'cover' : 'contain',
-            0,
-            isMobile
-        );
-    }, [loaded, isMobile]);
+        drawProgressFrame();
+    }, [drawProgressFrame, loaded, isMobile]);
+
+    useEffect(() => {
+        const redrawAfterLayoutSettles = () => {
+            requestAnimationFrame(() => drawProgressFrame());
+        };
+
+        window.addEventListener('load', redrawAfterLayoutSettles);
+        window.addEventListener('resize', redrawAfterLayoutSettles);
+        document.fonts?.ready.then(redrawAfterLayoutSettles).catch(() => undefined);
+
+        return () => {
+            window.removeEventListener('load', redrawAfterLayoutSettles);
+            window.removeEventListener('resize', redrawAfterLayoutSettles);
+        };
+    }, [drawProgressFrame]);
 
     const activeOverlay = overlays.find(o => progress >= o.from && progress < o.to)
         ?? (progress >= 1 ? overlays[overlays.length - 1] : null);

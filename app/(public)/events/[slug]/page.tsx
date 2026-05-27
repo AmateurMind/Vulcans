@@ -5,6 +5,8 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
+const IMAGE_FALLBACK_SRC = "/reference/colortheme.png";
+
 export default function EventDetailPage() {
     const params = useParams<{ slug: string }>();
     const pathId = params?.slug;
@@ -45,6 +47,11 @@ export default function EventDetailPage() {
                                         alt={`${event.title} image ${idx + 1}`} 
                                         loading={idx === 0 ? "eager" : "lazy"}
                                         decoding="async"
+                                        onError={(e) => {
+                                            const target = e.currentTarget;
+                                            if (target.src.endsWith(IMAGE_FALLBACK_SRC)) return;
+                                            target.src = IMAGE_FALLBACK_SRC;
+                                        }}
                                         className="w-full max-h-[75vh] object-contain rounded-xl"
                                     />
                                 ))}

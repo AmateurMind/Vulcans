@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const categories = ['All', 'Bots', 'Competitions', 'Workshop', 'Team', 'Builds']
+const IMAGE_FALLBACK_SRC = '/reference/colortheme.png'
 
 const botGallery = [
     { id: 101, category: 'Bots', url: '/gallery/bots/2013 BOT.png', title: '2013 Bot', desc: 'Vulcans competition robot - 2013', cols: '' },
@@ -95,6 +96,11 @@ export default function GalleryPage() {
                                 alt={item.title}
                                 loading="lazy"
                                 decoding="async"
+                                onError={(e) => {
+                                    const target = e.currentTarget
+                                    if (target.src.endsWith(IMAGE_FALLBACK_SRC)) return
+                                    target.src = IMAGE_FALLBACK_SRC
+                                }}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             {/* Overlay */}
@@ -119,6 +125,11 @@ export default function GalleryPage() {
                             alt={selectedImage.title}
                             loading="eager"
                             decoding="async"
+                            onError={(e) => {
+                                const target = e.currentTarget
+                                if (target.src.endsWith(IMAGE_FALLBACK_SRC)) return
+                                target.src = IMAGE_FALLBACK_SRC
+                            }}
                             className="w-full max-h-[82vh] object-contain rounded-xl border border-white/20 bg-black/40"
                         />
                         <div className="text-center">

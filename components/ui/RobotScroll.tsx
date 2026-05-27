@@ -127,15 +127,22 @@ export default function RobotScroll() {
             const img = images[index - 1];
             if (!img || img.src) return;
 
-            img.src = `${frameBase}${pad(index)}.jpg`;
+            const markReady = () => {
+                loadedFramesRef.current.add(index);
+                if (!cancelled && index === 1) setLoaded(true);
+            };
+
             img.onload = () => {
-                loadedFramesRef.current.add(index);
-                if (!cancelled && index === 1) setLoaded(true);
+                // Ensure browsers that support decode() only mark as ready once drawable.
+                if (typeof img.decode === 'function') {
+                    img.decode().then(markReady).catch(markReady);
+                    return;
+                }
+                markReady();
             };
-            img.onerror = () => {
-                loadedFramesRef.current.add(index);
-                if (!cancelled && index === 1) setLoaded(true);
-            };
+            img.onerror = markReady;
+
+            img.src = `${frameBase}${pad(index)}.jpg`;
         };
 
         for (let i = 1; i <= FRAME_COUNT; i++) {

@@ -6,6 +6,8 @@ import { CalendarDays } from "lucide-react";
 import { useMemo } from "react";
 import Link from "next/link";
 
+const IMAGE_FALLBACK_SRC = "/reference/colortheme.png";
+
 export function EventsList() {
     const events = useQuery(api.events.listWithImageUrls);
 
@@ -40,7 +42,18 @@ export function EventsList() {
                             <Link key={i} href={`/events/${h.pathId}`} className="block p-7 rounded-2xl glass bg-card border border-border transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_0_20px_var(--primary-glow)] group">
                                 {h.imageUrls?.[0] && (
                                     <div className="mb-4 overflow-hidden rounded-xl border border-border bg-black/5 dark:bg-white/5 flex items-center justify-center">
-                                        <img src={h.imageUrls[0]} alt={h.title} loading="lazy" decoding="async" className="w-full h-auto max-h-[350px] object-contain group-hover:scale-[1.03] transition-transform duration-300" />
+                                        <img
+                                            src={h.imageUrls[0]}
+                                            alt={h.title}
+                                            loading="lazy"
+                                            decoding="async"
+                                            onError={(e) => {
+                                                const target = e.currentTarget;
+                                                if (target.src.endsWith(IMAGE_FALLBACK_SRC)) return;
+                                                target.src = IMAGE_FALLBACK_SRC;
+                                            }}
+                                            className="w-full h-auto max-h-[350px] object-contain group-hover:scale-[1.03] transition-transform duration-300"
+                                        />
                                     </div>
                                 )}
                                 <div className="mb-4 p-3 rounded-xl bg-primary-maroon/30 w-fit group-hover:scale-110 transition-transform">
@@ -65,7 +78,18 @@ export function EventsList() {
                             <Link key={i} href={`/events/${h.pathId}`} className="block p-7 rounded-2xl glass bg-card border border-border transition-all duration-300 group">
                                 {h.imageUrls?.[0] && (
                                     <div className="mb-4 overflow-hidden rounded-xl border border-border bg-black/5 dark:bg-white/5 flex items-center justify-center">
-                                        <img src={h.imageUrls[0]} alt={h.title} loading="lazy" decoding="async" className="w-full h-auto max-h-[350px] object-contain group-hover:scale-[1.03] transition-transform duration-300" />
+                                        <img
+                                            src={h.imageUrls[0]}
+                                            alt={h.title}
+                                            loading="lazy"
+                                            decoding="async"
+                                            onError={(e) => {
+                                                const target = e.currentTarget;
+                                                if (target.src.endsWith(IMAGE_FALLBACK_SRC)) return;
+                                                target.src = IMAGE_FALLBACK_SRC;
+                                            }}
+                                            className="w-full h-auto max-h-[350px] object-contain group-hover:scale-[1.03] transition-transform duration-300"
+                                        />
                                     </div>
                                 )}
                                 <div className="mb-4 p-3 rounded-xl bg-muted w-fit group-hover:scale-110 transition-transform">

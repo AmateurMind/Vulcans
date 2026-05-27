@@ -12,6 +12,10 @@ const MOBILE_FRAME_BASE = '/frames-mobile/ezgif-frame-';
 const MOBILE_FOCUS_SCALE = 1.14;
 const MOBILE_FOCUS_Y_OFFSET = 20;
 const BRAND_EMBER = '#FF6A3D';
+const MOBILE_PRELOAD_BATCH_SIZE = 4;
+const DESKTOP_PRELOAD_BATCH_SIZE = 12;
+const MOBILE_PRELOAD_DELAY_MS = 120;
+const DESKTOP_PRELOAD_DELAY_MS = 16;
 
 function pad(n: number) {
     return n.toString().padStart(3, '0');
@@ -27,8 +31,13 @@ function drawFrameToCanvas(
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = fullHeight ? window.innerHeight : window.innerHeight - 64;
+    const nextWidth = window.innerWidth;
+    const nextHeight = fullHeight ? window.innerHeight : window.innerHeight - 64;
+
+    if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+        canvas.width = nextWidth;
+        canvas.height = nextHeight;
+    }
 
     const cw = canvas.width;
     const ch = canvas.height;
@@ -100,6 +109,7 @@ export default function RobotScroll() {
     const loadedFramesRef = useRef<Set<number>>(new Set());
     const progressRef = useRef(0);
     const isMobileRef = useRef(false);
+    const drawRafRef = useRef<number | null>(null);
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
     const [frameBase, setFrameBase] = useState(DESKTOP_FRAME_BASE);
@@ -150,6 +160,19 @@ export default function RobotScroll() {
         );
     }, [getDrawableFrameIndex]);
 
+    const requestDrawProgressFrame = useCallback((value = progressRef.current) => {
+        progressRef.current = value;
+
+        if (drawRafRef.current !== null) {
+            window.cancelAnimationFrame(drawRafRef.current);
+        }
+
+        drawRafRef.current = window.requestAnimationFrame(() => {
+            drawRafRef.current = null;
+            drawProgressFrame(progressRef.current);
+        });
+    }, [drawProgressFrame]);
+
     useEffect(() => {
         const updateFrameBase = () => {
             const mobile = window.innerWidth < MOBILE_BREAKPOINT;
@@ -176,7 +199,7 @@ export default function RobotScroll() {
             const markReady = () => {
                 loadedFramesRef.current.add(index);
                 if (!cancelled && index === 1) setLoaded(true);
-                if (!cancelled) requestAnimationFrame(() => drawProgressFrame());
+                if (!cancelled) requestDrawProgressFrame();
             };
 
             img.onload = () => {
@@ -194,43 +217,59 @@ export default function RobotScroll() {
 
         for (let i = 1; i <= FRAME_COUNT; i++) {
             const img = new window.Image();
+            img.decoding = 'async';
             images.push(img);
         }
         framesRef.current = images;
 
         loadFrame(1);
 
-        const preloadRest = () => {
-            for (let i = 2; i <= FRAME_COUNT; i++) {
-                loadFrame(i);
+        const priorityFrames = isMobile
+            ? [16, 32, 48, 64, 80, 96, 112, 128]
+            : [32, 64, 96, 128];
+        priorityFrames.forEach(loadFrame);
+
+        const remainingFrames = Array.from({ length: FRAME_COUNT - 1 }, (_, i) => i + 2)
+            .filter((index) => !priorityFrames.includes(index));
+        const batchSize = isMobile ? MOBILE_PRELOAD_BATCH_SIZE : DESKTOP_PRELOAD_BATCH_SIZE;
+        const batchDelay = isMobile ? MOBILE_PRELOAD_DELAY_MS : DESKTOP_PRELOAD_DELAY_MS;
+
+        let preloadTimer: number | null = null;
+
+        const preloadNextBatch = () => {
+            for (let i = 0; i < batchSize && remainingFrames.length > 0; i++) {
+                loadFrame(remainingFrames.shift()!);
+            }
+
+            if (remainingFrames.length > 0) {
+                preloadTimer = window.setTimeout(preloadNextBatch, batchDelay);
             }
         };
 
-        const idleHandle = window.setTimeout(preloadRest, 0);
+        preloadTimer = window.setTimeout(preloadNextBatch, batchDelay);
 
         return () => {
             cancelled = true;
-            window.clearTimeout(idleHandle);
+            if (preloadTimer !== null) window.clearTimeout(preloadTimer);
         };
-    }, [drawProgressFrame, frameBase]);
+    }, [frameBase, isMobile, requestDrawProgressFrame]);
 
     useEffect(() => {
         const unsubscribe = scrollYProgress.on('change', (v) => {
-            progressRef.current = v;
             setProgress(v);
-            drawProgressFrame(v);
+            requestDrawProgressFrame(v);
         });
         return unsubscribe;
-    }, [drawProgressFrame, scrollYProgress]);
+    }, [requestDrawProgressFrame, scrollYProgress]);
 
     useEffect(() => {
         if (!loaded) return;
-        drawProgressFrame();
-    }, [drawProgressFrame, loaded, isMobile]);
+        requestDrawProgressFrame();
+    }, [loaded, isMobile, requestDrawProgressFrame]);
 
     useEffect(() => {
         const redrawAfterLayoutSettles = () => {
-            requestAnimationFrame(() => drawProgressFrame());
+            requestDrawProgressFrame();
         };
 
         window.addEventListener('load', redrawAfterLayoutSettles);
@@ -241,7 +280,15 @@ export default function RobotScroll() {
             window.removeEventListener('load', redrawAfterLayoutSettles);
             window.removeEventListener('resize', redrawAfterLayoutSettles);
         };
-    }, [drawProgressFrame]);
+    }, [requestDrawProgressFrame]);
+
+    useEffect(() => {
+        return () => {
+            if (drawRafRef.current !== null) {
+                window.cancelAnimationFrame(drawRafRef.current);
+            }
+        };
+    }, []);
 
     const activeOverlay = overlays.find(o => progress >= o.from && progress < o.to)
         ?? (progress >= 1 ? overlays[overlays.length - 1] : null);

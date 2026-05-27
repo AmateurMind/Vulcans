@@ -43,6 +43,8 @@ export default function EventDetailPage() {
                                         key={`${url}-${idx}`} 
                                         src={url} 
                                         alt={`${event.title} image ${idx + 1}`} 
+                                        loading={idx === 0 ? "eager" : "lazy"}
+                                        decoding="async"
                                         className="w-full max-h-[75vh] object-contain rounded-xl"
                                     />
                                 ))}

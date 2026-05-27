@@ -93,6 +93,8 @@ export default function GalleryPage() {
                             <img
                                 src={item.url}
                                 alt={item.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             {/* Overlay */}
@@ -115,6 +117,8 @@ export default function GalleryPage() {
                         <img
                             src={selectedImage.url}
                             alt={selectedImage.title}
+                            loading="eager"
+                            decoding="async"
                             className="w-full max-h-[82vh] object-contain rounded-xl border border-white/20 bg-black/40"
                         />
                         <div className="text-center">

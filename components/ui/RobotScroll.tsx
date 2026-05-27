@@ -97,6 +97,7 @@ export default function RobotScroll() {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const framesRef = useRef<HTMLImageElement[]>([]);
+    const loadedFramesRef = useRef<Set<number>>(new Set());
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
     const [frameBase, setFrameBase] = useState(DESKTOP_FRAME_BASE);
@@ -118,26 +119,44 @@ export default function RobotScroll() {
 
     useEffect(() => {
         let cancelled = false;
-        let loadedCount = 0;
         const images: HTMLImageElement[] = [];
+        loadedFramesRef.current = new Set();
         setLoaded(false);
+
+        const loadFrame = (index: number) => {
+            const img = images[index - 1];
+            if (!img || img.src) return;
+
+            img.src = `${frameBase}${pad(index)}.jpg`;
+            img.onload = () => {
+                loadedFramesRef.current.add(index);
+                if (!cancelled && index === 1) setLoaded(true);
+            };
+            img.onerror = () => {
+                loadedFramesRef.current.add(index);
+                if (!cancelled && index === 1) setLoaded(true);
+            };
+        };
 
         for (let i = 1; i <= FRAME_COUNT; i++) {
             const img = new window.Image();
-            img.src = `${frameBase}${pad(i)}.jpg`;
-            img.onload = () => {
-                loadedCount++;
-                if (!cancelled && loadedCount === FRAME_COUNT) setLoaded(true);
-            };
-            img.onerror = () => {
-                loadedCount++;
-                if (!cancelled && loadedCount === FRAME_COUNT) setLoaded(true);
-            };
             images.push(img);
         }
         framesRef.current = images;
+
+        loadFrame(1);
+
+        const preloadRest = () => {
+            for (let i = 2; i <= FRAME_COUNT; i++) {
+                loadFrame(i);
+            }
+        };
+
+        const idleHandle = window.setTimeout(preloadRest, 0);
+
         return () => {
             cancelled = true;
+            window.clearTimeout(idleHandle);
         };
     }, [frameBase]);
 
@@ -149,7 +168,7 @@ export default function RobotScroll() {
 
             const idx = Math.min(Math.floor(v * FRAME_COUNT), FRAME_COUNT - 1);
             const img = framesRef.current[idx];
-            if (!img || !img.complete) return;
+            if (!img || !img.complete || !loadedFramesRef.current.has(idx + 1)) return;
 
             drawFrameToCanvas(
                 canvas,

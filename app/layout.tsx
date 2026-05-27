@@ -7,6 +7,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import { getSiteUrl } from "@/lib/site-url";
+
+const siteUrl = getSiteUrl();
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -32,7 +35,7 @@ export const metadata: Metadata = {
     "robotics team",
     "college robotics club",
   ],
-  metadataBase: new URL("https://teamvulcans-pesmcoe.com"),
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: "/",
   },

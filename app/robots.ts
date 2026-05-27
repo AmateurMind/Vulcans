@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/site-url";
 
-const SITE_URL = "https://robotics-pesmcoe.vercel.app";
+const SITE_URL = getSiteUrl();
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -13,4 +14,3 @@ export default function robots(): MetadataRoute.Robots {
     host: SITE_URL,
   };
 }
-

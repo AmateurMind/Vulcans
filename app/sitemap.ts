@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
+import { getSiteUrl } from "@/lib/site-url";
 
-const SITE_URL = "https://robotics-pesmcoe.vercel.app";
+const SITE_URL = getSiteUrl();
 
 const STATIC_PUBLIC_ROUTES = [
   "",

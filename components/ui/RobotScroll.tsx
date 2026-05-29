@@ -9,7 +9,6 @@ const FRAME_COUNT = 128;
 const MOBILE_BREAKPOINT = 768;
 const DESKTOP_FRAME_BASE = '/frames/ezgif-frame-';
 const MOBILE_FRAME_BASE = '/frames-mobile/ezgif-frame-';
-const MOBILE_VIDEO_SRC = '/robot-scroll-mobile.mp4';
 const MOBILE_FOCUS_SCALE = 1.14;
 const MOBILE_FOCUS_Y_OFFSET = 20;
 const BRAND_EMBER = '#FF6A3D';
@@ -20,10 +19,6 @@ const DESKTOP_PRELOAD_DELAY_MS = 16;
 
 function pad(n: number) {
     return n.toString().padStart(3, '0');
-}
-
-function getInitialIsMobile() {
-    return typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT;
 }
 
 function drawFrameToCanvas(
@@ -110,20 +105,15 @@ const overlays: TextOverlay[] = [
 export default function RobotScroll() {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const videoRef = useRef<HTMLVideoElement>(null);
     const framesRef = useRef<HTMLImageElement[]>([]);
     const loadedFramesRef = useRef<Set<number>>(new Set());
     const progressRef = useRef(0);
-    const isMobileRef = useRef(getInitialIsMobile());
+    const isMobileRef = useRef(false);
     const drawRafRef = useRef<number | null>(null);
-    const videoRafRef = useRef<number | null>(null);
-    const videoDurationRef = useRef(0);
-    const [sequenceReady, setSequenceReady] = useState(false);
-    const [videoReady, setVideoReady] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
-    const [frameBase, setFrameBase] = useState(() => getInitialIsMobile() ? MOBILE_FRAME_BASE : DESKTOP_FRAME_BASE);
-    const [isMobile, setIsMobile] = useState(getInitialIsMobile);
-    const loaded = isMobile ? videoReady : sequenceReady;
+    const [frameBase, setFrameBase] = useState(DESKTOP_FRAME_BASE);
+    const [isMobile, setIsMobile] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -183,28 +173,6 @@ export default function RobotScroll() {
         });
     }, [drawProgressFrame]);
 
-    const requestScrubVideo = useCallback((value = progressRef.current) => {
-        progressRef.current = value;
-
-        if (videoRafRef.current !== null) {
-            window.cancelAnimationFrame(videoRafRef.current);
-        }
-
-        videoRafRef.current = window.requestAnimationFrame(() => {
-            videoRafRef.current = null;
-
-            const video = videoRef.current;
-            if (!video || !videoDurationRef.current) return;
-
-            const maxTime = Math.max(videoDurationRef.current - 0.001, 0);
-            const nextTime = Math.min(videoDurationRef.current * progressRef.current, maxTime);
-
-            if (Math.abs(video.currentTime - nextTime) > 0.03) {
-                video.currentTime = nextTime;
-            }
-        });
-    }, []);
-
     useEffect(() => {
         const updateFrameBase = () => {
             const mobile = window.innerWidth < MOBILE_BREAKPOINT;
@@ -222,14 +190,7 @@ export default function RobotScroll() {
         let cancelled = false;
         const images: HTMLImageElement[] = [];
         loadedFramesRef.current = new Set();
-        setSequenceReady(false);
-
-        if (isMobile) {
-            framesRef.current = [];
-            return () => {
-                cancelled = true;
-            };
-        }
+        setLoaded(false);
 
         const loadFrame = (index: number) => {
             const img = images[index - 1];
@@ -237,7 +198,7 @@ export default function RobotScroll() {
 
             const markReady = () => {
                 loadedFramesRef.current.add(index);
-                if (!cancelled && index === 1) setSequenceReady(true);
+                if (!cancelled && index === 1) setLoaded(true);
                 if (!cancelled) requestDrawProgressFrame();
             };
 
@@ -296,31 +257,19 @@ export default function RobotScroll() {
     useEffect(() => {
         const unsubscribe = scrollYProgress.on('change', (v) => {
             setProgress(v);
-            if (isMobileRef.current) {
-                requestScrubVideo(v);
-            } else {
-                requestDrawProgressFrame(v);
-            }
+            requestDrawProgressFrame(v);
         });
         return unsubscribe;
-    }, [requestDrawProgressFrame, requestScrubVideo, scrollYProgress]);
+    }, [requestDrawProgressFrame, scrollYProgress]);
 
     useEffect(() => {
         if (!loaded) return;
-        if (isMobile) {
-            requestScrubVideo();
-        } else {
-            requestDrawProgressFrame();
-        }
-    }, [isMobile, loaded, requestDrawProgressFrame, requestScrubVideo]);
+        requestDrawProgressFrame();
+    }, [loaded, isMobile, requestDrawProgressFrame]);
 
     useEffect(() => {
         const redrawAfterLayoutSettles = () => {
-            if (isMobileRef.current) {
-                requestScrubVideo();
-            } else {
-                requestDrawProgressFrame();
-            }
+            requestDrawProgressFrame();
         };
 
         window.addEventListener('load', redrawAfterLayoutSettles);
@@ -331,15 +280,12 @@ export default function RobotScroll() {
             window.removeEventListener('load', redrawAfterLayoutSettles);
             window.removeEventListener('resize', redrawAfterLayoutSettles);
         };
-    }, [requestDrawProgressFrame, requestScrubVideo]);
+    }, [requestDrawProgressFrame]);
 
     useEffect(() => {
         return () => {
             if (drawRafRef.current !== null) {
                 window.cancelAnimationFrame(drawRafRef.current);
-            }
-            if (videoRafRef.current !== null) {
-                window.cancelAnimationFrame(videoRafRef.current);
             }
         };
     }, []);
@@ -370,30 +316,8 @@ export default function RobotScroll() {
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full"
-                    style={{ display: loaded && !isMobile ? 'block' : 'none' }}
+                    style={{ display: loaded ? 'block' : 'none' }}
                 />
-
-                {isMobile && (
-                    <video
-                        ref={videoRef}
-                        src={MOBILE_VIDEO_SRC}
-                        muted
-                        playsInline
-                        preload="auto"
-                        className="absolute inset-0 h-full w-full object-cover"
-                        style={{ display: loaded ? 'block' : 'none' }}
-                        onLoadedMetadata={(event) => {
-                            videoDurationRef.current = event.currentTarget.duration;
-                            setVideoReady(true);
-                            requestScrubVideo();
-                        }}
-                        onCanPlay={(event) => {
-                            videoDurationRef.current = event.currentTarget.duration;
-                            setVideoReady(true);
-                            requestScrubVideo();
-                        }}
-                    />
-                )}
 
                 <div className="absolute inset-0 pointer-events-none" style={{
                     background: 'radial-gradient(ellipse 75% 100% at 50% 50%, transparent 20%, #0B0B0F 80%)',

@@ -5,7 +5,7 @@
       "has": [
         {
           "type": "host",
-          "value": "robotics-pesmcoe.vercel.app"
+          "value": "(?<subdomain>.*)\\.vercel\\.app"
         }
       ],
       "headers": [

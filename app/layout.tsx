@@ -37,7 +37,14 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
+  },
+  openGraph: {
+    url: siteUrl,
+    siteName: "Vulcans Robotics Club",
+    title: "Vulcans Robotics Club",
+    description: "Vulcans - The premier robotics and engineering club. We build, compete, and innovate.",
+    type: "website",
   },
   verification: {
     google: "dYdWQD4JK5uBoHjZvqXaVPe6NojvzbZdnLh2z5JGMZg",

@@ -5,6 +5,8 @@
 
 main URL: https://teamvulcans-pesmcoe.com/
 
+(https://robotics-pesmcoe.vercel.app/)
+
 This repo now has two separate Next.js apps:
 
 - Public website: root project (`f:\Vulcans`)

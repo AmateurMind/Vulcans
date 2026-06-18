@@ -1,5 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
 import { Cpu, Instagram, Twitter, Linkedin, Youtube, Github, Mail, MapPin, Phone } from 'lucide-react'
 
 const navColumns = [
@@ -34,6 +38,13 @@ const socials = [
 ]
 
 export function Footer() {
+    const [mounted, setMounted] = useState(false)
+    const { resolvedTheme } = useTheme()
+
+    useEffect(() => setMounted(true), [])
+
+    const collegeLogo = '/colg-logo-nobg.png' // mounted && resolvedTheme === 'dark' ? '/dark-good.png' : '/colg-logo-nobg.png'
+
     return (
         <footer className="border-t border-[var(--border)] bg-[var(--card)]/40 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-6 py-14">
@@ -48,7 +59,7 @@ export function Footer() {
                             <div className="h-5 w-px bg-[var(--border)]" />
                             <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="flex items-center">
                                 <Image
-                                    src="/colg-logo-nobg.png"
+                                    src={collegeLogo}
                                     alt="PES MCOE Logo"
                                     width={44}
                                     height={44}

@@ -28,7 +28,7 @@ export function Navbar() {
 
     useEffect(() => setMounted(true), [])
 
-    const collegeLogo = mounted && resolvedTheme === 'dark' ? '/dark-good.png' : '/colg-logo-nobg.png'
+    const collegeLogo = '/colg-logo-nobg.png' // mounted && resolvedTheme === 'dark' ? '/dark-good.png' : '/colg-logo-nobg.png'
 
     return (
         <header className={cn(

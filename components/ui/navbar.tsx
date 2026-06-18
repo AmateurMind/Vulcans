@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -22,6 +23,8 @@ const navLinks = [
 export function Navbar() {
     const [open, setOpen] = useState(false)
     const pathname = usePathname()
+    const { resolvedTheme } = useTheme()
+    const collegeLogo = resolvedTheme === 'dark' ? '/dark-good.png' : '/colg-logo-nobg.png'
 
     return (
         <header className={cn(
@@ -70,7 +73,7 @@ export function Navbar() {
                     <ThemeToggle />
                     <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="flex items-center hover:opacity-80 transition-opacity">
                         <Image
-                            src="/colg-logo-nobg.png"
+                            src={collegeLogo}
                             alt="PES MCOE Logo"
                             width={56}
                             height={56}
@@ -112,7 +115,7 @@ export function Navbar() {
                         <div className="mt-4 pb-2 flex justify-center border-t border-[var(--border)]">
                             <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
                                 <Image
-                                    src="/colg-logo-nobg.png"
+                                    src={collegeLogo}
                                     alt="PES MCOE Logo"
                                     width={44}
                                     height={44}

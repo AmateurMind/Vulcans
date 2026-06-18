@@ -48,7 +48,7 @@ export function Footer() {
                             <div className="h-5 w-px bg-[var(--border)]" />
                             <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="flex items-center">
                                 <Image
-                                    src="/colg-logo-nobg.png"
+                                    src="/dark-good.png"
                                     alt="PES MCOE Logo"
                                     width={44}
                                     height={44}

@@ -65,15 +65,19 @@ export function Navbar() {
                     ))}
                 </nav>
 
-                {/* CTA */}
-                <div className="hidden md:flex items-center gap-3">
+                {/* CTA / College Logo */}
+                <div className="hidden md:flex items-center gap-4">
                     <ThemeToggle />
-                    <Link
-                        href="/contact"
-                        className="px-5 py-2 rounded-xl bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white text-sm font-semibold transition-all duration-200 shadow-[0_0_20px_var(--primary-glow)]"
-                    >
-                        Join Us
-                    </Link>
+                    <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="flex items-center hover:opacity-80 transition-opacity">
+                        <Image
+                            src="/colg-logo-nobg.png"
+                            alt="PES MCOE Logo"
+                            width={56}
+                            height={56}
+                            priority
+                            className="h-11 sm:h-12 w-auto object-contain"
+                        />
+                    </a>
                 </div>
 
                 {/* Mobile Menu Toggle */}
@@ -105,13 +109,18 @@ export function Navbar() {
                                 {link.label}
                             </Link>
                         ))}
-                        <Link
-                            href="/contact"
-                            onClick={() => setOpen(false)}
-                            className="mt-2 px-4 py-3 rounded-xl bg-[var(--primary)] text-center text-sm font-semibold text-white"
-                        >
-                            Join Us
-                        </Link>
+                        <div className="mt-4 pb-2 flex justify-center border-t border-[var(--border)]">
+                            <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
+                                <Image
+                                    src="/colg-logo-nobg.png"
+                                    alt="PES MCOE Logo"
+                                    width={44}
+                                    height={44}
+                                    className="h-10 w-auto object-contain"
+                                />
+                                <span>PES MCOE</span>
+                            </a>
+                        </div>
                     </nav>
                 </div>
             )}

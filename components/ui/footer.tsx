@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Cpu, Instagram, Twitter, Linkedin, Youtube, Github, Mail, MapPin, Phone } from 'lucide-react'
 
 const navColumns = [
@@ -38,11 +39,23 @@ export function Footer() {
             <div className="max-w-7xl mx-auto px-6 py-14">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-[var(--border)]">
                     <div className="md:col-span-2 flex flex-col gap-5">
-                        <Link href="/" className="flex items-center gap-2.5 group w-fit">
-                            <span className="font-bold text-xl tracking-tight text-[var(--foreground)]">
-                                Team <span className="text-[var(--primary)]">Vulcans</span>
-                            </span>
-                        </Link>
+                        <div className="flex items-center gap-3">
+                            <Link href="/" className="flex items-center gap-2.5 group w-fit">
+                                <span className="font-bold text-xl tracking-tight text-[var(--foreground)]">
+                                    Team <span className="text-[var(--primary)]">Vulcans</span>
+                                </span>
+                            </Link>
+                            <div className="h-5 w-px bg-[var(--border)]" />
+                            <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                <Image
+                                    src="/colg-logo-nobg.png"
+                                    alt="PES MCOE Logo"
+                                    width={44}
+                                    height={44}
+                                    className="h-9 w-auto object-contain hover:opacity-80 transition-opacity"
+                                />
+                            </a>
+                        </div>
 
                         <p className="text-[var(--muted-foreground)] text-sm leading-relaxed max-w-xs">
                             A student-led robotics and engineering club competing at national and international levels.

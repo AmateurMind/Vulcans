@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -22,9 +22,13 @@ const navLinks = [
 
 export function Navbar() {
     const [open, setOpen] = useState(false)
+    const [mounted, setMounted] = useState(false)
     const pathname = usePathname()
     const { resolvedTheme } = useTheme()
-    const collegeLogo = resolvedTheme === 'dark' ? '/dark-good.png' : '/colg-logo-nobg.png'
+
+    useEffect(() => setMounted(true), [])
+
+    const collegeLogo = mounted && resolvedTheme === 'dark' ? '/dark-good.png' : '/colg-logo-nobg.png'
 
     return (
         <header className={cn(

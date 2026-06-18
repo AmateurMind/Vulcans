@@ -59,8 +59,8 @@ export function Footer() {
 
                         <p className="text-[var(--muted-foreground)] text-sm leading-relaxed max-w-xs">
                             A student-led robotics and engineering club competing at national and international levels.
-                            We build, we compete, we innovate.
                         </p>
+                        <p className="text-[var(--primary)] font-bold text-xs tracking-[0.3em] uppercase">Innovate. Build. Automate.</p>
 
                         <div className="flex flex-col gap-2.5 text-sm text-[var(--muted-foreground)]">
                             <a href='mailto:robocon_teamvulcans@moderncoe.edu.in'><span className="flex items-center gap-2"><Mail className="w-4 h-4 text-[var(--primary)]" /> robocon_teamvulcans@moderncoe.edu.in</span></a>

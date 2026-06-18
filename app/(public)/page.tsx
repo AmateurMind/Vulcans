@@ -1,6 +1,6 @@
 import { RobotScrollClient } from "@/components/ui/RobotScrollClient";
 import { EventsList } from "@/components/ui/EventsList";
-import { Trophy, Users, Cpu, Star, ArrowRight, Zap, Globe, Shield } from "lucide-react";
+import { Trophy, Users, Cpu, Star, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 
@@ -12,23 +12,7 @@ const stats = [
   { label: "Years Active", value: "15+" },
 ];
 
-const features = [
-  {
-    icon: <Zap className="w-6 h-6 text-yellow-400" />,
-    title: "High-Performance Builds",
-    desc: "From CAD to final assembly, we build competition-ready robots with precision and reliability."
-  },
-  {
-    icon: <Shield className="w-6 h-6 text-blue-400" />,
-    title: "Competitive Excellence",
-    desc: "24+ competition wins and consistent national-level performances across major robotics events."
-  },
-  {
-    icon: <Globe className="w-6 h-6 text-[var(--primary)]" />,
-    title: "Club Ecosystem",
-    desc: "A growing PESMCOE network of student builders, mentors, and alumni driving each season forward."
-  },
-];
+
 
 const highlights = [
   {
@@ -93,14 +77,19 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex-1 grid grid-cols-1 gap-4">
-            {features.map((f, i) => (
-              <div key={i} className="glass p-5 rounded-2xl flex items-start gap-4 hover:border-[var(--primary)]/30 transition-all duration-300">
-                <div className="p-2.5 rounded-xl bg-[var(--primary-maroon)]/50 shrink-0">{f.icon}</div>
-                <div>
-                  <h3 className="font-semibold text-[var(--foreground)] mb-1">{f.title}</h3>
-                  <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{f.desc}</p>
-                </div>
+          <div className="flex-1 flex flex-col gap-6 items-center md:items-start">
+            {[
+              { word: "Innovate", desc: "Pushing boundaries with creative solutions" },
+              { word: "Build", desc: "From CAD to competition-ready machines" },
+              { word: "Automate", desc: "Intelligent systems, autonomous control" },
+            ].map((item, i) => (
+              <div key={i} className="group cursor-default text-center md:text-left">
+                <span className="block text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-[var(--primary)] md:text-[var(--primary)]/20 md:group-hover:text-[var(--primary)] transition-colors duration-300">
+                  {item.word}.
+                </span>
+                <span className="block text-xs sm:text-sm text-[var(--muted-foreground)] mt-1 tracking-wide">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>

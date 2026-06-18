@@ -23,14 +23,14 @@ const TEAM_MEMBERS = [
     {
         name: "Asmi Patil",
         email: "patil_asmi_entc@moderncoe.edu.in",
-        linkedIn: "#",
+        linkedIn: "https://www.linkedin.com/in/asmipatil/",
         role: "Team Member",
         department: "ENTC",
     },
     {
         name: "Advait Deo",
         email: "deo_advait_entc@moderncoe.edu.in",
-        linkedIn: "#",
+        linkedIn: "https://www.linkedin.com/in/advaitdeo/",
         role: "Team Member",
         department: "ENTC",
     },
@@ -65,7 +65,7 @@ const TEAM_MEMBERS = [
     {
         name: "Janhavi Pawar",
         email: "pawar_janhavi_entc@moderncoe.edu.in",
-        linkedIn: "#",
+        linkedIn: "https://www.linkedin.com/in/janhavipyc/",
         role: "Jr. Media & Content Executive",
         department: "ENTC",
     },

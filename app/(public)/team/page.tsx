@@ -52,11 +52,13 @@ const leaders: TeamMember[] = [
     name: "Asmi Patil",
     designation: "Electronics Lead",
     imageSrc: "/ID CARD/core/Asmi Patil.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/asmipatil/" }],
   },
   {
     name: "Advait Deo",
     designation: "Software Lead",
     imageSrc: "/ID CARD/core/Advait Deo.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/advaitdeo/" }],
   },
   {
     name: "Sarvesh Daphale",
@@ -89,6 +91,7 @@ const otherMembers: TeamMember[] = [
     name: "Laukik Mesharam",
     designation: "Jr. Embedded Engineer",
     imageSrc: "/ID CARD/Laukik Meshram.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
   },
   {
     name: "Vedant Kaulgekar",
@@ -142,6 +145,7 @@ const otherMembers: TeamMember[] = [
     name: "Athrav Ghorpade",
     designation: "Jr. Electrical Engineer",
     imageSrc: "",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
   },
   {
     name: "Yashodhan Kulkarni",
@@ -183,11 +187,13 @@ const otherMembers: TeamMember[] = [
     name: "Pradyumna Rawas",
     designation: "Jr. Circuit Design Engineer",
     imageSrc: "/ID CARD/Pradyumna Rawas.png",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
   },
   {
     name: "Janhavi Pawar",
     designation: "Jr. Media & Content Executive",
     imageSrc: "/ID CARD/Janhavi Pawar.jpeg",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/janhavipyc/" }],
   },
   {
     name: "Aryan Shirkhe",
@@ -199,6 +205,7 @@ const otherMembers: TeamMember[] = [
     name: "Snehal Shirur",
     designation: "Jr. Electronics Engineer",
     imageSrc: "/ID CARD/Snehal_Shirur.jpg",
+    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
   },
 ];
 

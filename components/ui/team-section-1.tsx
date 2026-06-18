@@ -48,7 +48,7 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                 )}
                 {...props}
             >
-                <div className="container grid items-center justify-center gap-8 px-4 text-center md:px-6">
+                <div className="max-w-6xl mx-auto grid items-center justify-center gap-8 px-4 text-center md:px-6">
                     <div className="absolute inset-0 z-0 opacity-5">
                         <svg className="h-full w-full" fill="none">
                             <defs>

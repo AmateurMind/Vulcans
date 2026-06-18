@@ -13,7 +13,7 @@ interface OBJViewerProps {
     modelName?: string
 }
 
-export function OBJViewer({ src, className = '', modelName = '2025 basketball bot' }: OBJViewerProps) {
+export function OBJViewer({ src, className = '', modelName = '2025 Basketball Bot' }: OBJViewerProps) {
     const containerRef = useRef<HTMLDivElement>(null)
     const [loadError, setLoadError] = useState<string | null>(null)
     const [loading, setLoading] = useState(true)

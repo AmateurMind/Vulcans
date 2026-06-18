@@ -13,12 +13,12 @@ export default function OBJViewerPage() {
         () => [
             {
                 id: 'r2-base-drive-shooter-obj',
-                label: '2025 basketball bot',
+                label: '2025 Basketball Bot',
                 src: '/models/r2-base-drive-shooter.glb?v=2',
             },
             {
                 id: 'r2-2k24',
-                label: '2024 harvest bot',
+                label: '2024 Harvest Bot',
                 src: '/models/r2-2k24.glb?v=2',
             },
         ],

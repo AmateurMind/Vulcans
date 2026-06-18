@@ -21,6 +21,7 @@ interface TeamSectionProps extends React.HTMLAttributes<HTMLDivElement> {
     registerLink?: string;
     logo?: React.ReactNode;
     socialLinksMain?: SocialLink[];
+    gridClassName?: string;
 }
 
 export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
@@ -32,6 +33,7 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
             registerLink,
             logo,
             socialLinksMain,
+            gridClassName,
             className,
             ...props
         },
@@ -116,7 +118,7 @@ export const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
                         </div>
                     )}
 
-                    <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 mt-12">
+                    <div className={cn("relative z-10 mx-auto grid w-full max-w-6xl gap-6 lg:gap-8 mt-12", gridClassName || "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4")}>
                         {members.map((member, index) => (
                             <div
                                 key={index}

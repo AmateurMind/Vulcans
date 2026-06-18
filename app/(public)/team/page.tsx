@@ -209,15 +209,37 @@ const otherMembers: TeamMember[] = [
   },
 ];
 
+const facultyCoordinators: TeamMember[] = [
+  {
+    name: "Dr. Vidya Kodgirwar",
+    designation: "Faculty Coordinator",
+    imageSrc: "/ID CARD/vidya.jpg",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/kodgirwar-vidya-3bbab4347" }],
+  },
+  {
+    name: "Dr. Anil Shirsat",
+    designation: "Faculty Coordinator",
+    imageSrc: "/ID CARD/anil.jpg",
+  },
+];
+
 export default function TeamPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground pt-10">
       <TeamSection
+        title="Faculty Coordinators"
+        description="Our guiding mentors who provide invaluable direction and support to Team Vulcans."
+        members={facultyCoordinators}
+        className="pt-6 md:pt-10 lg:pt-12"
+        gridClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 [&>*:first-child]:lg:col-start-2"
+      />
+
+      <TeamSection
         title="Core Team"
         description="The core team driving Team Vulcans forward with innovation, teamwork, and technical excellence."
         members={leaders}
-        className="pt-6 md:pt-10 lg:pt-12"
+        className="pt-0 md:pt-4 lg:pt-6"
       />
 
       {otherMembers.length > 0 && (

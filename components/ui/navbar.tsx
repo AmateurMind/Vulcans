@@ -116,7 +116,7 @@ export function Navbar() {
                                 {link.label}
                             </Link>
                         ))}
-                        <div className="mt-4 pb-2 flex justify-center border-t border-[var(--border)]">
+                        <div className="mt-4 pb-2 flex items-center justify-center gap-4 border-t border-[var(--border)]">
                             <a href="https://moderncoe.edu.in/" target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
                                 <Image
                                     src={collegeLogo}
@@ -127,6 +127,9 @@ export function Navbar() {
                                 />
                                 <span>PES MCOE</span>
                             </a>
+                            <div className="mt-3">
+                                <ThemeToggle />
+                            </div>
                         </div>
                     </nav>
                 </div>

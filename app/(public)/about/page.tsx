@@ -21,7 +21,7 @@ export default function AboutPage() {
                             Team <span className="text-shimmer">Vulcans</span>
                         </h1>
                         <p className="text-vulcan-text-muted text-xl leading-relaxed max-w-2xl">
-                            A robotics club driven by innovation, hands-on engineering, and competitive excellence since 2011.
+                            The official robotics club of Progressive Education Society&apos;s Modern College of Engineering, driven by innovation, hands-on engineering, and competitive excellence since 2011.
                         </p>
                     </div>
                     <div>

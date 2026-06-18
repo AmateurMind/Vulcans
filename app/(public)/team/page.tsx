@@ -40,43 +40,41 @@ const leaders: TeamMember[] = [
     name: "Shreyas Kumbhar",
     designation: "Captain",
     imageSrc: "/ID CARD/core/Shreyas Kumbhar.png",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/shreyaskumbhar185" }],
   },
   {
     name: "Chase Gunjal",
     designation: "Vice Captain",
     imageSrc: "/ID CARD/core/Chase Gunjal.png",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/chase-gunjal-b5a1b92b4" }],
   },
   {
     name: "Asmi Patil",
     designation: "Electronics Lead",
     imageSrc: "/ID CARD/core/Asmi Patil.png",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
   },
   {
     name: "Advait Deo",
     designation: "Software Lead",
     imageSrc: "/ID CARD/core/Advait Deo.png",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
   },
   {
     name: "Sarvesh Daphale",
     designation: "Mechanical Lead",
     imageSrc: "/ID CARD/core/sarvesh Daphale.jpg",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/sarvesh-daphale-3443a8316" }],
   },
   {
     name: "Harshal Raje",
     designation: "Co-Secretary",
     imageSrc: "/ID CARD/core/Harshal Raje.png",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/harshal-raje-a0b391323" }],
   },
   {
     name: "Vaishnavi Sutar",
     designation: "Co-Secretary",
     imageSrc: "/ID CARD/core/Vaishnavi Sutar.png",
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/vaishnavi-sutar-2bba892b4" }],
   },
   {
     name: "Samiksha Mote",
@@ -90,122 +88,117 @@ const otherMembers: TeamMember[] = [
   {
     name: "Laukik Mesharam",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "/ID CARD/Laukik Meshram.png", // Fixed extension & space
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Laukik Meshram.png",
   },
   {
     name: "Vedant Kaulgekar",
     designation: "Jr. AI/ML Engineer",
-    imageSrc: "/ID CARD/Vedant Kaulgekar.jpeg", // Matches explorer
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Vedant Kaulgekar.jpeg",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/vedant-kaulgekar" }],
   },
   {
     name: "Aditya Garad",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "/ID CARD/Aditya Garad.png", // Fixed extension & casing
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Aditya Garad.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/aditya-garad-45473837a" }],
   },
   {
     name: "Yash Doke",
     designation: "Jr. ROS Engineer",
-    imageSrc: "/ID CARD/Yash Doke.jpg", // Matches explorer
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Yash Doke.jpg",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/yash-doke" }],
   },
   {
     name: "Viraj Jadhao",
     designation: "Jr. Software Developer",
-    imageSrc: "", // Not found in image
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/viraj-jadhao-0771b830b" }],
   },
   {
     name: "Harsh Jain",
     designation: "Jr. AI/ML Engineer",
-    imageSrc: "/ID CARD/IMG_4546(Harsh Jain).PNG", // Matches exact casing
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/IMG_4546(Harsh Jain).PNG",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/harsh-jain-853b31341" }],
   },
   {
     name: "Meherdeep Chapade",
     designation: "Jr. Electronics Engineer",
-    imageSrc: "/ID CARD/Meherdeep Chapade.png", // Updated to match explorer filename
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Meherdeep Chapade.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/meherdeep-chapade-40136833b" }],
   },
   {
     name: "Ashwin Bobade",
     designation: "Jr. Electronics Engineer",
-    imageSrc: "/ID CARD/Ashwin Bobade.png", // Fixed casing
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Ashwin Bobade.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/ashwinbobade" }],
   },
   {
     name: "Anand Jad",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "/ID CARD/Anand Jad.png", // Added from explorer
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Anand Jad.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/anandjad" }],
   },
   {
     name: "Athrav Ghorpade",
     designation: "Jr. Electrical Engineer",
-    imageSrc: "", 
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "",
   },
   {
     name: "Yashodhan Kulkarni",
     designation: "Jr. Software Developer",
-    imageSrc: "", 
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/yashodhan-k-55ab15229" }],
   },
   {
     name: "Prathamesh Shingade",
     designation: "Jr. Design Engineer (CAD)",
-    imageSrc: "/ID CARD/Prathamesh Shingade.png", // Fixed spelling & extension
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Prathamesh Shingade.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/prathamesh-shingade-646266351" }],
   },
   {
     name: "Aditya Darekar",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "/ID CARD/Aditya Darekar.png", // Fixed filename
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Aditya Darekar.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/aditya-darekar-5b40a73b4" }],
   },
   {
     name: "Vaibhav Pawar",
     designation: "Jr. PCB Design Engineer",
-    imageSrc: "/ID CARD/Vaibhav Pawar.png", // Added from explorer
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Vaibhav Pawar.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/pawar-vaibhav-105834383" }],
   },
   {
     name: "Pranav Shinde",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "/ID CARD/Pranav Shinde.png", // Fixed extension
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Pranav Shinde.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/pranav-shinde-43a2333a1" }],
   },
   {
     name: "Ayush Tiwari",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "/ID CARD/Ayush Tiwari.png", // Fixed extension
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Ayush Tiwari.png",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/coolayushtiwari" }],
   },
   {
     name: "Pradyumna Rawas",
     designation: "Jr. Circuit Design Engineer",
-    imageSrc: "/ID CARD/Pradyumna Rawas.png", // Added from explorer
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Pradyumna Rawas.png",
   },
   {
     name: "Janhavi Pawar",
     designation: "Jr. Media & Content Executive",
-    imageSrc: "/ID CARD/Janhavi Pawar.jpeg", // Fixed extension
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Janhavi Pawar.jpeg",
   },
   {
     name: "Aryan Shirkhe",
     designation: "Jr. Embedded Engineer",
-    imageSrc: "", 
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "",
+    socialLinks: [{ icon: Linkedin, href: "https://www.linkedin.com/in/aryanshirke" }],
   },
   {
     name: "Snehal Shirur",
     designation: "Jr. Electronics Engineer",
-    imageSrc: "/ID CARD/Snehal_Shirur.jpg", // Added from explorer
-    socialLinks: [{ icon: Linkedin, href: TEAM_LINKEDIN_URL }],
+    imageSrc: "/ID CARD/Snehal_Shirur.jpg",
   },
 ];
 
